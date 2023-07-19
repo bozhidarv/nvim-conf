@@ -1,4 +1,4 @@
--- You can add your own plugins here or in other files in this directory!
+-- You can add your own plugins here or in other files in this directory!plu
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
@@ -23,24 +23,12 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
 	-- NOTE: First, some plugins that don't require any configuration
 
-	-- Git related plugins
-	'tpope/vim-fugitive',
-	'tpope/vim-rhubarb',
-	{
-		'kdheepak/lazygit.nvim',
-		-- optional for floating window border decoration
-		dependencies = {
-			'nvim-lua/plenary.nvim',
-		},
-	},
+	require 'custom.plugins.git',
+	require 'custom.plugins.ui',
 
 	-- Detect tabstop and shiftwidth automatically
-	'tpope/vim-sleuth',
+	{ 'christoomey/vim-tmux-navigator' },
 
-	'nvim-tree/nvim-web-devicons',
-
-	-- NOTE: This is where your plugins related to LSP can be installed.
-	--  The configuration is done below. Search for lspconfig to find it below.
 	{
 		-- LSP Configuration & Plugins
 		'neovim/nvim-lspconfig',
@@ -56,6 +44,34 @@ require('lazy').setup({
 			-- Additional lua configuration, makes nvim stuff amazing!
 			'folke/neodev.nvim',
 		},
+		config = function()
+			require('lspconfig').lua_ls.setup {
+				settings = {
+					Lua = {
+						runtime = {
+							-- Tell the language server which version of Lua you're using
+							-- (most likely LuaJIT in the case of Neovim)
+							version = 'LuaJIT',
+						},
+						diagnostics = {
+							-- Get the language server to recognize the `vim` global
+							globals = {
+								'vim',
+								'require',
+							},
+						},
+						workspace = {
+							-- Make the server aware of Neovim runtime files
+							library = vim.api.nvim_get_runtime_file('', true),
+						},
+						-- Do not send telemetry data containing a randomized but unique identifier
+						telemetry = {
+							enable = false,
+						},
+					},
+				},
+			}
+		end,
 	},
 
 	{
@@ -93,19 +109,89 @@ require('lazy').setup({
 				vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk,
 					{ buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
 				vim.keymap.set('n', '<leader>gn', require('gitsigns').next_hunk, { buffer = bufnr, desc = '[G]o to [N]ext Hunk' })
-				vim.keymap.set('n', '<leader>ph', require('gitsigns').preview_hunk, { buffer = bufnr, desc = '[P]review [H]unk' })
+				vim.keymap.set('n', '<leader>gh', require('gitsigns').preview_hunk, { buffer = bufnr, desc = '[P]review [H]unk' })
 			end,
 		},
 	},
+	{
+		'catppuccin/nvim',
+		name = 'catppuccin',
+		opts = {
+			flavour = 'mocha', -- latte, frappe, macchiato, mocha
+			background = {     -- :h background
+				light = 'latte',
+				dark = 'mocha',
+			},
+			transparent_background = true, -- disables setting the background color.
+			show_end_of_buffer = false,    -- shows the '~' characters after the end of buffers
+			term_colors = false,           -- sets terminal colors (e.g. `g:terminal_color_0`)
+			dim_inactive = {
+				enabled = false,             -- dims the background color of inactive window
+				shade = 'dark',
+				percentage = 0.15,           -- percentage of the shade to apply to the inactive window
+			},
+			no_italic = false,             -- Force no italic
+			no_bold = false,               -- Force no bold
+			no_underline = false,          -- Force no underline
+			styles = {                     -- Handles the styles of general hi groups (see `:h highlight-args`):
+				comments = { 'italic' },     -- Change the style of comments
+				conditionals = { 'italic' },
+				loops = {},
+				functions = {},
+				keywords = {},
+				strings = {},
+				variables = {},
+				numbers = {},
+				booleans = {},
+				properties = {},
+				types = {},
+				operators = {},
+			},
+			color_overrides = {},
+			custom_highlights = function(c)
+				return {
 
+					NvimTreeRootFolder = { fg = c.pink },
+					NvimTreeIndentMarker = { fg = c.surface0 },
+
+					-- For telescope.nvim
+					TelescopeBorder = { fg = c.mantle, bg = c.mantle },
+					TelescopePromptBorder = { fg = c.surface0, bg = c.surface0 },
+					TelescopePromptNormal = { fg = c.text, bg = c.surface0 },
+					TelescopePromptPrefix = { fg = c.flamingo, bg = c.surface0 },
+					TelescopeNormal = { bg = c.mantle },
+					TelescopePreviewTitle = { fg = c.base, bg = c.green },
+					TelescopePromptTitle = { fg = c.base, bg = c.red },
+					TelescopeResultsTitle = { fg = c.mantle, bg = c.mantle },
+					TelescopeSelection = { fg = c.text, bg = c.surface0 },
+					TelescopeResultsDiffAdd = { fg = c.green },
+					TelescopeResultsDiffChange = { fg = c.yellow },
+					TelescopeResultsDiffDelete = { fg = c.red },
+				}
+			end,
+			integrations = {
+				cmp = true,
+				gitsigns = true,
+				nvimtree = true,
+				telescope = true,
+				notify = true,
+				mini = false,
+				neotree = true,
+				mason = false,
+				treesitter_context = true,
+				which_key = true,
+				-- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+			},
+		},
+	},
 	{
 		-- Theme inspired by Atom
 		'navarasu/onedark.nvim',
 		priority = 1000,
 		config = function()
 			require('onedark').setup {
-				-- style = 'dark',           -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
-				transparent = true,           -- Show/hide background
+				style = 'dark',               -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+				transparent = false,          -- Show/hide background
 				term_colors = true,           -- Change terminal color as per the selected theme style
 				ending_tildes = false,        -- Show the end-of-buffer tildes. By default they are hidden
 				cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
@@ -141,7 +227,6 @@ require('lazy').setup({
 					background = true, -- use background color for virtual text
 				},
 			}
-			require('onedark').load()
 		end,
 	},
 
@@ -152,7 +237,7 @@ require('lazy').setup({
 		opts = {
 			options = {
 				icons_enabled = true,
-				theme = 'onedark',
+				theme = 'catppuccin',
 				globalstatus = true,
 				-- component_separators = '|',
 				-- section_separators = '',
@@ -172,10 +257,20 @@ require('lazy').setup({
 	},
 
 	-- "gc" to comment visual regions/lines
-	{ 'numToStr/Comment.nvim',         opts = {} },
+	{ 'numToStr/Comment.nvim', opts = {} },
 
 	-- Fuzzy Finder (files, lsp, etc)
-	{ 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
+	{
+		'nvim-telescope/telescope.nvim',
+		branch = '0.1.x',
+		dependencies = {
+			'nvim-lua/plenary.nvim',
+			'nvim-telescope/telescope-file-browser.nvim',
+		},
+		config = function()
+			require('telescope').load_extension 'file_browser'
+		end,
+	},
 
 	-- Fuzzy Finder Algorithm which requires local dependencies to be built.
 	-- Only load if `make` is available. Make sure you have the system
@@ -224,6 +319,15 @@ require('lazy').setup({
 		end,
 	},
 
+	{
+		'nvim-neo-tree/neo-tree.nvim',
+		branch = 'v2.x',
+		dependencies = {
+			'nvim-lua/plenary.nvim',
+			'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+			'MunifTanjim/nui.nvim',
+		},
+	},
 	-- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
 	--       These are some example plugins that I've included in the kickstart repository.
 	--       Uncomment any of the lines below to enable them.
