@@ -43,6 +43,7 @@ vim.g.maplocalleader = ' '
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
-require 'custom.plugins-init'
 
-require 'custom.options'
+require 'plugins'
+
+require 'options'
