@@ -58,11 +58,13 @@ vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc =
 vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<leader>e', ':Telescope file_browser<CR>', { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>e', ':Telescope file_browser<CR>', { desc = 'Open file browser' })
 vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
 vim.keymap.set('n', '<leader>gg', ':LazyGit<CR>', { desc = 'Open lazygit' })
 vim.keymap.set('n', '<leader>gf', ':Git<CR>', { desc = 'Open git fugitive' })
+
+vim.keymap.set("n", "<leader>fu", ":Telescope undo<cr>", { desc = 'Open undo tree for this buffer' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
