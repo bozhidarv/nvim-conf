@@ -6,11 +6,11 @@ local opts = {
       completion = {
         favoriteStaticMembers = {},
         filteredTypes = {
-          -- "com.sun.*",
-          -- "io.micrometer.shaded.*",
-          -- "java.awt.*",
-          -- "jdk.*",
-          -- "sun.*",
+          "com.sun.*",
+          "io.micrometer.shaded.*",
+          "java.awt.*",
+          "jdk.*",
+          "sun.*",
         },
       },
       sources = {
@@ -44,6 +44,7 @@ local opts = {
   },
 }
 
+
 local function setup()
   local pkg_status, jdtls = pcall(require, 'jdtls')
   if not pkg_status then
@@ -51,8 +52,12 @@ local function setup()
     return {}
   end
 
-  -- local jdtls_path = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
+  local jdtls_path = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
   local jdtls_bin = vim.fn.stdpath 'data' .. '/mason/bin/jdtls'
+  if vim.fn.has('win32') == 1 then
+    jdtls_bin = vim.fn.stdpath 'data' .. '\\mason\\bin\\jdtls.cmd'
+  end
+
 
   local root_markers = { '.gradle', 'gradlew', '.git' }
   local root_dir = jdtls.setup.find_root(root_markers)
@@ -67,7 +72,6 @@ local function setup()
   }
   local on_attach = function(client, bufnr)
     require('options.utils').on_attach(client, bufnr)
-    jdtls.setup.add_commands() -- important to ensure you can update configs when build is updated
     -- if you setup DAP according to https://github.com/mfussenegger/nvim-jdtls#nvim-dap-configuration you can uncomment below
     jdtls.setup_dap { hotcodereplace = 'auto' }
     jdtls.dap.setup_dap_main_class_configs()
@@ -81,10 +85,10 @@ local function setup()
 end
 
 local pkg_status, jdtls = pcall(require, 'jdtls')
--- if not pkg_status then
---   vim.notify('unable to load nvim-jdtls', 1)
---   return
--- end
+if not pkg_status then
+  vim.notify('unable to load nvim-jdtls', 1)
+  return
+end
 
 jdtls.start_or_attach(setup())
 -- This starts a new client & server,

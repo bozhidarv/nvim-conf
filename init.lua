@@ -35,6 +35,7 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now :)
 --]]
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -45,5 +46,10 @@ vim.g.maplocalleader = ' '
 --    `:help lazy.nvim.txt` for more info
 
 require 'plugins'
+
+-- vim.notify(tostring(os.getenv 'TRANSPARENT_BACK' ~= nil), vim.log.levels.WARN)
+
+require('nvim-treesitter.install').prefer_git = false
+require('nvim-treesitter.install').compilers = { 'clang', 'gcc' }
 
 require 'options'
