@@ -19,6 +19,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: First, some plugins that don't require any configuration
   require 'plugins.git',
+  require 'plugins.debug',
   require 'plugins.base',
   require 'plugins.custom',
   require 'plugins.ui',
