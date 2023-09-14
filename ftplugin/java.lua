@@ -1,3 +1,16 @@
+local bundles = {
+  vim.fn.glob(vim.fn.stdpath 'data' .. '/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin-*.jar',
+    true)
+}
+
+vim.list_extend(
+  bundles,
+  vim.split(
+    vim.fn.glob(vim.fn.stdpath 'data' .. '/mason/packages/java-test/extension/server/*.jar', true),
+    '\n'
+  )
+)
+
 local opts = {
   cmd = {},
   settings = {
@@ -37,13 +50,10 @@ local opts = {
     },
   },
   init_options = {
-    bundles = {
-      vim.fn.glob(vim.fn.stdpath 'data' .. '/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin-0.45.0.jar',
-        true),
-    },
+    bundles = bundles,
+    extendedClientCapabilities = require('jdtls').extendedClientCapabilities
   },
 }
-
 
 local function setup()
   local pkg_status, jdtls = pcall(require, 'jdtls')
@@ -72,15 +82,18 @@ local function setup()
   }
   local on_attach = function(client, bufnr)
     require('options.utils').on_attach(client, bufnr)
+    vim.keymap.set('n', '<leader>djc', jdtls.test_class, { desc = 'Jdtls test class' })
+    vim.keymap.set('n', '<leader>djm', jdtls.test_nearest_method, { desc = 'Jdtls test nearest method' })
+
     -- if you setup DAP according to https://github.com/mfussenegger/nvim-jdtls#nvim-dap-configuration you can uncomment below
+    --
     jdtls.setup_dap { hotcodereplace = 'auto' }
-    jdtls.dap.setup_dap_main_class_configs()
+    require('jdtls.dap').setup_dap_main_class_configs()
     -- you may want to also run your generic on_attach() function used by your LSP config
   end
 
   opts.on_attach = on_attach
   opts.capabilities = vim.lsp.protocol.make_client_capabilities()
-
   return opts
 end
 
@@ -90,9 +103,9 @@ if not pkg_status then
   return
 end
 
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+
 jdtls.start_or_attach(setup())
 -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
-
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
