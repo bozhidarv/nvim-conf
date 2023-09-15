@@ -193,7 +193,6 @@ return {
             settings = servers[server_name],
           }
         end,
-
         ['jdtls'] = noop,
       }
 

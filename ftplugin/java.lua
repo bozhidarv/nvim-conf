@@ -1,3 +1,5 @@
+vim.notify("JAVA", vim.log.levels.WARN)
+
 local bundles = {
   vim.fn.glob(vim.fn.stdpath 'data' .. '/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin-*.jar',
     true)
@@ -63,9 +65,8 @@ local function setup()
   end
 
   local jdtls_path = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
-  local jdtls_bin = vim.fn.stdpath 'data' .. '/mason/bin/jdtls'
   if vim.fn.has('win32') == 1 then
-    jdtls_bin = vim.fn.stdpath 'data' .. '\\mason\\bin\\jdtls.cmd'
+    jdtls_path = vim.fn.stdpath 'data' .. '\\mason\\packages\\jdtls\\jdtls.cmd'
   end
 
 
@@ -76,19 +77,20 @@ local function setup()
   local workspace_dir = home .. '/.cache/jdtls/workspace/' .. project_name
 
   opts.cmd = {
-    jdtls_bin,
+    jdtls_path,
     '-data',
     workspace_dir,
   }
   local on_attach = function(client, bufnr)
-    require('options.utils').on_attach(client, bufnr)
     vim.keymap.set('n', '<leader>djc', jdtls.test_class, { desc = 'Jdtls test class' })
     vim.keymap.set('n', '<leader>djm', jdtls.test_nearest_method, { desc = 'Jdtls test nearest method' })
+
+    require('options.utils').on_attach(client, bufnr)
 
     -- if you setup DAP according to https://github.com/mfussenegger/nvim-jdtls#nvim-dap-configuration you can uncomment below
     --
     jdtls.setup_dap { hotcodereplace = 'auto' }
-    require('jdtls.dap').setup_dap_main_class_configs()
+    -- require('jdtls.dap').setup_dap_main_class_configs()
     -- you may want to also run your generic on_attach() function used by your LSP config
   end
 

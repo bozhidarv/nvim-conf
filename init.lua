@@ -52,5 +52,6 @@ require 'plugins'
 require('nvim-treesitter.install').prefer_git = false
 require('nvim-treesitter.install').compilers = { 'clang', 'gcc' }
 
-require 'options'
 require 'autogroups'
+
+require 'options'

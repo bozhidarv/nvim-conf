@@ -45,4 +45,16 @@ M.on_attach = function(_, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 end
 
+M.checkTransperancy = function()
+  local isTrans = os.getenv 'NVIM_TRANSPARENT_BACKGROUND'
+  if isTrans == nil then
+    return true
+  end
+  if isTrans == 'true' then
+    return true
+  end
+  return false
+end
+
+
 return M
