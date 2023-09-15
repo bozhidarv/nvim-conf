@@ -1,10 +1,19 @@
 local utils = require('options.utils')
 
 return {
-	'tpope/vim-sleuth',
-
-	'nvim-tree/nvim-web-devicons',
-
+	{ 'tpope/vim-sleuth' },
+	{ 'nvim-tree/nvim-web-devicons' },
+	{
+		'uga-rosa/ccc.nvim',
+		config = function()
+			require("ccc").setup({
+				highlighter = {
+					auto_enable = true,
+					lsp = true,
+				},
+			})
+		end
+	},
 	{
 		'kevinhwang91/nvim-ufo',
 		event = { 'User BaseFile', 'InsertEnter' },

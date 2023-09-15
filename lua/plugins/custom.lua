@@ -29,15 +29,21 @@ return {
 			return vim.fn.executable 'make' == 1
 		end,
 	},
-
 	{
-		'nvim-neo-tree/neo-tree.nvim',
-		branch = 'v2.x',
-		dependencies = {
-			'nvim-lua/plenary.nvim',
-			'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
-			'MunifTanjim/nui.nvim',
-		},
+		'stevearc/oil.nvim',
+		opts = {},
+		-- Optional dependencies
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("oil").setup({
+				columns = {
+					"icon",
+					"permissions",
+					-- "size",
+					-- "mtime",
+				}
+			})
+		end
 	},
 	{
 		'MattesGroeger/vim-bookmarks'

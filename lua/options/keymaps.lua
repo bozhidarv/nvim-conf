@@ -31,8 +31,8 @@ vim.keymap.set('n', '<leader>fd', require('telescope.builtin').diagnostics, { de
 vim.keymap.set('n', '<leader>fu', ':Telescope undo<cr>', { desc = 'Open undo tree for this buffer' })
 --#endregion
 
---#region Netrw
-vim.keymap.set('n', '<leader>e', ':Explore<CR>', { desc = 'Open Netrw' })
+--#region Oil.nvim
+vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open file explorer" })
 --#endregion
 
 --#region Git
