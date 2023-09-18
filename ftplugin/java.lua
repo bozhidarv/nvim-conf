@@ -82,6 +82,9 @@ local function setup()
     workspace_dir,
   }
   local on_attach = function(client, bufnr)
+    vim.o.tabstop = 4
+    vim.o.shiftwidth = 4
+
     vim.keymap.set('n', '<leader>djc', jdtls.test_class, { desc = 'Jdtls test class' })
     vim.keymap.set('n', '<leader>djm', jdtls.test_nearest_method, { desc = 'Jdtls test nearest method' })
 

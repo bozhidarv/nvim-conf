@@ -38,9 +38,10 @@ vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open file explorer" }
 --#region Git
 vim.keymap.set('n', '<leader>gg', ':LazyGit<CR>', { desc = 'Open lazygit' })
 
-vim.keymap.set('n', '<leader>gf', ':Git<CR>', { desc = 'Open git fugitive' })
-vim.keymap.set('n', '<leader>gp', ':Git pull<CR>', { desc = 'Git fugitive pull' })
-vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = 'Git fugitive push' })
+vim.keymap.set('n', '<leader>gf', ':Neogit<CR>', { desc = 'Open git Neogit' })
+vim.keymap.set('n', '<leader>gp', ':Neogit pull<CR>', { desc = 'Neogit pull' })
+vim.keymap.set('n', '<leader>gP', ':Neogit push<CR>', { desc = 'Neogit push' })
+vim.keymap.set('n', '<leader>gc', ':Neogit commit<CR>', { desc = 'Neogit push' })
 --#endregion
 
 --#region Diagnostic
@@ -66,4 +67,10 @@ vim.keymap.set('n', '<C-l>', ':TmuxNavigateRight<CR>', { silent = true, desc = '
 vim.keymap.set('n', '<leader>C', ':bd<CR>', { silent = true, desc = 'Close buffer' })
 vim.keymap.set('n', 'L', ':BufferLineCycleNext<CR>', { silent = true, desc = 'Next buffer' })
 vim.keymap.set('n', 'H', ':BufferLineCyclePrev<CR>', { silent = true, desc = 'Previous buffer' })
+--#endregion
+
+--#region tabs
+vim.keymap.set('n', '<leader>tc', ':tabclose<CR>', { silent = true, desc = 'Close tab' })
+vim.keymap.set('n', '<leader>th', ':tabprevious<CR>', { silent = true, desc = 'Previous tab' })
+vim.keymap.set('n', '<leader>tl', ':tabNext<CR>', { silent = true, desc = 'Next tab' })
 --#endregion
