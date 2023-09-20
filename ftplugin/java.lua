@@ -57,7 +57,12 @@ local opts = {
   },
 }
 
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+
 local function setup()
+  vim.o.tabstop = 4
+  vim.o.shiftwidth = 4
   local pkg_status, jdtls = pcall(require, 'jdtls')
   if not pkg_status then
     vim.notify('unable to load nvim-jdtls', 1)
@@ -82,9 +87,6 @@ local function setup()
     workspace_dir,
   }
   local on_attach = function(client, bufnr)
-    vim.o.tabstop = 4
-    vim.o.shiftwidth = 4
-
     vim.keymap.set('n', '<leader>djc', jdtls.test_class, { desc = 'Jdtls test class' })
     vim.keymap.set('n', '<leader>djm', jdtls.test_nearest_method, { desc = 'Jdtls test nearest method' })
 
@@ -107,9 +109,6 @@ if not pkg_status then
   vim.notify('unable to load nvim-jdtls', 1)
   return
 end
-
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
 
 jdtls.start_or_attach(setup())
 -- This starts a new client & server,

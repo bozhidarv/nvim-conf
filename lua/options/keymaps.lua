@@ -38,10 +38,10 @@ vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open file explorer" }
 --#region Git
 vim.keymap.set('n', '<leader>gg', ':LazyGit<CR>', { desc = 'Open lazygit' })
 
-vim.keymap.set('n', '<leader>gf', ':Neogit<CR>', { desc = 'Open git Neogit' })
-vim.keymap.set('n', '<leader>gp', ':Neogit pull<CR>', { desc = 'Neogit pull' })
-vim.keymap.set('n', '<leader>gP', ':Neogit push<CR>', { desc = 'Neogit push' })
-vim.keymap.set('n', '<leader>gc', ':Neogit commit<CR>', { desc = 'Neogit push' })
+vim.keymap.set('n', '<leader>gf', ':Git<CR>', { desc = 'Open fugitive' })
+vim.keymap.set('n', '<leader>gp', ':Git pull<CR>', { desc = 'fugitive pull' })
+vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = 'fugitive push' })
+vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', { desc = 'fugitive push' })
 --#endregion
 
 --#region Diagnostic
