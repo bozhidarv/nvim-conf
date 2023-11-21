@@ -47,5 +47,11 @@ return {
 	},
 	{
 		'MattesGroeger/vim-bookmarks'
+	},
+	{
+		'RRethy/vim-illuminate',
+		config = function()
+			require('illuminate').configure({})
+		end,
 	}
 }
