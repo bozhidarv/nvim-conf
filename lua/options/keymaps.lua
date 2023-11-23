@@ -74,3 +74,6 @@ vim.keymap.set('n', '<leader>tc', ':tabclose<CR>', { silent = true, desc = 'Clos
 vim.keymap.set('n', '<leader>th', ':tabprevious<CR>', { silent = true, desc = 'Previous tab' })
 vim.keymap.set('n', '<leader>tl', ':tabNext<CR>', { silent = true, desc = 'Next tab' })
 --#endregion
+
+--#region hlSearch
+vim.keymap.set('n', '<esc><esc>', ':nohls<cr>', { silent = true, desc = 'Turn off hlSearch' })

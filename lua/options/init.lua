@@ -3,10 +3,10 @@
 -- NOTE: You can change these options as you wish!
 
 -- vim.cmd 'colorscheme catppuccin-mocha'
-vim.cmd 'colorscheme onedark'
+vim.cmd("colorscheme onedark")
 
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.o.hlsearch = true
 
 -- Make line numbers default
 vim.wo.number = true
