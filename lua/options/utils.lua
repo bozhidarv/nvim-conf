@@ -48,7 +48,7 @@ end
 M.checkTransperancy = function()
   local isTrans = os.getenv 'NVIM_TRANSPARENT_BACKGROUND'
   if isTrans == nil then
-    return true
+    return false
   end
   if isTrans == 'true' then
     return true

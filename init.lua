@@ -48,8 +48,6 @@ vim.opt.clipboard = 'unnamedplus'
 
 require 'plugins'
 
--- vim.notify(tostring(os.getenv 'TRANSPARENT_BACK' ~= nil), vim.log.levels.WARN)
-
 require('nvim-treesitter.install').prefer_git = false
 require('nvim-treesitter.install').compilers = { 'clang', 'gcc' }
 
