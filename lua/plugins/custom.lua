@@ -53,5 +53,8 @@ return {
 		config = function()
 			require('illuminate').configure({})
 		end,
+	},
+	{
+		'github/copilot.vim'
 	}
 }
