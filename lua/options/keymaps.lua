@@ -77,3 +77,8 @@ vim.keymap.set('n', '<leader>tl', ':tabNext<CR>', { silent = true, desc = 'Next 
 
 --#region hlSearch
 vim.keymap.set('n', '<esc><esc>', ':nohls<cr>', { silent = true, desc = 'Turn off hlSearch' })
+--#endregion
+
+--#region Github Copilot
+vim.keymap.set('i', '<C-j>', 'copilot#Accept("<CR>")', { expr = true, silent = true, desc = 'Accept copilot suggestion' })
+--#endregion
