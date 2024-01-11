@@ -152,6 +152,8 @@ return {
         },
       }
 
+
+
       require('neodev').setup()
 
       -- Switch for controlling whether you want autoformatting.
@@ -191,6 +193,16 @@ return {
             capabilities = capabilities,
             on_attach = require('options.utils').on_attach,
             settings = servers[server_name],
+          }
+        end,
+        ['clangd'] = function()
+          require('lspconfig')['clangd'].setup {
+            capabilities = capabilities,
+            on_attach = require('options.utils').on_attach,
+            cmd = {
+              "clangd",
+              "--offset-encoding=utf-16",
+            },
           }
         end,
         ['jdtls'] = noop,
