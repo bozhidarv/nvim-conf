@@ -47,8 +47,14 @@ vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', { desc = 'fugitive push' })
 --#region Diagnostic
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', '<leader>Q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+
+vim.keymap.set('n', '<leader>q', function()
+  require("trouble").toggle("document_diagnostics")
+end, { desc = 'Toggle diagnostics list for file' })
+
+vim.keymap.set('n', '<leader>Q', function()
+  require("trouble").toggle("workspace_diagnostics")
+end, { desc = 'Toggle diagnostics list for workspace' })
 --#endregion
 
 --#region ufo.nvim
