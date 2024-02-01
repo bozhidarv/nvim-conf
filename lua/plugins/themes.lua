@@ -1,55 +1,6 @@
 local utils = require('options.utils')
 
 return {
-	{ 'tpope/vim-sleuth' },
-	{ 'nvim-tree/nvim-web-devicons' },
-	{
-		'uga-rosa/ccc.nvim',
-		config = function()
-			require("ccc").setup({
-				highlighter = {
-					auto_enable = true,
-					lsp = true,
-				},
-			})
-		end
-	},
-	{
-		'kevinhwang91/nvim-ufo',
-		event = { 'User BaseFile', 'InsertEnter' },
-		dependencies = { 'kevinhwang91/promise-async' },
-		opts = {
-			preview = {
-				mappings = {
-					scrollB = '<C-b>',
-					scrollF = '<C-f>',
-					scrollU = '<C-u>',
-					scrollD = '<C-d>',
-				},
-			},
-			provider_selector = function(_, filetype, buftype)
-				local function handleFallbackException(bufnr, err, providerName)
-					if type(err) == 'string' and err:match 'UfoFallbackException' then
-						return require('ufo').getFolds(bufnr, providerName)
-					else
-						return require('promise').reject(err)
-					end
-				end
-
-				return (filetype == '' or buftype == 'nofile') and 'indent' -- only use indent until a file is opened
-						or function(bufnr)
-							return require('ufo')
-									.getFolds(bufnr, 'lsp')
-									:catch(function(err)
-										return handleFallbackException(bufnr, err, 'treesitter')
-									end)
-									:catch(function(err)
-										return handleFallbackException(bufnr, err, 'indent')
-									end)
-						end
-			end,
-		},
-	},
 	{
 		'catppuccin/nvim',
 		name = 'catppuccin',
@@ -165,39 +116,5 @@ return {
 				},
 			}
 		end,
-	},
-	{
-		'akinsho/bufferline.nvim',
-		version = '*',
-		dependencies = 'nvim-tree/nvim-web-devicons',
-		config = function()
-			require('bufferline').setup()
-		end,
-		opts = {
-			diagnostics = 'nvim_lsp',
-			diagnostics_indicator = function(count, level, diagnostics_dict, context)
-				local s = ' '
-				for e, n in pairs(diagnostics_dict) do
-					local sym = e == 'error' and ' ' or (e == 'warning' and ' ' or '')
-					s = s .. n .. sym
-				end
-				return s
-			end,
-		},
-	},
-
-	{
-		-- Set lualine as statusline
-		'nvim-lualine/lualine.nvim',
-		-- See `:help lualine.txt`
-		opts = {
-			options = {
-				icons_enabled = true,
-				theme = 'onedark',
-				globalstatus = true,
-				-- component_separators = '|',
-				-- section_separators = '',
-			},
-		},
 	},
 }
