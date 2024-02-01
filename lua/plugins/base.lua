@@ -159,11 +159,11 @@ return {
       -- Switch for controlling whether you want autoformatting.
       --  Use :KickstartFormatToggle to toggle autoformatting on or off
       local servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
-        -- tsserver = {},
+        tsserver = {},
 
         lua_ls = {
           Lua = {
@@ -201,7 +201,7 @@ return {
             on_attach = require('options.utils').on_attach,
             cmd = {
               "clangd",
-              "--offset-encoding=utf-16",
+              "--offset-encoding=utf-8",
             },
           }
         end,
@@ -272,6 +272,7 @@ return {
         sources = {
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
+          { name = 'vim-dadbod-completion' },
         },
       }
     end

@@ -56,5 +56,8 @@ return {
 	},
 	{
 		'github/copilot.vim'
-	}
+	},
+	'tpope/vim-dadbod',
+	'kristijanhusak/vim-dadbod-ui',
+	'kristijanhusak/vim-dadbod-completion',
 }
