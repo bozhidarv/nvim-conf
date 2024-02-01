@@ -20,6 +20,8 @@ return {
 				end
 			end
 
+			vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+
 			return (filetype == '' or buftype == 'nofile') and 'indent' -- only use indent until a file is opened
 					or function(bufnr)
 						return require('ufo')

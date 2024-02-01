@@ -22,6 +22,7 @@ return {
 		'lewis6991/gitsigns.nvim',
 		opts = {
 			-- See `:help gitsigns.txt`
+			signcolumn = true,
 			signs = {
 				add = { text = "┃" },
 				change = { text = '┋' },
@@ -29,6 +30,7 @@ return {
 				topdelete = { text = '' },
 				changedelete = { text = '┃' },
 			},
+			attach_to_untracked = true,
 			current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
 			on_attach = function(_)
 				-- vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk, { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
