@@ -3,7 +3,7 @@
 -- NOTE: You can change these options as you wish!
 
 -- vim.cmd 'colorscheme catppuccin-mocha'
-vim.cmd("colorscheme onedark")
+vim.cmd("colorscheme tokyonight")
 
 -- Set highlight on search
 vim.o.hlsearch = true

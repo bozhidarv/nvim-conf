@@ -69,7 +69,8 @@ local function setup()
     return {}
   end
 
-  local jdtls_path = vim.fn.stdpath("data") .. "/mason/packages/jdtls"
+  local jdtls_path = vim.fn.stdpath("data") .. "/mason/bin/jdtls"
+  local lombok_path = vim.fn.stdpath("data") .. "/mason/packages/lombok.jar"
   if vim.fn.has('win32') == 1 then
     jdtls_path = vim.fn.stdpath 'data' .. '\\mason\\packages\\jdtls\\jdtls.cmd'
   end
@@ -83,6 +84,7 @@ local function setup()
 
   opts.cmd = {
     jdtls_path,
+    "-javaagent:" .. lombok_path,
     '-data',
     workspace_dir,
   }
