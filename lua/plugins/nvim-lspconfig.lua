@@ -89,7 +89,7 @@ return {
           on_attach = require('options.utils').on_attach,
           cmd = {
             "clangd",
-            "--offset-encoding=utf-8",
+            "--offset-encoding=utf-16"
           },
         }
       end,
