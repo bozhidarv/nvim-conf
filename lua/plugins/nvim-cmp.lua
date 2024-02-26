@@ -18,6 +18,22 @@ return {
     require('luasnip.loaders.from_vscode').lazy_load()
     luasnip.config.setup {}
 
+    local cmp_kinds = {
+      Text = ' ',
+      Method = ' ',
+      Function = '󰊕 ',
+      Keyword = ' ',
+      Variable = ' ',
+      Property = ' ',
+      Class = ' ',
+      Interface = ' ',
+      Module = ' ',
+      Unit = ' ',
+      Enum = ' ',
+      Snippet = ' ',
+      Field = ' ',
+    }
+
     cmp.setup {
       snippet = {
         expand = function(args)
@@ -56,6 +72,20 @@ return {
           vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n',
             true)
         end)
+      },
+      formatting = {
+        expandable_indicator = false,
+        fields = { "abbr", "kind", "menu" },
+        format = function(entry, vim_item)
+          vim_item.abbr = (cmp_kinds[vim_item.kind] or '') .. (vim_item.abbr or '')
+          vim_item.menu = ({
+            nvim_lsp = "[LSP]",
+            nvim_lua = "[Lua]",
+            luasnip = "[LuaSnip]",
+            buffer = "[Buffer]",
+          })[entry.source.name]
+          return vim_item
+        end
       },
       sources = {
         { name = 'nvim_lsp' },
