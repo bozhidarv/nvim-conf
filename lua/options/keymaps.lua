@@ -11,6 +11,11 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 --#endregion
 
+--#region Remap for moving highlighted line in visual mode
+vim.keymap.set('v', 'J', ':m \'>+1<CR>gv=gv', { silent = true })
+vim.keymap.set('v', 'K', ':m \'<-2<CR>gv=gv', { silent = true })
+--#endregion
+
 --#region Telescope
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, { desc = '[ ] Search files' })
@@ -45,8 +50,10 @@ vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', { desc = 'fugitive push' })
 --#endregion
 
 --#region Diagnostic
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', '[d', function() require('trouble').previous({ skip_groups = true, jump = true }) end,
+  { desc = 'Go to previous diagnostic message' })
+vim.keymap.set('n', ']d', function() require('trouble').next({ skip_groups = true, jump = true }) end,
+  { desc = 'Go to next diagnostic message' })
 
 vim.keymap.set('n', '<leader>q', function()
   require("trouble").toggle("document_diagnostics")
