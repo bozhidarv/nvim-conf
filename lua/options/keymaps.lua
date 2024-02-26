@@ -49,19 +49,33 @@ vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = 'fugitive push' })
 vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', { desc = 'fugitive push' })
 --#endregion
 
---#region Diagnostic
+--#region Trouble.nvim
 vim.keymap.set('n', '[d', function() require('trouble').previous({ skip_groups = true, jump = true }) end,
   { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', function() require('trouble').next({ skip_groups = true, jump = true }) end,
   { desc = 'Go to next diagnostic message' })
 
-vim.keymap.set('n', '<leader>q', function()
+vim.keymap.set('n', '<leader>qf', function()
   require("trouble").toggle("document_diagnostics")
 end, { desc = 'Toggle diagnostics list for file' })
 
-vim.keymap.set('n', '<leader>Q', function()
+vim.keymap.set('n', '<leader>qw', function()
   require("trouble").toggle("workspace_diagnostics")
 end, { desc = 'Toggle diagnostics list for workspace' })
+--#endregion
+
+--#region Todo-comments.nvim
+vim.keymap.set("n", "<leader>qt", function()
+  require("todo-comments").toggle()
+end, { desc = "Toggle todo comments" })
+
+vim.keymap.set("n", "]t", function()
+  require("todo-comments").jump_next()
+end, { desc = "Next todo comment" })
+
+vim.keymap.set("n", "[t", function()
+  require("todo-comments").jump_prev()
+end, { desc = "Previous todo comment" })
 --#endregion
 
 --#region ufo.nvim
