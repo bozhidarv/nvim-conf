@@ -24,13 +24,19 @@ return {
       }
     },
     config = function()
+      local actions = require('telescope.actions')
       require('telescope').setup {
         defaults = {
           mappings = {
             i = {
               ['<C-u>'] = false,
               ['<C-d>'] = false,
+              ['<C-/>'] = false,
+              ['<C-h>'] = 'which_key'
             },
+            n = {
+              ["<esc>"] = actions.close
+            }
           },
         },
       }
