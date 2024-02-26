@@ -29,7 +29,10 @@ return {
           nls.builtins.diagnostics.golangci_lint,
           nls.builtins.formatting.goimports,
           nls.builtins.formatting.golines,
-          nls.builtins.formatting.gofumpt
+          nls.builtins.formatting.gofumpt,
+          nls.builtins.formatting.prettierd.with({
+            extra_filetypes = { "astro" },
+          }),
         },
       }
     end,
