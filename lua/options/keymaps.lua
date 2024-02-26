@@ -7,8 +7,8 @@ vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
 --#endregion
 
 --#region Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+vim.keymap.set('n', 'k', 'v:count == 0 ? \'gk\' : \'k\'', { expr = true, silent = true })
+vim.keymap.set('n', 'j', 'v:count == 0 ? \'gj\' : \'j\'', { expr = true, silent = true })
 --#endregion
 
 --#region Remap for moving highlighted line in visual mode
@@ -37,7 +37,7 @@ vim.keymap.set('n', '<leader>fu', ':Telescope undo<cr>', { desc = 'Open undo tre
 --#endregion
 
 --#region Oil.nvim
-vim.keymap.set("n", "<leader>e", "<CMD>Oil<CR>", { desc = "Open file explorer" })
+vim.keymap.set('n', '<leader>e', '<CMD>Oil<CR>', { desc = 'Open file explorer' })
 --#endregion
 
 --#region Git
@@ -56,26 +56,24 @@ vim.keymap.set('n', ']d', function() require('trouble').next({ skip_groups = tru
   { desc = 'Go to next diagnostic message' })
 
 vim.keymap.set('n', '<leader>qf', function()
-  require("trouble").toggle("document_diagnostics")
+  require('trouble').toggle('document_diagnostics')
 end, { desc = 'Toggle diagnostics list for file' })
 
 vim.keymap.set('n', '<leader>qw', function()
-  require("trouble").toggle("workspace_diagnostics")
+  require('trouble').toggle('workspace_diagnostics')
 end, { desc = 'Toggle diagnostics list for workspace' })
 --#endregion
 
 --#region Todo-comments.nvim
-vim.keymap.set("n", "<leader>qt", function()
-  require("todo-comments").toggle()
-end, { desc = "Toggle todo comments" })
+vim.keymap.set('n', '<leader>qt', ':TodoTrouble<CR>', { desc = 'Open todo comments in trouble', silent = true})
 
-vim.keymap.set("n", "]t", function()
-  require("todo-comments").jump_next()
-end, { desc = "Next todo comment" })
+vim.keymap.set('n', ']t', function()
+  require('todo-comments').jump_next()
+end, { desc = 'Next todo comment' })
 
-vim.keymap.set("n", "[t", function()
-  require("todo-comments").jump_prev()
-end, { desc = "Previous todo comment" })
+vim.keymap.set('n', '[t', function()
+  require('todo-comments').jump_prev()
+end, { desc = 'Previous todo comment' })
 --#endregion
 
 --#region ufo.nvim
