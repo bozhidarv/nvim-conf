@@ -64,6 +64,7 @@ local function setup()
   vim.o.tabstop = 4
   vim.o.shiftwidth = 4
   local pkg_status, jdtls = pcall(require, 'jdtls')
+  local jdtls_dap = require("jdtls.dap")
   if not pkg_status then
     vim.notify('unable to load nvim-jdtls', 1)
     return {}
@@ -71,8 +72,13 @@ local function setup()
 
   local jdtls_path = vim.fn.stdpath("data") .. "/mason/bin/jdtls"
   local lombok_path = vim.fn.stdpath("data") .. "/mason/packages/lombok.jar"
+  local confPath = ''
   if vim.fn.has('win32') == 1 then
-    jdtls_path = vim.fn.stdpath 'data' .. '\\mason\\packages\\jdtls\\jdtls.cmd'
+    jdtls_path = vim.fn.stdpath 'data' ..
+        '\\mason\\packages\\jdtls\\plugins\\org.eclipse.equinox.launcher_1.6.700.v20231214-2017.jar'
+    confPath = vim.fn.stdpath 'data' ..
+        '\\mason\\packages\\jdtls\\config_win'
+    lombok_path = vim.fn.stdpath 'data' .. '\\mason\\packages\\jdtls\\lombok.jar'
   end
 
 
@@ -83,8 +89,23 @@ local function setup()
   local workspace_dir = home .. '/.cache/jdtls/workspace/' .. project_name
 
   opts.cmd = {
+    'java', -- or '/path/to/java17_or_newer/bin/java'
+    -- depends on if `java` is in your $PATH env variable and if it points to the right version.
+
+    '-Declipse.application=org.eclipse.jdt.ls.core.id1',
+    '-Dosgi.bundles.defaultStartLevel=4',
+    '-Declipse.product=org.eclipse.jdt.ls.core.product',
+    '-Dlog.protocol=true',
+    '-Dlog.level=ALL',
+    '-Xmx1g',
+    '-javaagent:' .. lombok_path,
+    '--add-modules=ALL-SYSTEM',
+    '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+    '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+    '-jar',
     jdtls_path,
-    "-javaagent:" .. lombok_path,
+    '-configuration',
+    confPath,
     '-data',
     workspace_dir,
   }
@@ -97,6 +118,7 @@ local function setup()
     -- if you setup DAP according to https://github.com/mfussenegger/nvim-jdtls#nvim-dap-configuration you can uncomment below
     --
     jdtls.setup_dap { hotcodereplace = 'auto' }
+    jdtls_dap.setup_dap_main_class_configs()
     -- require('jdtls.dap').setup_dap_main_class_configs()
     -- you may want to also run your generic on_attach() function used by your LSP config
   end
@@ -112,6 +134,5 @@ if not pkg_status then
   return
 end
 
-jdtls.start_or_attach(setup())
--- This starts a new client & server,
+jdtls.start_or_attach(setup()) -- This starts a new client & server,
 -- or attaches to an existing client & server depending on the `root_dir`.
