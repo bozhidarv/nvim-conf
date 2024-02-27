@@ -1,9 +1,10 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
--- NOTE: You can change these options as you wish!
+
+local colorscheme = require('options.utils').colorscheme
 
 -- vim.cmd 'colorscheme catppuccin-mocha'
-vim.cmd("colorscheme tokyonight")
+vim.cmd('colorscheme ' .. colorscheme)
 
 -- Set highlight on search
 vim.o.hlsearch = true

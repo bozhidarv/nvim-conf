@@ -4,6 +4,7 @@ return {
 	{
 		'catppuccin/nvim',
 		name = 'catppuccin',
+		cond = utils.colorscheme == 'catppuccin',
 		opts = {
 			flavour = 'mocha', -- latte, frappe, macchiato, mocha
 			background = {  -- :h background
@@ -76,6 +77,7 @@ return {
 		-- Theme inspired by Atom
 		'navarasu/onedark.nvim',
 		priority = 1000,
+		cond = utils.colorscheme == 'onedark',
 		config = function()
 			require('onedark').setup {
 				style = 'darker',                    -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
@@ -120,6 +122,7 @@ return {
 	{
 		'edeneast/nightfox.nvim',
 		priority = 1000,
+		cond = utils.colorscheme == 'nightfox',
 		config = function()
 			require('nightfox').setup({
 				options = {
@@ -170,6 +173,7 @@ return {
 		"folke/tokyonight.nvim",
 		lazy = false,
 		priority = 1000,
+		cond = utils.colorscheme == 'tokyonight',
 		config = function()
 			require("tokyonight").setup({
 				-- your configuration comes here

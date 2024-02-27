@@ -47,5 +47,6 @@ M.checkTransperancy = function()
   return false
 end
 
+M.colorscheme = 'tokyonight'
 
 return M
