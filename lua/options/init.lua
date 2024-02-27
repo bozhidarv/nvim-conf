@@ -37,10 +37,9 @@ vim.o.updatetime = 250
 vim.o.timeout = true
 vim.o.timeoutlen = 300
 
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+-- Enable cursor line
+vim.opt.cursorline = true
 
--- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 vim.o.relativenumber = true
 
