@@ -1,5 +1,3 @@
-vim.notify("JAVA", vim.log.levels.WARN)
-
 local bundles = {
   vim.fn.glob(vim.fn.stdpath 'data' .. '/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin-*.jar',
     true)
