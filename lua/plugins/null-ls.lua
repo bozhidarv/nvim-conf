@@ -31,7 +31,7 @@ return {
           nls.builtins.formatting.golines,
           nls.builtins.formatting.gofumpt,
           nls.builtins.formatting.prettierd.with({
-            extra_filetypes = { "astro" },
+            extra_filetypes = { "astro", "json" },
           }),
         },
       }
