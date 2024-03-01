@@ -117,6 +117,7 @@ local function setup()
 
     -- if you setup DAP according to https://github.com/mfussenegger/nvim-jdtls#nvim-dap-configuration you can uncomment below
     --
+    ---@diagnostic disable-next-line: missing-fields
     jdtls.setup_dap { hotcodereplace = 'auto' }
     jdtls_dap.setup_dap_main_class_configs()
     -- require('jdtls.dap').setup_dap_main_class_configs()
