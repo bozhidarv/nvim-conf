@@ -70,9 +70,11 @@ local function setup()
     return {}
   end
 
-  local jdtls_path = vim.fn.stdpath("data") .. "/mason/bin/jdtls"
-  local lombok_path = vim.fn.stdpath("data") .. "/mason/packages/lombok.jar"
-  local confPath = ''
+  local jdtls_path = vim.fn.stdpath("data") ..
+      "/mason/packages/jdtls/plugins/org.eclipse.equinox.launcher_1.6.700.v20231214-2017.jar"
+  local lombok_path = vim.fn.stdpath("data") .. "/mason/packages/jdtls/lombok.jar"
+  local confPath = vim.fn.stdpath 'data' ..
+      '/mason/packages/jdtls/config_linux'
   if vim.fn.has('win32') == 1 then
     jdtls_path = vim.fn.stdpath 'data' ..
         '\\mason\\packages\\jdtls\\plugins\\org.eclipse.equinox.launcher_1.6.700.v20231214-2017.jar'
