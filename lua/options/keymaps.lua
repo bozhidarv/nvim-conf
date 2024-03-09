@@ -43,10 +43,10 @@ vim.keymap.set('n', '<leader>e', '<CMD>Oil<CR>', { desc = 'Open file explorer' }
 --#region Git
 vim.keymap.set('n', '<leader>gg', ':LazyGit<CR>', { desc = 'Open lazygit' })
 
-vim.keymap.set('n', '<leader>gf', ':Git<CR>', { desc = 'Open fugitive' })
-vim.keymap.set('n', '<leader>gp', ':Git pull<CR>', { desc = 'fugitive pull' })
-vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = 'fugitive push' })
-vim.keymap.set('n', '<leader>gc', ':Git commit<CR>', { desc = 'fugitive push' })
+vim.keymap.set('n', '<leader>gf', ':Neogit<CR>', { desc = 'Open neogit' })
+-- vim.keymap.set('n', '<leader>gp', ':Git pull<CR>', { desc = 'fugitive pull' })
+-- vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = 'fugitive push' })
+vim.keymap.set('n', '<leader>gc', ':Neogit commit<CR>', { desc = 'Neogit push' })
 --#endregion
 
 --#region Trouble.nvim
@@ -65,7 +65,7 @@ end, { desc = 'Toggle diagnostics list for workspace' })
 --#endregion
 
 --#region Todo-comments.nvim
-vim.keymap.set('n', '<leader>qt', ':TodoTrouble<CR>', { desc = 'Open todo comments in trouble', silent = true})
+vim.keymap.set('n', '<leader>qt', ':TodoTrouble<CR>', { desc = 'Open todo comments in trouble', silent = true })
 
 vim.keymap.set('n', ']t', function()
   require('todo-comments').jump_next()
