@@ -48,7 +48,17 @@ return {
       },
     }
 
-    require('neodev').setup()
+    require('neodev').setup({
+      library = {
+        vim = {
+          -- The path to the runtime files for Neovim
+          runtime = vim.api.nvim_get_runtime_file('', true),
+          -- The path to the runtime files for Lua
+          lua = vim.api.nvim_get_runtime_file('lua', true),
+        },
+      },
+      { plugins = { "nvim-dap-ui" }, types = true }
+    })
 
     local servers = {
       clangd = {},
