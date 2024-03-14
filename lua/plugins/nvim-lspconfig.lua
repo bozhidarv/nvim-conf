@@ -106,7 +106,6 @@ return {
       ensure_installed = vim.tbl_keys(servers),
     }
 
-    local noop = function() end
     mason_lspconfig.setup_handlers {
       function(server_name)
         require('lspconfig')[server_name].setup {
