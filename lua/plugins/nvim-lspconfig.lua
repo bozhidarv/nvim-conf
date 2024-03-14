@@ -12,7 +12,27 @@ return {
     { 'github/copilot.vim' },
     -- Additional lua configuration, makes nvim stuff amazing!
     'folke/neodev.nvim',
-    'mfussenegger/nvim-jdtls',
+    {
+      'nvim-java/nvim-java',
+      dependencies = {
+        'nvim-java/lua-async-await',
+        'nvim-java/nvim-java-core',
+        'nvim-java/nvim-java-test',
+        'nvim-java/nvim-java-dap',
+        'MunifTanjim/nui.nvim',
+        'neovim/nvim-lspconfig',
+        'mfussenegger/nvim-dap',
+        {
+          'williamboman/mason.nvim',
+          opts = {
+            registries = {
+              'github:nvim-java/mason-registry',
+              'github:mason-org/mason-registry',
+            },
+          },
+        }
+      }
+    }
   },
   config = function()
     local signs = { Error = "", Warn = "", Hint = "", Info = "" }
@@ -20,6 +40,8 @@ return {
       local hl = "DiagnosticSign" .. type
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
     end
+
+    require('java').setup()
 
     require('lspconfig').lua_ls.setup {
       settings = {
@@ -103,7 +125,6 @@ return {
           },
         }
       end,
-      ['jdtls'] = noop,
     }
   end,
 }
