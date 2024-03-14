@@ -90,8 +90,6 @@ vim.keymap.set('n', '<C-l>', ':TmuxNavigateRight<CR>', { silent = true, desc = '
 
 --#region buffers
 vim.keymap.set('n', '<leader>C', ':bd<CR>', { silent = true, desc = 'Close buffer' })
-vim.keymap.set('n', 'L', ':BufferLineCycleNext<CR>', { silent = true, desc = 'Next buffer' })
-vim.keymap.set('n', 'H', ':BufferLineCyclePrev<CR>', { silent = true, desc = 'Previous buffer' })
 --#endregion
 
 --#region tabs
@@ -109,4 +107,19 @@ vim.keymap.set('i',
   '<Plug>(vimrc:copilot-dummy-map)',
   'copilot#Accept("")',
   { silent = true, expr = true, desc = 'Copilot dummy accept' })
+--#endregion
+
+--#region harpoon
+local harpoon = require('harpoon')
+vim.keymap.set('n', '<leader>hh', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
+  { desc = 'Toggle harpoon quick menu' })
+vim.keymap.set("n", "<leader>ha", function() harpoon:list():append() end, { desc = 'Add to harpoon list' })
+vim.keymap.set('n', '<leader>hp', function() harpoon:list():prev() end, { desc = 'Open next harpoon item' })
+vim.keymap.set('n', '<leader>hn', function() harpoon:list():next() end, { desc = 'Open previous harpoon item' })
+vim.keymap.set('n', '<leader>hq', function() harpoon:list():select(1) end, { desc = 'Open first harpoon item' })
+vim.keymap.set('n', '<leader>hw', function() harpoon:list():select(2) end, { desc = 'Open second harpoon item' })
+vim.keymap.set('n', '<leader>he', function() harpoon:list():select(3) end, { desc = 'Open third harpoon item' })
+vim.keymap.set('n', '<leader>hr', function() harpoon:list():select(4) end, { desc = 'Open fourth harpoon item' })
+vim.keymap.set('n', '<leader>hc', function() harpoon:list():clear() end, { desc = 'Clear harpoon items' })
+
 --#endregion
