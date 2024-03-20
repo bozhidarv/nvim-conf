@@ -25,7 +25,6 @@ return {
           nls.builtins.code_actions.eslint_d,
           nls.builtins.diagnostics.editorconfig_checker,
           nls.builtins.diagnostics.eslint_d,
-          nls.builtins.diagnostics.gospel,
           nls.builtins.diagnostics.golangci_lint,
           nls.builtins.formatting.goimports,
           nls.builtins.formatting.golines,
