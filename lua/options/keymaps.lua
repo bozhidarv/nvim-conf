@@ -7,13 +7,13 @@ vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
 --#endregion
 
 --#region Remap for dealing with word wrap
-vim.keymap.set('n', 'k', 'v:count == 0 ? \'gk\' : \'k\'', { expr = true, silent = true })
-vim.keymap.set('n', 'j', 'v:count == 0 ? \'gj\' : \'j\'', { expr = true, silent = true })
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 --#endregion
 
 --#region Remap for moving highlighted line in visual mode
-vim.keymap.set('v', 'J', ':m \'>+1<CR>gv=gv', { silent = true })
-vim.keymap.set('v', 'K', ':m \'<-2<CR>gv=gv', { silent = true })
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { silent = true })
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { silent = true })
 --#endregion
 
 --#region Telescope
@@ -52,17 +52,19 @@ vim.keymap.set('n', '<leader>gf', require('neogit').open, { desc = 'Open neogit'
 --#endregion
 
 --#region Trouble.nvim
-vim.keymap.set('n', '[d', function() require('trouble').previous({ skip_groups = true, jump = true }) end,
-  { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', function() require('trouble').next({ skip_groups = true, jump = true }) end,
-  { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', '[d', function()
+  require('trouble').previous { skip_groups = true, jump = true }
+end, { desc = 'Go to previous diagnostic message' })
+vim.keymap.set('n', ']d', function()
+  require('trouble').next { skip_groups = true, jump = true }
+end, { desc = 'Go to next diagnostic message' })
 
 vim.keymap.set('n', '<leader>qf', function()
-  require('trouble').toggle('document_diagnostics')
+  require('trouble').toggle 'document_diagnostics'
 end, { desc = 'Toggle diagnostics list for file' })
 
 vim.keymap.set('n', '<leader>qw', function()
-  require('trouble').toggle('workspace_diagnostics')
+  require('trouble').toggle 'workspace_diagnostics'
 end, { desc = 'Toggle diagnostics list for workspace' })
 --#endregion
 
@@ -105,23 +107,37 @@ vim.keymap.set('n', '<esc><esc>', ':nohls<cr>', { silent = true, desc = 'Turn of
 --#endregion
 
 --#region Github Copilot
-vim.keymap.set('i',
-  '<Plug>(vimrc:copilot-dummy-map)',
-  'copilot#Accept("")',
-  { silent = true, expr = true, desc = 'Copilot dummy accept' })
+vim.keymap.set('i', '<Plug>(vimrc:copilot-dummy-map)', 'copilot#Accept("")', { silent = true, expr = true, desc = 'Copilot dummy accept' })
 --#endregion
 
 --#region harpoon
-local harpoon = require('harpoon')
-vim.keymap.set('n', '<leader>hh', function() harpoon.ui:toggle_quick_menu(harpoon:list()) end,
-  { desc = 'Toggle harpoon quick menu' })
-vim.keymap.set("n", "<leader>ha", function() harpoon:list():append() end, { desc = 'Add to harpoon list' })
-vim.keymap.set('n', '<leader>hp', function() harpoon:list():prev() end, { desc = 'Open next harpoon item' })
-vim.keymap.set('n', '<leader>hn', function() harpoon:list():next() end, { desc = 'Open previous harpoon item' })
-vim.keymap.set('n', '<leader>hq', function() harpoon:list():select(1) end, { desc = 'Open first harpoon item' })
-vim.keymap.set('n', '<leader>hw', function() harpoon:list():select(2) end, { desc = 'Open second harpoon item' })
-vim.keymap.set('n', '<leader>he', function() harpoon:list():select(3) end, { desc = 'Open third harpoon item' })
-vim.keymap.set('n', '<leader>hr', function() harpoon:list():select(4) end, { desc = 'Open fourth harpoon item' })
-vim.keymap.set('n', '<leader>hc', function() harpoon:list():clear() end, { desc = 'Clear harpoon items' })
+local harpoon = require 'harpoon'
+vim.keymap.set('n', '<leader>hh', function()
+  harpoon.ui:toggle_quick_menu(harpoon:list())
+end, { desc = 'Toggle harpoon quick menu' })
+vim.keymap.set('n', '<leader>ha', function()
+  harpoon:list():append()
+end, { desc = 'Add to harpoon list' })
+vim.keymap.set('n', '<leader>hp', function()
+  harpoon:list():prev { ui_nav_wrap = true }
+end, { desc = 'Open next harpoon item' })
+vim.keymap.set('n', '<leader>hn', function()
+  harpoon:list():next { ui_nav_wrap = true }
+end, { desc = 'Open previous harpoon item' })
+vim.keymap.set('n', '<leader>hq', function()
+  harpoon:list():select(1)
+end, { desc = 'Open first harpoon item' })
+vim.keymap.set('n', '<leader>hw', function()
+  harpoon:list():select(2)
+end, { desc = 'Open second harpoon item' })
+vim.keymap.set('n', '<leader>he', function()
+  harpoon:list():select(3)
+end, { desc = 'Open third harpoon item' })
+vim.keymap.set('n', '<leader>hr', function()
+  harpoon:list():select(4)
+end, { desc = 'Open fourth harpoon item' })
+vim.keymap.set('n', '<leader>hc', function()
+  harpoon:list():clear()
+end, { desc = 'Clear harpoon items' })
 
 --#endregion
