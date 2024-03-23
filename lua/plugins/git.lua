@@ -3,22 +3,9 @@ return {
 	-- { 'tpope/vim-fugitive' },
 	{ 'sindrets/diffview.nvim' },
 	{ 'tpope/vim-rhubarb' },
-	-- {
-	-- 	'NeogitOrg/neogit',
-	-- 	dependencies = 'nvim-lua/plenary.nvim',
-	-- 	config = function()
-	-- 		require('neogit').setup {}
-	-- 	end,
-	-- },
-	{
-		'kdheepak/lazygit.nvim',
-		-- optional for floating window border decoration
-		dependencies = {
-			'nvim-lua/plenary.nvim',
-		},
-	},
 	{
 		"NeogitOrg/neogit",
+		event = "VeryLazy",
 		dependencies = {
 			"nvim-lua/plenary.nvim", -- required
 			"sindrets/diffview.nvim", -- optional - Diff integration
