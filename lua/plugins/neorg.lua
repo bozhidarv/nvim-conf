@@ -1,7 +1,8 @@
 return {
 	"nvim-neorg/neorg",
 	build = ":Neorg sync-parsers",
-	lazy = false, -- specify lazy = false because some lazy.nvim distributions set lazy = true by default
+	event = "VeryLazy",
+	lazy = true, -- specify lazy = false because some lazy.nvim distributions set lazy = true by default
 	-- tag = "*",
 	dependencies = { "nvim-lua/plenary.nvim" },
 	config = function()
