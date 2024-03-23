@@ -28,7 +28,7 @@ vim.keymap.set('n', '<leader>/', function()
 end, { desc = '[/] Fuzzily search in current buffer' })
 vim.keymap.set('n', '<leader>ff', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
 vim.keymap.set('n', '<leader>fF', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>fb', require('telescope').extensions.vim_bookmarks.all, { desc = '[S]earch [B]ookmarks' })
+vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[S]earch [B]uffers' })
 vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
@@ -37,16 +37,18 @@ vim.keymap.set('n', '<leader>fu', ':Telescope undo<cr>', { desc = 'Open undo tre
 --#endregion
 
 --#region Oil.nvim
-vim.keymap.set('n', '<leader>e', '<CMD>Oil<CR>', { desc = 'Open file explorer' })
+
+if not package.loaded['oil'] then
+  vim.keymap.set('n', '<leader>e', '<CMD>Explore<CR>', { desc = 'Open file explorer' })
+else
+  vim.keymap.set('n', '<leader>e', '<CMD>Oil<CR>', { desc = 'Open file explorer' })
+end
 --#endregion
 
 --#region Git
-vim.keymap.set('n', '<leader>gg', ':LazyGit<CR>', { desc = 'Open lazygit' })
-
-vim.keymap.set('n', '<leader>gf', ':Neogit<CR>', { desc = 'Open neogit' })
+vim.keymap.set('n', '<leader>gf', require('neogit').open, { desc = 'Open neogit' })
 -- vim.keymap.set('n', '<leader>gp', ':Git pull<CR>', { desc = 'fugitive pull' })
 -- vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = 'fugitive push' })
-vim.keymap.set('n', '<leader>gc', ':Neogit commit<CR>', { desc = 'Neogit push' })
 --#endregion
 
 --#region Trouble.nvim
