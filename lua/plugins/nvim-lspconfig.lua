@@ -124,6 +124,44 @@ return {
           },
         }
       end,
+      ['jdtls'] = function()
+        require('lspconfig')['jdtls'].setup {
+          capabilities = capabilities,
+          on_attach = require('options.utils').on_attach,
+          cmd = {
+            "jdtls",
+            "-data",
+            vim.fn.stdpath('data') .. '/lspconfig/jdtls-workspace',
+          },
+          settings = {
+            java = {
+              configuration = {
+                runtimes = {
+                  {
+                    name = "JavaSE-21",
+                    path = "/usr/lib/jvm/java-21-openjdk",
+                    default = true,
+                  },
+                  {
+                    name = "JavaSE=17",
+                    path = "/usr/lib/jvm/jdk-17-oracle-x64",
+                    default = false,
+                  }
+                }
+              }
+            }
+          }
+        }
+      end,
+      ['tsserver'] = function()
+        require('lspconfig')['tsserver'].setup {
+          capabilities = capabilities,
+          on_attach = require('options.utils').on_attach,
+          settings = {
+            documentFormatting = false,
+          },
+        }
+      end,
     }
   end,
 }
