@@ -14,11 +14,13 @@ return {
     'rafamadriz/friendly-snippets',
   },
   config = function()
-    local cmp = require 'cmp'
+    --#region LuaSnip Setup
     local luasnip = require 'luasnip'
     require('luasnip.loaders.from_vscode').lazy_load()
     luasnip.config.setup {}
+    --#endregion
 
+    --#region cmp icons
     local cmp_kinds = {
       Text = ' ',
       Method = ' ',
@@ -36,7 +38,10 @@ return {
       File = ' ',
       Folder = ' ',
     }
+    --#endregion
 
+    --#region cmp Setup
+    local cmp = require 'cmp'
     cmp.setup {
       snippet = {
         expand = function(args)
@@ -80,5 +85,6 @@ return {
         { name = 'vim-dadbod-completion' },
       },
     }
+    --#endregion
   end,
 }

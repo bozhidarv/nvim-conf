@@ -7,13 +7,26 @@ return {
     'williamboman/mason-lspconfig.nvim',
 
     -- Useful status updates for LSP
-    -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
     { 'j-hui/fidget.nvim',       opts = {} },
     { 'github/copilot.vim' },
     -- Additional lua configuration, makes nvim stuff amazing!
-    'folke/neodev.nvim',
+    {
+      'folke/neodev.nvim',
+      opts = {
+        library = {
+          vim = {
+            -- The path to the runtime files for Neovim
+            runtime = vim.api.nvim_get_runtime_file('', true),
+            -- The path to the runtime files for Lua
+            lua = vim.api.nvim_get_runtime_file('lua', true),
+          },
+        },
+        { plugins = { 'nvim-dap-ui' }, types = true },
+      },
+    },
     {
       'nvim-java/nvim-java',
+      opts = {},
       dependencies = {
         'nvim-java/lua-async-await',
         'nvim-java/nvim-java-core',
@@ -30,138 +43,112 @@ return {
               'github:mason-org/mason-registry',
             },
           },
-        }
-      }
-    }
+        },
+      },
+    },
   },
   config = function()
-    local signs = { Error = "", Warn = "", Hint = "", Info = "" }
+    --#region Diagnostic Signs Configuration
+    local signs = require('options.utils').lspSigns
     for type, icon in pairs(signs) do
-      local hl = "DiagnosticSign" .. type
+      local hl = 'DiagnosticSign' .. type
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
     end
+    --#endregion
 
-    require('java').setup()
-
-    require('lspconfig').lua_ls.setup {
-      settings = {
-        Lua = {
-          runtime = {
-            -- Tell the language server which version of Lua you're using
-            -- (most likely LuaJIT in the case of Neovim)
-            version = 'LuaJIT',
-          },
-          diagnostics = {
-            -- Get the language server to recognize the `vim` global
-            globals = {
-              'vim',
-              'require',
-            },
-          },
-          workspace = {
-            -- Make the server aware of Neovim runtime files
-            library = vim.api.nvim_get_runtime_file('', true),
-          },
-          -- Do not send telemetry data containing a randomized but unique identifier
-          telemetry = {
-            enable = false,
-          },
-        },
-      },
-    }
-
-    require('neodev').setup({
-      library = {
-        vim = {
-          -- The path to the runtime files for Neovim
-          runtime = vim.api.nvim_get_runtime_file('', true),
-          -- The path to the runtime files for Lua
-          lua = vim.api.nvim_get_runtime_file('lua', true),
-        },
-      },
-      { plugins = { "nvim-dap-ui" }, types = true }
-    })
-
+    --#region Default LSP Servers
     local servers = {
       clangd = {},
-      -- gopls = {},
-      -- pyright = {},
-      -- rust_analyzer = {},
-      tsserver = {},
-
+      tsserver = {
+        documentFormatting = false,
+      },
       lua_ls = {
-        Lua = {
-          workspace = { checkThirdParty = false },
-          telemetry = { enable = false },
+        settings = {
+          Lua = {
+            runtime = {
+              version = 'LuaJIT',
+            },
+            diagnostics = {
+              globals = {
+                'vim',
+                'require',
+              },
+            },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file('', true),
+            },
+            telemetry = {
+              checkThirdParty = false,
+              enable = false,
+            },
+          },
         },
       },
     }
+    --#endregion
 
+    --#region LSP Configuration
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
     local mason_lspconfig = require 'mason-lspconfig'
-
     mason_lspconfig.setup {
       ensure_installed = vim.tbl_keys(servers),
-    }
-
-    mason_lspconfig.setup_handlers {
-      function(server_name)
-        require('lspconfig')[server_name].setup {
-          capabilities = capabilities,
-          on_attach = require('options.utils').on_attach,
-          settings = servers[server_name],
-        }
-      end,
-      ['clangd'] = function()
-        require('lspconfig')['clangd'].setup {
-          capabilities = capabilities,
-          on_attach = require('options.utils').on_attach,
-          cmd = {
-            "clangd",
-            "--offset-encoding=utf-16"
-          },
-        }
-      end,
-      ['jdtls'] = function()
-        require('lspconfig')['jdtls'].setup {
-          capabilities = capabilities,
-          on_attach = require('options.utils').on_attach,
-          cmd = {
-            "jdtls",
-            "-data",
-            vim.fn.stdpath('data') .. '/lspconfig/jdtls-workspace',
-          },
-          settings = {
-            java = {
-              configuration = {
-                runtimes = {
-                  {
-                    name = "JavaSE-21",
-                    path = "/usr/lib/jvm/java-21-openjdk",
-                    default = true,
-                  },
-                  {
-                    name = "JavaSE=17",
-                    path = "/usr/lib/jvm/jdk-17-oracle-x64",
-                    default = false,
-                  }
-                }
-              }
-            }
+      handlers = {
+        function(server_name)
+          require('lspconfig')[server_name].setup {
+            capabilities = capabilities,
+            on_attach = require('options.utils').on_attach,
+            settings = servers[server_name],
           }
-        }
-      end,
-      ['tsserver'] = function()
-        require('lspconfig')['tsserver'].setup {
-          capabilities = capabilities,
-          on_attach = require('options.utils').on_attach,
-          settings = {
-            documentFormatting = false,
-          },
-        }
-      end,
+        end,
+        ['clangd'] = function()
+          require('lspconfig')['clangd'].setup {
+            capabilities = capabilities,
+            on_attach = require('options.utils').on_attach,
+            cmd = {
+              'clangd',
+              '--offset-encoding=utf-16',
+            },
+          }
+        end,
+        ['jdtls'] = function()
+          require('lspconfig')['jdtls'].setup {
+            capabilities = capabilities,
+            on_attach = require('options.utils').on_attach,
+            cmd = {
+              'jdtls',
+              '-data',
+              vim.fn.stdpath 'data' .. '/lspconfig/jdtls-workspace',
+            },
+            settings = {
+              java = {
+                configuration = {
+                  runtimes = {
+                    {
+                      name = 'JavaSE-21',
+                      path = '/usr/lib/jvm/java-21-openjdk',
+                      default = true,
+                    },
+                    {
+                      name = 'JavaSE=17',
+                      path = '/usr/lib/jvm/jdk-17-oracle-x64',
+                      default = false,
+                    },
+                  },
+                },
+              },
+            },
+          }
+        end,
+        ['tsserver'] = function()
+          require('lspconfig')['tsserver'].setup {
+            capabilities = capabilities,
+            on_attach = require('options.utils').on_attach,
+          }
+        end,
+      },
     }
+    --#endregion
   end,
 }

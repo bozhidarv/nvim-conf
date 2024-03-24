@@ -8,35 +8,42 @@ return {
       'debugloop/telescope-undo.nvim',
       {
         'nvim-telescope/telescope-fzf-native.nvim',
-        -- NOTE: If you are having trouble with this installation,
-        --       refer to the README for telescope-fzf-native for more instructions.
         build = 'make',
         cond = function()
           return vim.fn.executable 'make' == 1
         end,
-      }
+      },
     },
-    config = function()
-      local actions = require('telescope.actions')
-      require('telescope').setup {
-        defaults = {
-          mappings = {
-            i = {
-              ['<C-u>'] = false,
-              ['<C-d>'] = false,
-              ['<C-/>'] = false,
-              ['<C-h>'] = 'which_key'
-            },
-            n = {
-              ["<esc>"] = actions.close
-            }
+    opts = {
+      defaults = {
+        mappings = {
+          i = {
+            ['<C-u>'] = false,
+            ['<C-d>'] = false,
+          },
+          n = {
+            ['<esc>'] = require('telescope.actions').close,
           },
         },
-      }
-
+        path_display = { 'truncate' },
+        sorting_strategy = 'ascending',
+        layout_config = {
+          horizontal = {
+            prompt_position = 'top',
+            preview_width = 0.50,
+          },
+          vertical = {
+            mirror = false,
+          },
+          width = 0.87,
+          height = 0.80,
+          preview_cutoff = 120,
+        },
+      },
+    },
+    config = function()
       require('telescope').load_extension 'ui-select'
-      require("telescope").load_extension "undo"
-
+      require('telescope').load_extension 'undo'
       pcall(require('telescope').load_extension, 'fzf')
     end,
   },

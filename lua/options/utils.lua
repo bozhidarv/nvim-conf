@@ -1,5 +1,12 @@
 local M = {}
 
+M.lspSigns = {
+  Error = '',
+  Warn = '',
+  Hint = '',
+  Info = '',
+}
+
 M.on_attach = function(_, bufnr)
   vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { buffer = bufnr, desc = '[R]e[n]ame' })
   vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = '[C]ode [A]ction' })

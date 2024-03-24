@@ -3,7 +3,7 @@ return {
     'echasnovski/mini.statusline',
     version = '*',
     config = function()
-      local signs = { Error = '', Warn = '', Hint = '', Info = '' }
+      local signs = require('options.utils').lspSigns
       local statusline = require 'mini.statusline'
       -- set use_icons to true if you have a Nerd Font
       statusline.setup {

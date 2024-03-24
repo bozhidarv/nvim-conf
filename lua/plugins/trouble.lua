@@ -1,11 +1,9 @@
 return {
-	'folke/trouble.nvim',
-	dependencies = {
-		'nvim-tree/nvim-web-devicons',
-		'folke/todo-comments.nvim'
-	},
-	config = function()
-		require('trouble').setup {}
-		require('todo-comments').setup {}
-	end
+  'folke/trouble.nvim',
+  dependencies = {
+    'nvim-tree/nvim-web-devicons',
+    { 'folke/todo-comments.nvim', opts = {} },
+  },
+  opts = {},
+  config = function() end,
 }
