@@ -3,6 +3,8 @@
 return {
   {
     'jose-elias-alvarez/null-ls.nvim',
+    event = 'BufAdd',
+    lazy = true,
     dependencies = {
       {
         'jay-babu/mason-null-ls.nvim',
@@ -29,9 +31,9 @@ return {
           nls.builtins.formatting.goimports,
           nls.builtins.formatting.golines,
           nls.builtins.formatting.gofumpt,
-          nls.builtins.formatting.prettierd.with({
-            extra_filetypes = { "astro", "json" },
-          }),
+          nls.builtins.formatting.prettierd.with {
+            extra_filetypes = { 'astro', 'json' },
+          },
         },
       }
     end,

@@ -1,5 +1,7 @@
 return {
   'nvim-treesitter/nvim-treesitter',
+  event = 'BufAdd',
+  lazy = true,
   dependencies = {
     'nvim-treesitter/nvim-treesitter-textobjects',
   },
