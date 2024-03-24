@@ -42,5 +42,5 @@ M.checkTransperancy = function()
   return false
 end
 
-M.colorscheme = 'onedark'
+M.colorscheme = 'astrodark'
 return M

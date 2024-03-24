@@ -16,6 +16,10 @@ vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { silent = true })
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { silent = true })
 --#endregion
 
+--#region QOL keymaps
+vim.keymap.set('n', 'd_', '"_d', { silent = true, desc = 'Delete without yanking' })
+--#endregion
+
 --#region Telescope
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, { desc = '[ ] Search files' })
@@ -107,7 +111,8 @@ vim.keymap.set('n', '<esc><esc>', ':nohls<cr>', { silent = true, desc = 'Turn of
 --#endregion
 
 --#region Github Copilot
-vim.keymap.set('i', '<Plug>(vimrc:copilot-dummy-map)', 'copilot#Accept("")', { silent = true, expr = true, desc = 'Copilot dummy accept' })
+vim.keymap.set('i', '<Plug>(vimrc:copilot-dummy-map)', 'copilot#Accept("")',
+  { silent = true, expr = true, desc = 'Copilot dummy accept' })
 --#endregion
 
 --#region harpoon
