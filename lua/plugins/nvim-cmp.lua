@@ -33,6 +33,8 @@ return {
       Enum = ' ',
       Snippet = ' ',
       Field = ' ',
+      File = ' ',
+      Folder = ' ',
     }
 
     cmp.setup {
@@ -54,21 +56,22 @@ return {
         ['<C-j>'] = cmp.mapping(function(_)
           vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n',
             true)
-        end)
+        end),
       },
       formatting = {
         expandable_indicator = false,
-        fields = { "abbr", "kind", "menu" },
+        fields = { 'kind', 'abbr', 'menu' },
         format = function(entry, vim_item)
-          vim_item.abbr = (cmp_kinds[vim_item.kind] or '') .. (vim_item.abbr or '')
-          vim_item.menu = ({
-            nvim_lsp = "[LSP]",
-            nvim_lua = "[Lua]",
-            luasnip = "[LuaSnip]",
-            buffer = "[Buffer]",
-          })[entry.source.name]
+          vim_item.menu = '[' .. vim_item.kind .. ']'
+          vim_item.kind = (cmp_kinds[vim_item.kind] or '')
+          local icon, hl_group = require('nvim-web-devicons').get_icon(entry:get_completion_item().label)
+          if icon then
+            vim_item.kind = icon
+            vim_item.kind_hl_group = hl_group
+            return vim_item
+          end
           return vim_item
-        end
+        end,
       },
       sources = {
         { name = 'nvim_lsp' },
@@ -77,5 +80,5 @@ return {
         { name = 'vim-dadbod-completion' },
       },
     }
-  end
+  end,
 }
