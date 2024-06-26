@@ -65,4 +65,9 @@ vim.o.foldenable = true
 
 vim.g.copilot_no_tab_map = true
 
+if vim.g.vscode then
+  require 'options.vscode-keymaps'
+else
+
 require 'options.keymaps'
+end

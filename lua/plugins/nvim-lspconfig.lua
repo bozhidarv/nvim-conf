@@ -30,6 +30,7 @@ return {
       'nvim-java/nvim-java',
       opts = {},
       dependencies = {
+        'nvim-java/nvim-java-refactor',
         'nvim-java/lua-async-await',
         'nvim-java/nvim-java-core',
         'nvim-java/nvim-java-test',
