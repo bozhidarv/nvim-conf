@@ -102,8 +102,8 @@ vim.keymap.set('n', '<leader>C', ':bd<CR>', { silent = true, desc = 'Close buffe
 
 --#region tabs
 vim.keymap.set('n', '<leader>tc', ':tabclose<CR>', { silent = true, desc = 'Close tab' })
-vim.keymap.set('n', '<leader>th', ':tabprevious<CR>', { silent = true, desc = 'Previous tab' })
-vim.keymap.set('n', '<leader>tl', ':tabNext<CR>', { silent = true, desc = 'Next tab' })
+vim.keymap.set('n', '[T', ':tabprevious<CR>', { silent = true, desc = 'Previous tab' })
+vim.keymap.set('n', ']T', ':tabNext<CR>', { silent = true, desc = 'Next tab' })
 --#endregion
 
 --#region hlSearch

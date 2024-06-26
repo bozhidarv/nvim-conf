@@ -78,10 +78,14 @@ return {
 		cond = utils.colorscheme == 'astrodark',
 		opts = {
 			palette = 'astrodark',
-			plugins = { ['dashboard-nvim'] = true },
-			-- style = {
-			-- 	transparent = utils.checkTransperancy(),
-			-- },
+			plugins = {
+				['dashboard-nvim'] = true,
+				['gitsigns.nvim'] = true,
+			},
+			style = {
+				transparent = utils.checkTransperancy(),
+				inactive = false,
+			},
 		},
 	},
 	{
