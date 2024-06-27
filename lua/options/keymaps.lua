@@ -111,8 +111,7 @@ vim.keymap.set('n', '<esc><esc>', ':nohls<cr>', { silent = true, desc = 'Turn of
 --#endregion
 
 --#region Github Copilot
-vim.keymap.set('i', '<Plug>(vimrc:copilot-dummy-map)', 'copilot#Accept("")',
-  { silent = true, expr = true, desc = 'Copilot dummy accept' })
+vim.keymap.set('i', '<Plug>(vimrc:copilot-dummy-map)', 'copilot#Accept("")', { silent = true, expr = true, desc = 'Copilot dummy accept' })
 --#endregion
 
 --#region harpoon
@@ -125,10 +124,10 @@ vim.keymap.set('n', '<leader>ha', function()
 end, { desc = 'Add to harpoon list' })
 vim.keymap.set('n', '<leader>hp', function()
   harpoon:list():prev { ui_nav_wrap = true }
-end, { desc = 'Open next harpoon item' })
+end, { desc = 'Open previous harpoon item' })
 vim.keymap.set('n', '<leader>hn', function()
   harpoon:list():next { ui_nav_wrap = true }
-end, { desc = 'Open previous harpoon item' })
+end, { desc = 'Open next harpoon item' })
 vim.keymap.set('n', '<leader>hq', function()
   harpoon:list():select(1)
 end, { desc = 'Open first harpoon item' })
