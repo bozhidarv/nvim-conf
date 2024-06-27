@@ -20,6 +20,11 @@ vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { silent = true })
 vim.keymap.set('n', 'd_', '"_d', { silent = true, desc = 'Delete without yanking' })
 --#endregion
 
+--#region window splitting
+vim.keymap.set('n', '<leader>sh', ':split<CR>', { desc = 'Horizontal split' })
+vim.keymap.set('n', '<leader>sv', ':vsplit<CR>', { desc = 'Verical split' })
+--#endregion
+
 --#region Telescope
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, { desc = '[ ] Search files' })
