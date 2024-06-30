@@ -1,6 +1,7 @@
 return {
   {
     'echasnovski/mini.statusline',
+    enabled = false,
     version = '*',
     config = function()
       local signs = require('options.utils').lspSigns

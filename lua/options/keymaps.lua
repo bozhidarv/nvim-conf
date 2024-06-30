@@ -70,7 +70,8 @@ vim.keymap.set('n', ']d', function()
   trouble.next { skip_groups = true, jump = true }
 end, { desc = 'Go to next diagnostic message' })
 
-vim.keymap.set('n', '<leader>qf', ':Trouble diagnostics toggle filter.buf=0<CR>', { desc = 'Toggle diagnostics list for file' })
+vim.keymap.set('n', '<leader>qf', ':Trouble diagnostics toggle filter.buf=0<CR>',
+  { desc = 'Toggle diagnostics list for file' })
 
 vim.keymap.set('n', '<leader>qw', function()
   trouble.toggle 'diagnostics'
@@ -116,7 +117,8 @@ vim.keymap.set('n', '<esc><esc>', ':nohls<cr>', { silent = true, desc = 'Turn of
 --#endregion
 
 --#region Github Copilot
-vim.keymap.set('i', '<Plug>(vimrc:copilot-dummy-map)', 'copilot#Accept("")', { silent = true, expr = true, desc = 'Copilot dummy accept' })
+vim.keymap.set('i', '<Plug>(vimrc:copilot-dummy-map)', 'copilot#Accept("")',
+  { silent = true, expr = true, desc = 'Copilot dummy accept' })
 --#endregion
 
 --#region harpoon
