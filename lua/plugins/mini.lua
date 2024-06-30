@@ -18,15 +18,15 @@ return {
       ---@diagnostic disable-next-line: duplicate-set-field
       statusline.section_diagnostics = function(_)
         local count = {}
-        local levels = {
-          errors = 'Error',
-          warnings = 'Warn',
-          info = 'Info',
-          hints = 'Hint',
-        }
 
-        for k, level in pairs(levels) do
-          count[k] = vim.tbl_count(vim.diagnostic.get(0, { severity = level }))
+        local severities = vim.diagnostic.severity
+
+        for level in pairs(vim.diagnostic.severity) do
+          count[level] = vim.tbl_count(vim.diagnostic.get(0, { severity = level }))
+        end
+
+        if count[severities.ERROR] == 0 and count[severities.WARN] == 0 and count[severities.HINT] == 0 and count[severities.INFO] == 0 then
+          return ''
         end
 
         local errors = ''
@@ -34,20 +34,20 @@ return {
         local hints = ''
         local info = ''
 
-        if count['errors'] ~= 0 then
-          errors = signs.Error .. ' ' .. count['errors'] .. ' '
+        if count[severities.ERROR] ~= 0 then
+          errors = signs.Error .. ' ' .. count[severities.E] .. ' '
         end
-        if count['warnings'] ~= 0 then
-          warnings = signs.Warn .. ' ' .. count['warnings'] .. ' '
+        if count[severities.WARN] ~= 0 then
+          warnings = signs.Warn .. ' ' .. count[severities.WARN] .. ' '
         end
-        if count['hints'] ~= 0 then
-          hints = signs.Hint .. ' ' .. count['hints'] .. ' '
+        if count[severities.HINT] ~= 0 then
+          hints = signs.Hint .. ' ' .. count[severities.HINT] .. ' '
         end
-        if count['info'] ~= 0 then
-          info = signs.Info .. ' ' .. count['info'] .. ' '
+        if count[severities.HINT] ~= 0 then
+          info = signs.Info .. ' ' .. count[severities.HINT] .. ' '
         end
 
-        return errors .. warnings .. hints .. info
+        return '|' .. errors .. warnings .. hints .. info .. '|'
       end
     end,
   },
