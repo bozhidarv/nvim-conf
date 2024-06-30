@@ -61,19 +61,19 @@ vim.keymap.set('n', '<leader>gP', ':Neogit push<CR>', { desc = 'Neogit push' })
 --#endregion
 
 --#region Trouble.nvim
+local trouble = require 'trouble'
+
 vim.keymap.set('n', '[d', function()
-  require('trouble').previous { skip_groups = true, jump = true }
+  trouble.prev { skip_groups = true, jump = true }
 end, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', function()
-  require('trouble').next { skip_groups = true, jump = true }
+  trouble.next { skip_groups = true, jump = true }
 end, { desc = 'Go to next diagnostic message' })
 
-vim.keymap.set('n', '<leader>qf', function()
-  require('trouble').toggle 'document_diagnostics'
-end, { desc = 'Toggle diagnostics list for file' })
+vim.keymap.set('n', '<leader>qf', ':Trouble diagnostics toggle filter.buf=0<CR>', { desc = 'Toggle diagnostics list for file' })
 
 vim.keymap.set('n', '<leader>qw', function()
-  require('trouble').toggle 'workspace_diagnostics'
+  trouble.toggle 'diagnostics'
 end, { desc = 'Toggle diagnostics list for workspace' })
 --#endregion
 
@@ -125,7 +125,7 @@ vim.keymap.set('n', '<leader>hh', function()
   harpoon.ui:toggle_quick_menu(harpoon:list())
 end, { desc = 'Toggle harpoon quick menu' })
 vim.keymap.set('n', '<leader>ha', function()
-  harpoon:list():append()
+  harpoon:list():add()
 end, { desc = 'Add to harpoon list' })
 vim.keymap.set('n', '<leader>hp', function()
   harpoon:list():prev { ui_nav_wrap = true }
