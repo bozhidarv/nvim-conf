@@ -1,7 +1,6 @@
 return {
   {
     'echasnovski/mini.statusline',
-    enabled = false,
     version = '*',
     config = function()
       local signs = require('options.utils').lspSigns
@@ -14,6 +13,10 @@ return {
       ---@diagnostic disable-next-line: duplicate-set-field
       statusline.section_location = function()
         return '%2l:%-2v'
+      end
+
+      statusline.section_lsp = function()
+        return ''
       end
 
       ---@diagnostic disable-next-line: duplicate-set-field
