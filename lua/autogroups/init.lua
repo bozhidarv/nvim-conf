@@ -8,6 +8,29 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+vim.api.nvim_create_autocmd('ExitPre', {
+  callback = function(_)
+    local unsaved_buffers = vim.fn.getbufinfo { buflisted = 1, bufmodified = 1 }
+    if #unsaved_buffers > 0 then
+      local unsaved_bufnrs = vim.tbl_map(function(buf)
+        return buf.bufnr
+      end, unsaved_buffers)
+
+      require('options.utils').unsaved_files_telescope_picker(unsaved_bufnrs, {
+        show_all_buffers = true,
+        ignore_current_buffer = false,
+        only_cwd = false,
+        sort_lastused = false,
+        sort_mru = false,
+        bufnr_with = 'dynamic',
+        file_encoding = 'utf-8',
+      })
+    else
+      vim.cmd 'qall!'
+    end
+  end,
+})
+
 local format_is_enabled = true
 vim.api.nvim_create_user_command('KickstartFormatToggle', function()
   format_is_enabled = not format_is_enabled

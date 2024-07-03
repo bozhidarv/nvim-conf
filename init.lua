@@ -42,7 +42,7 @@ P.S. You can delete this when you're done too. It's your config now :)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.opt.clipboard = 'unnamedplus'
-vim.opt.hidden = false
+vim.opt.hidden = true
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -53,7 +53,7 @@ if not vim.loop.fs_stat(lazypath) then
     'clone',
     '--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable',   -- latest stable release
+    '--branch=stable', --latest stable release
     lazypath,
   }
 end
@@ -64,8 +64,7 @@ vim.opt.rtp:prepend(lazypath)
 --
 --  You can also configure plugins after the setup call,
 --    as they will be available in your neovim runtime.
-require('lazy').setup('plugins')
-
+require('lazy').setup 'plugins'
 
 require('nvim-treesitter.install').prefer_git = false
 require('nvim-treesitter.install').compilers = { 'clang', 'gcc' }
