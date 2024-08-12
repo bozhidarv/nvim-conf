@@ -1,4 +1,4 @@
-local vscode = require('vscode')
+local vscode = require 'vscode'
 
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set('n', '<C-h>', '<C-w>h', { silent = true })
@@ -22,9 +22,29 @@ vim.keymap.set('n', 'd_', '"_d', { silent = true, desc = 'Delete without yanking
 --#endregion
 
 --#region
-vim.keymap.set('n', '<leader>C', function () vscode.action('workbench.action.closeActiveEditor') end, { silent = true, desc = 'Close editor' })
-vim.keymap.set('n', '[b', function () vscode.action('workbench.action.previousEditor') end, { silent = true, desc = 'Previous editor' })
-vim.keymap.set('n', ']b', function () vscode.action('workbench.action.nextEditor') end, { silent = true, desc = 'Next editor' })
-vim.keymap.set('n', '<leader><leader>', function () vscode.action('workbench.action.quickOpen') end, { silent = true, desc = 'Next editor' })
-
+vim.keymap.set('n', '<leader>C', function()
+  vscode.action 'workbench.action.closeActiveEditor'
+end, { silent = true, desc = 'Close editor' })
+vim.keymap.set('n', '[b', function()
+  vscode.action 'workbench.action.previousEditor'
+end, { silent = true, desc = 'Previous editor' })
+vim.keymap.set('n', ']b', function()
+  vscode.action 'workbench.action.nextEditor'
+end, { silent = true, desc = 'Next editor' })
+vim.keymap.set('n', '<leader><leader>', function()
+  vscode.action 'workbench.action.quickOpen'
+end, { silent = true, desc = 'Search files' })
+vim.keymap.set('n', '<leader>e', function()
+  vscode.call 'workbench.view.explorer'
+end, { silent = true, desc = 'Open file explorer' })
+vim.keymap.set('n', '<leader>cs', function()
+  vscode.action 'workbench.action.gotoSymbol'
+end, { silent = true, desc = 'Show document symbols' })
+vim.keymap.set('n', '<leader>ca', function()
+  vscode.action 'problems.action.showQuickFixes'
+end, { silent = true, desc = 'Show code actions' })
+vim.keymap.set('n', '<leader>cf', function()
+  vscode.action 'editor.action.formatDocument'
+end, { silent = true, desc = 'Format file' })
 --#endregion
+

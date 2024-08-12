@@ -7,7 +7,7 @@ return {
     'williamboman/mason-lspconfig.nvim',
 
     -- Useful status updates for LSP
-    { 'j-hui/fidget.nvim', opts = {} },
+    -- { 'j-hui/fidget.nvim', opts = {} },
     { 'github/copilot.vim' },
     -- Additional lua configuration, makes nvim stuff amazing!
     {
@@ -47,6 +47,9 @@ return {
         },
       },
     },
+  },
+  opts = {
+    inlay_hints = { enabled = true },
   },
   config = function()
     --#region Diagnostic Signs Configuration
