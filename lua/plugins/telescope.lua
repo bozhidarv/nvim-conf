@@ -19,7 +19,7 @@ return {
         defaults = {
           mappings = {
             i = {
-              ['<esc>'] = require('telescope.actions').close,
+              -- ['<esc>'] = require('telescope.actions').close,
             },
           },
           path_display = { 'truncate' },
@@ -59,7 +59,6 @@ return {
             theme = 'ivy',
           },
           lsp_document_symbols = {
-            previewer = false,
             width = 0.25,
           },
         },

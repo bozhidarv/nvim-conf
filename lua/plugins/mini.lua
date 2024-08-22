@@ -57,64 +57,64 @@ return {
       })
     end,
   },
-  {
-    'echasnovski/mini.statusline',
-    version = '*',
-    config = function()
-      local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      statusline.setup {
-        use_icons = true,
-      }
-
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
-      end
-
-      statusline.section_lsp = function()
-        return ''
-      end
-
-      ---@diagnostic disable-next-line: duplicate-set-field
-
-      statusline.section_diagnostics = function(_)
-        local count = {}
-
-        local severities = vim.diagnostic.severity
-
-        for level in pairs(vim.diagnostic.severity) do
-          count[level] = vim.tbl_count(vim.diagnostic.get(0, { severity = level }))
-        end
-
-        if count[severities.ERROR] == 0 and count[severities.WARN] == 0 and count[severities.HINT] == 0 and count[severities.INFO] == 0 then
-          return ''
-        end
-
-        local errors = ''
-        local warnings = ''
-        local hints = ''
-        local info = ''
-
-        if count[severities.ERROR] ~= 0 then
-          local icon, _ = MiniIcons.get('lsp', 'error')
-          errors = icon .. ' ' .. count[severities.E] .. ' '
-        end
-        if count[severities.WARN] ~= 0 then
-          local icon, _ = MiniIcons.get('lsp', 'warning')
-          warnings = icon .. ' ' .. count[severities.WARN] .. ' '
-        end
-        if count[severities.HINT] ~= 0 then
-          local icon, _ = MiniIcons.get('lsp', 'hint')
-          hints = icon .. ' ' .. count[severities.HINT] .. ' '
-        end
-        if count[severities.HINT] ~= 0 then
-          local icon, _ = MiniIcons.get('lsp', 'info')
-          info = icon .. ' ' .. count[severities.HINT] .. ' '
-        end
-
-        return '|' .. errors .. warnings .. hints .. info .. '|'
-      end
-    end,
-  },
+  -- {
+  --   'echasnovski/mini.statusline',
+  --   version = '*',
+  --   config = function()
+  --     local statusline = require 'mini.statusline'
+  --     -- set use_icons to true if you have a Nerd Font
+  --     statusline.setup {
+  --       use_icons = true,
+  --     }
+  --
+  --     ---@diagnostic disable-next-line: duplicate-set-field
+  --     statusline.section_location = function()
+  --       return '%2l:%-2v'
+  --     end
+  --
+  --     statusline.section_lsp = function()
+  --       return ''
+  --     end
+  --
+  --     ---@diagnostic disable-next-line: duplicate-set-field
+  --
+  --     statusline.section_diagnostics = function(_)
+  --       local count = {}
+  --
+  --       local severities = vim.diagnostic.severity
+  --
+  --       for level in pairs(vim.diagnostic.severity) do
+  --         count[level] = vim.tbl_count(vim.diagnostic.get(0, { severity = level }))
+  --       end
+  --
+  --       if count[severities.ERROR] == 0 and count[severities.WARN] == 0 and count[severities.HINT] == 0 and count[severities.INFO] == 0 then
+  --         return ''
+  --       end
+  --
+  --       local errors = ''
+  --       local warnings = ''
+  --       local hints = ''
+  --       local info = ''
+  --
+  --       if count[severities.ERROR] ~= 0 then
+  --         local icon, _ = MiniIcons.get('lsp', 'error')
+  --         errors = icon .. ' ' .. count[severities.E] .. ' '
+  --       end
+  --       if count[severities.WARN] ~= 0 then
+  --         local icon, _ = MiniIcons.get('lsp', 'warning')
+  --         warnings = icon .. ' ' .. count[severities.WARN] .. ' '
+  --       end
+  --       if count[severities.HINT] ~= 0 then
+  --         local icon, _ = MiniIcons.get('lsp', 'hint')
+  --         hints = icon .. ' ' .. count[severities.HINT] .. ' '
+  --       end
+  --       if count[severities.HINT] ~= 0 then
+  --         local icon, _ = MiniIcons.get('lsp', 'info')
+  --         info = icon .. ' ' .. count[severities.HINT] .. ' '
+  --       end
+  --
+  --       return '|' .. errors .. warnings .. hints .. info .. '|'
+  --     end
+  --   end,
+  -- },
 }

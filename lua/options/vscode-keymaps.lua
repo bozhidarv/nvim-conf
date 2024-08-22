@@ -48,3 +48,27 @@ vim.keymap.set('n', '<leader>cf', function()
 end, { silent = true, desc = 'Format file' })
 --#endregion
 
+--#region Harpoon
+vim.keymap.set('n', '<leader>hh', function()
+  vscode.action 'vscode-harpoon.editEditors'
+end, { desc = 'Toggle harpoon quick menu' })
+vim.keymap.set('n', '<leader>ha', function()
+  vscode.action 'vscode-harpoon.addEditor'
+end, { desc = 'Add to harpoon list' })
+vim.keymap.set('n', '<leader>hp', function()
+  vscode.action 'vscode-harpoon.gotoPreviousHarpoonEditor'
+end, { desc = 'Open previous harpoon item' })
+vim.keymap.set('n', '<leader>hq', function()
+  vscode.action 'vscode-harpoon.gotoEditor1'
+end, { desc = 'Open first harpoon item' })
+vim.keymap.set('n', '<leader>hw', function()
+  vscode.action 'vscode-harpoon.gotoEditor2'
+end, { desc = 'Open second harpoon item' })
+vim.keymap.set('n', '<leader>he', function()
+  vscode.action 'vscode-harpoon.gotoEditor3'
+end, { desc = 'Open third harpoon item' })
+vim.keymap.set('n', '<leader>hr', function()
+  vscode.action 'vscode-harpoon.gotoEditor4'
+end, { desc = 'Open fourth harpoon item' })
+
+--#endregion
