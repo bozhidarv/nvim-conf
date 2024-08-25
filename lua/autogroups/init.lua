@@ -13,16 +13,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(event)
     local bufnr = event.buf
     vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { buffer = bufnr, desc = '[R]e[n]ame' })
-    vim.keymap.set('n', '<leader>ca', require('fzf-lua').lsp_code_actions, { buffer = bufnr, desc = '[C]ode [A]ction' })
+    vim.keymap.set('n', '<leader>ca', function()
+      require('fzf-lua').lsp_code_actions {
+        previewer = false,
+      }
+    end, { buffer = bufnr, desc = '[C]ode [A]ction' })
 
     vim.keymap.set('n', 'gd', require('fzf-lua').lsp_definitions, { buffer = bufnr, desc = '[G]oto [D]efinition' })
     vim.keymap.set('n', 'gr', require('fzf-lua').lsp_references, { buffer = bufnr, desc = '[G]oto [R]eferences' })
     vim.keymap.set('n', 'gI', vim.lsp.buf.implementation, { buffer = bufnr, desc = '[G]oto [I]mplementation' })
     vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, { buffer = bufnr, desc = 'Type [D]efinition' })
-    vim.keymap.set('n', '<leader>cs', require('fzf-lua').lsp_document_symbols,
-      { buffer = bufnr, desc = '[D]ocument [S]ymbols' })
-    vim.keymap.set('n', '<leader>cS', require('fzf-lua').lsp_live_workspace_symbols,
-      { buffer = bufnr, desc = '[W]orkspace [S]ymbols' })
+    vim.keymap.set('n', '<leader>cs', require('fzf-lua').lsp_document_symbols, { buffer = bufnr, desc = '[D]ocument [S]ymbols' })
+    vim.keymap.set('n', '<leader>cS', require('fzf-lua').lsp_live_workspace_symbols, { buffer = bufnr, desc = '[W]orkspace [S]ymbols' })
     vim.keymap.set('n', '<leader>cf', vim.lsp.buf.format, { buffer = bufnr, desc = 'Format buffer' })
 
     -- See `:help K` for why this keymap
@@ -31,10 +33,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Lesser used LSP functionality
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc = '[G]oto [D]eclaration' })
-    vim.keymap.set('n', '<leader>cwa', vim.lsp.buf.add_workspace_folder,
-      { buffer = bufnr, desc = '[W]orkspace [A]dd Folder' })
-    vim.keymap.set('n', '<leader>cwr', vim.lsp.buf.remove_workspace_folder,
-      { buffer = bufnr, desc = '[W]orkspace [R]emove Folder' })
+    vim.keymap.set('n', '<leader>cwa', vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = '[W]orkspace [A]dd Folder' })
+    vim.keymap.set('n', '<leader>cwr', vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc = '[W]orkspace [R]emove Folder' })
     vim.keymap.set('n', '<leader>cwl', function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, { buffer = bufnr, desc = '[W]orkspace [L]ist Folders' })
@@ -49,7 +49,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
       vim.keymap.set('n', '<leader>cth', function()
-        vim.print('inlay hints: ' .. tostring(vim.lsp.inlay_hint.is_enabled { bufnr = bufnr }))
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr })
       end, { buffer = bufnr, desc = '[T]oggle Inlay [H]ints' })
     end
@@ -60,19 +59,12 @@ vim.api.nvim_create_autocmd('ExitPre', {
   callback = function(_)
     local unsaved_buffers = vim.fn.getbufinfo { buflisted = 1, bufmodified = 1 }
     if #unsaved_buffers > 0 then
-      local unsaved_bufnrs = vim.tbl_map(function(buf)
-        return buf.bufnr
-      end, unsaved_buffers)
-
-      require('options.utils').unsaved_files_telescope_picker(unsaved_bufnrs, {
-        show_all_buffers = true,
-        ignore_current_buffer = false,
-        only_cwd = false,
-        sort_lastused = false,
-        sort_mru = false,
-        bufnr_with = 'dynamic',
-        file_encoding = 'utf-8',
-      })
+      require('fzf-lua').buffers {
+        actions = {
+          ['ctrl-x'] = { fn = require('fzf-lua.actions').buf_del, reload = true },
+          ['ctrl-w'] = { fn = require('options.utils').fzf_lua_save_buffer_action, reload = true },
+        },
+      }
     else
       vim.cmd 'qall!'
     end

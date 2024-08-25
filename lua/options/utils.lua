@@ -19,4 +19,18 @@ M.checkTransperancy = function()
 end
 
 M.colorscheme = 'tokyonight'
+
+M.fzf_lua_save_buffer_action = function(selected, opts)
+  local path = require 'fzf-lua.path'
+  local utils = require 'fzf-lua.utils'
+  for _, sel in ipairs(selected) do
+    local entry = path.entry_to_file(sel, opts)
+    if entry.bufnr and utils.buffer_is_dirty(entry.bufnr, true, false) then
+      vim.api.nvim_buf_call(entry.bufnr, function()
+        vim.cmd 'silent! w'
+      end)
+    end
+  end
+end
+
 return M

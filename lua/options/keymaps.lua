@@ -54,7 +54,14 @@ vim.keymap.set('n', '<leader>/', function()
 end, { desc = '[/] Fuzzily search in current buffer' })
 vim.keymap.set('n', '<leader>ff', require('fzf-lua').git_files, { desc = 'Find Git Files' })
 vim.keymap.set('n', '<leader>fF', require('fzf-lua').files, { desc = 'Find Files' })
-vim.keymap.set('n', '<leader>fb', require('fzf-lua').buffers, { desc = 'Find Buffers' })
+vim.keymap.set('n', '<leader>fb', function()
+  require('fzf-lua').buffers {
+    actions = {
+      ['ctrl-x'] = { fn = require('fzf-lua.actions').buf_del, reload = true },
+      ['ctrl-w'] = { fn = require('options.utils').fzf_lua_save_buffer_action, reload = true },
+    },
+  }
+end, { desc = 'Find Buffers' })
 vim.keymap.set('n', '<leader>fh', require('fzf-lua').helptags, { desc = 'Find Help' })
 vim.keymap.set('n', '<leader>fm', require('fzf-lua').manpages, { desc = 'Find Manpages' })
 vim.keymap.set('n', '<leader>fw', require('fzf-lua').grep_visual, { desc = 'Search current Word' })
