@@ -25,24 +25,41 @@ vim.keymap.set('n', '<leader>sh', ':split<CR>', { desc = 'Horizontal split' })
 vim.keymap.set('n', '<leader>sv', ':vsplit<CR>', { desc = 'Verical split' })
 --#endregion
 
---#region Telescope
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, { desc = 'Search files' })
+-- --#region Telescope
+-- vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+-- vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, { desc = 'Search files' })
+-- vim.keymap.set('n', '<leader>/', function()
+--   -- You can pass additional configuration to telescope to change theme, layout, etc.
+--   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+--     winblend = 10,
+--     previewer = false,
+--   })
+-- end, { desc = '[/] Fuzzily search in current buffer' })
+-- vim.keymap.set('n', '<leader>ff', require('telescope.builtin').git_files, { desc = 'Find Git Files' })
+-- vim.keymap.set('n', '<leader>fF', require('telescope.builtin').find_files, { desc = 'Find Files' })
+-- vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = 'Find Buffers' })
+-- vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = 'Find Help' })
+-- vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = 'Search current Word' })
+-- vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Find by Grep' })
+-- vim.keymap.set('n', '<leader>fu', require('telescope').extensions.undo.undo,
+--   { desc = 'Open undo tree for current buffer' })
+-- --#endregion
+
+--#region fzf-lua
+vim.keymap.set('n', '<leader>?', require('fzf-lua').oldfiles, { desc = '[?] Find recently opened files' })
+vim.keymap.set('n', '<leader><space>', require('fzf-lua').files, { desc = 'Search files' })
 vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
-    previewer = false,
-  })
+  require('fzf-lua').lgrep_curbuf()
 end, { desc = '[/] Fuzzily search in current buffer' })
-vim.keymap.set('n', '<leader>ff', require('telescope.builtin').git_files, { desc = 'Find Git Files' })
-vim.keymap.set('n', '<leader>fF', require('telescope.builtin').find_files, { desc = 'Find Files' })
-vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = 'Find Buffers' })
-vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = 'Find Help' })
-vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = 'Search current Word' })
-vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Find by Grep' })
-vim.keymap.set('n', '<leader>fu', require('telescope').extensions.undo.undo,
-  { desc = 'Open undo tree for current buffer' })
+vim.keymap.set('n', '<leader>ff', require('fzf-lua').git_files, { desc = 'Find Git Files' })
+vim.keymap.set('n', '<leader>fF', require('fzf-lua').files, { desc = 'Find Files' })
+vim.keymap.set('n', '<leader>fb', require('fzf-lua').buffers, { desc = 'Find Buffers' })
+vim.keymap.set('n', '<leader>fh', require('fzf-lua').helptags, { desc = 'Find Help' })
+vim.keymap.set('n', '<leader>fm', require('fzf-lua').manpages, { desc = 'Find Manpages' })
+vim.keymap.set('n', '<leader>fw', require('fzf-lua').grep_visual, { desc = 'Search current Word' })
+vim.keymap.set('n', '<leader>fg', require('fzf-lua').live_grep_native, { desc = 'Find by Grep' })
+vim.keymap.set('n', '<leader>fu', vim.cmd.UndotreeToggle, { desc = 'Open undo tree for current buffer' })
 --#endregion
 
 --#region Oil.nvim
@@ -72,8 +89,7 @@ vim.keymap.set('n', ']d', function()
   trouble.next { skip_groups = true, jump = true }
 end, { desc = 'Go to next diagnostic message' })
 
-vim.keymap.set('n', '<leader>qf', ':Trouble diagnostics toggle filter.buf=0<CR>',
-  { desc = 'Toggle diagnostics list for file' })
+vim.keymap.set('n', '<leader>qf', ':Trouble diagnostics toggle filter.buf=0<CR>', { desc = 'Toggle diagnostics list for file' })
 
 vim.keymap.set('n', '<leader>qw', function()
   trouble.toggle 'diagnostics'
@@ -119,8 +135,7 @@ vim.keymap.set('n', '<esc><esc>', ':nohls<cr>', { silent = true, desc = 'Turn of
 --#endregion
 
 --#region Github Copilot
-vim.keymap.set('i', '<Plug>(vimrc:copilot-dummy-map)', 'copilot#Accept("")',
-  { silent = true, expr = true, desc = 'Copilot dummy accept' })
+vim.keymap.set('i', '<Plug>(vimrc:copilot-dummy-map)', 'copilot#Accept("")', { silent = true, expr = true, desc = 'Copilot dummy accept' })
 --#endregion
 
 --#region harpoon
