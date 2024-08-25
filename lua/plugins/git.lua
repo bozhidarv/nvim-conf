@@ -7,7 +7,7 @@ return {
       'nvim-lua/plenary.nvim', -- required
       'sindrets/diffview.nvim', -- optional - Diff integration
 
-      'nvim-telescope/telescope.nvim',
+      'ibhagwan/fzf-lua',
     },
     config = true,
   },
