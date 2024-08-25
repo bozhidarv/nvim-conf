@@ -13,6 +13,8 @@ return {
       -- Adds LSP completion capabilities
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'folke/lazydev.nvim',
+      'github/copilot.vim',
 
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
@@ -66,6 +68,7 @@ return {
           { name = 'luasnip' },
           { name = 'path' },
           { name = 'vim-dadbod-completion' },
+          { name = 'lazydev', group_index = 0 },
         },
       }
       --#endregion
