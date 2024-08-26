@@ -87,14 +87,8 @@ vim.keymap.set('n', '<leader>gP', ':Neogit push<CR>', { desc = 'Neogit push' })
 --#region Trouble.nvim
 local trouble = require 'trouble'
 
-vim.keymap.set('n', '[d', function()
-  ---@diagnostic disable-next-line: missing-fields
-  trouble.prev { skip_groups = true, jump = true }
-end, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', function()
-  ---@diagnostic disable-next-line: missing-fields
-  trouble.next { skip_groups = true, jump = true }
-end, { desc = 'Go to next diagnostic message' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 
 vim.keymap.set('n', '<leader>qf', ':Trouble diagnostics toggle filter.buf=0<CR>', { desc = 'Toggle diagnostics list for file' })
 
