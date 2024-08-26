@@ -4,7 +4,7 @@ return {
   lazy = true,
   dependencies = {
     -- Creates a beautiful debugger UI
-    { 'rcarriga/nvim-dap-ui', opts = {} },
+    { 'rcarriga/nvim-dap-ui',         opts = {} },
 
     -- Installs the debug adapters for you
     'williamboman/mason.nvim',
@@ -19,13 +19,17 @@ return {
     local dap = require 'dap'
     local dapui = require 'dapui'
 
-    require('nvim-dap-virtual-text').setup()
+    require('nvim-dap-virtual-text').setup {}
 
     --#region Dap icons definition
-    vim.fn.sign_define('DapBreakpoint', { text = '󰻃 ', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
-    vim.fn.sign_define('DapBreakpointCondition', { text = '󰘥 ', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
-    vim.fn.sign_define('DapBreakpointRejected', { text = ' ', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
-    vim.fn.sign_define('DapLogPoint', { text = ' ', texthl = 'DapLogPoint', linehl = 'DapLogPoint', numhl = 'DapLogPoint' })
+    vim.fn.sign_define('DapBreakpoint',
+      { text = '󰻃 ', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
+    vim.fn.sign_define('DapBreakpointCondition',
+      { text = '󰘥 ', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
+    vim.fn.sign_define('DapBreakpointRejected',
+      { text = ' ', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
+    vim.fn.sign_define('DapLogPoint',
+      { text = ' ', texthl = 'DapLogPoint', linehl = 'DapLogPoint', numhl = 'DapLogPoint' })
     vim.fn.sign_define('DapStopped', { text = '', texthl = 'DapStopped', linehl = 'DapStopped', numhl = 'DapStopped' })
     --#endregion
 
@@ -41,6 +45,7 @@ return {
       dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
     end, { desc = 'Debug: Set Breakpoint' })
     vim.keymap.set('n', '<leader>de', function()
+      ---@diagnostic disable-next-line: missing-fields
       require('dapui').eval(nil, { enter = true })
     end, { desc = 'Debug: Eval under cursor' })
     --#endregion
