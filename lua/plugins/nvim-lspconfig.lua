@@ -3,16 +3,20 @@ return {
   'neovim/nvim-lspconfig',
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
-    { 'williamboman/mason.nvim', config = true },
+    { 'williamboman/mason.nvim',           config = true },
     'williamboman/mason-lspconfig.nvim',
 
     -- Additional lua configuration, makes nvim stuff amazing!
     { 'nvim-java/nvim-java' },
+    { 'Hoffs/omnisharp-extended-lsp.nvim', lazy = true },
+    { 'nanotee/sqls.nvim' },
   },
   opts = {
     inlay_hints = { enabled = true },
   },
   config = function()
+    require('java').setup()
+
     --#region Diagnostic Signs Configuration
     local signs = require('options.utils').lspSigns
     for type, icon in pairs(signs) do
@@ -29,12 +33,25 @@ return {
           '--offset-encoding=utf-16',
         },
       },
-      jdtls = {
-        cmd = {
-          'jdtls',
-          '-data',
-          vim.fn.stdpath 'data' .. '/lspconfig/jdtls-workspace',
+      sqls = {
+        settings = {
+          sqls = {
+            connections = {
+              {
+                driver = 'postgresql',
+                dataSourceName =
+                'host=127.0.0.1 port=5432 user=postgres password=poll-api dbname=postgres sslmode=disable',
+              },
+            },
+          },
         },
+      },
+      jdtls = {
+        -- cmd = {
+        --   'jdtls',
+        --   '-data',
+        --   vim.fn.stdpath 'data' .. '/lspconfig/jdtls-workspace',
+        -- },
         settings = {
           java = {
             configuration = {
@@ -65,6 +82,41 @@ return {
               functionTypeParameters = true,
               parameterNames = true,
               rangeVariableTypes = true,
+            },
+          },
+        },
+      },
+      omnisharp = {
+        enable_roslyn_analyzers = true,
+        organize_imports_on_format = true,
+        enable_import_completion = true,
+        settings = {
+          RoslynExtensionsOptions = {
+            -- Enables support for roslyn analyzers, code fixes and rulesets.
+            EnableAnalyzersSupport = false,
+            -- Enables support for showing unimported types and unimported extension
+            -- methods in completion lists. When committed, the appropriate using
+            -- directive will be added at the top of the current file. This option can
+            -- have a negative impact on initial completion responsiveness,
+            -- particularly for the first few completion sessions after opening a
+            -- solution.
+            EnableImportCompletion = true,
+            -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
+            -- true
+            AnalyzeOpenDocumentsOnly = true,
+            inlayHintsOptions = {
+              enableForParameters = true,
+              forLiteralParameters = true,
+              forIndexerParameters = true,
+              forObjectCreationParameters = true,
+              forOtherParameters = true,
+              suppressForParametersThatDifferOnlyBySuffix = false,
+              suppressForParametersThatMatchMethodIntent = false,
+              suppressForParametersThatMatchArgumentName = false,
+              enableForTypes = true,
+              forImplicitVariableTypes = true,
+              forLambdaParameterTypes = true,
+              forImplicitObjectCreation = true,
             },
           },
         },

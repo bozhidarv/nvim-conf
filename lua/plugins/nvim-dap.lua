@@ -55,12 +55,32 @@ return {
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     --#endregion
 
-    --#region DapUI adapters
+    --make a local var is os is windows
+    local is_windows = vim.fn.has 'win32' == 1
+
+    --#region Dap adapters
     dap.adapters.coreclr = {
       type = 'executable',
-      command = os.getenv 'HOME' .. '/.local/share/nvim/mason/packages/netcoredbg/libexec/netcoredbg/netcoredbg',
+      command = vim.fn.stdpath 'data' .. '/mason/packages/netcoredbg/libexec/netcoredbg/netcoredbg',
       args = { '--interpreter=vscode' },
     }
+
+    if not is_windows then
+      dap.adapters.cppdbg = {
+        id = 'cppdbg',
+        type = 'executable',
+        command = vim.fn.stdpath 'data' .. '/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
+      }
+    else
+      dap.adapters.cppdbg = {
+        id = 'cppdbg',
+        type = 'executable',
+        command = vim.fn.stdpath 'data' .. '\\mason\\packages\\cpptools\\extension\\debugAdapters\\bin\\OpenDebugAD7.exe',
+        options = {
+          detached = false,
+        },
+      }
+    end
     --#endregion
 
     --#region Dap configs
@@ -74,6 +94,44 @@ return {
         end,
       },
     }
-    --#endregion
+    dap.configurations.cpp = {
+      {
+        name = 'Launch file',
+        type = 'cppdbg',
+        request = 'launch',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopAtEntry = true,
+        setupCommands = {
+          {
+            text = '-enable-pretty-printing',
+            description = 'enable pretty printing',
+            ignoreFailures = false,
+          },
+        },
+      },
+      {
+        name = 'Attach to gdbserver :1234',
+        type = 'cppdbg',
+        request = 'launch',
+        MIMode = 'gdb',
+        miDebuggerServerAddress = 'localhost:1234',
+        miDebuggerPath = '/usr/bin/gdb',
+        cwd = '${workspaceFolder}',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        setupCommands = {
+          {
+            text = '-enable-pretty-printing',
+            description = 'enable pretty printing',
+            ignoreFailures = false,
+          },
+        },
+      },
+    }
+    dap.configurations.c = dap.configurations.cpp
   end,
 }

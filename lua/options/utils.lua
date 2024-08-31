@@ -9,6 +9,7 @@ M.lspSigns = {
 
 M.checkTransperancy = function()
   local isTrans = os.getenv 'NVIM_TRANSPARENT_BACKGROUND'
+  -- vim.print(isTrans)
   if isTrans == nil then
     return false
   end
@@ -18,7 +19,7 @@ M.checkTransperancy = function()
   return false
 end
 
-M.colorscheme = 'tokyonight'
+M.colorscheme = 'astrodark'
 
 M.fzf_lua_save_buffer_action = function(selected, opts)
   local path = require 'fzf-lua.path'

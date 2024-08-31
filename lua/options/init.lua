@@ -2,9 +2,14 @@
 -- See `:help vim.o`
 
 local colorscheme = require('options.utils').colorscheme
+local isTransparent = require('options.utils').checkTransperancy
 
--- vim.cmd 'colorscheme catppuccin-mocha'
-vim.cmd('colorscheme ' .. colorscheme)
+vim.cmd.colorscheme(colorscheme)
+
+if isTransparent() then
+  vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
+end
 
 -- Set highlight on search
 vim.o.hlsearch = true
@@ -28,7 +33,7 @@ vim.o.undofile = true
 
 -- Set terminal to pwsh for windows
 --
-if vim.fn.has('win32') == 1 then
+if vim.fn.has 'win32' == 1 then
   vim.opt.shell = 'pwsh'
 end
 
@@ -59,7 +64,7 @@ vim.bo.softtabstop = 2
 
 -- ufo.nvim settings
 vim.o.foldcolumn = '1' -- '0' is not bad
-vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
@@ -68,6 +73,5 @@ vim.g.copilot_no_tab_map = true
 if vim.g.vscode then
   require 'options.vscode-keymaps'
 else
-
-require 'options.keymaps'
+  require 'options.keymaps'
 end

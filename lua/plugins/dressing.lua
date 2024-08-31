@@ -1,7 +1,8 @@
 return {
-	'stevearc/dressing.nvim',
-	opts = {
-		input = { default_prompt = '➤ ' },
-		select = { backend = { 'telescope', 'builtin' } },
-	},
+  'stevearc/dressing.nvim',
+  enabled = false,
+  opts = {
+    input = { default_prompt = '➤ ' },
+    select = { backend = { 'telescope', 'builtin' } },
+  },
 }

@@ -25,26 +25,6 @@ vim.keymap.set('n', '<leader>sh', ':split<CR>', { desc = 'Horizontal split' })
 vim.keymap.set('n', '<leader>sv', ':vsplit<CR>', { desc = 'Verical split' })
 --#endregion
 
--- --#region Telescope
--- vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
--- vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, { desc = 'Search files' })
--- vim.keymap.set('n', '<leader>/', function()
---   -- You can pass additional configuration to telescope to change theme, layout, etc.
---   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
---     winblend = 10,
---     previewer = false,
---   })
--- end, { desc = '[/] Fuzzily search in current buffer' })
--- vim.keymap.set('n', '<leader>ff', require('telescope.builtin').git_files, { desc = 'Find Git Files' })
--- vim.keymap.set('n', '<leader>fF', require('telescope.builtin').find_files, { desc = 'Find Files' })
--- vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = 'Find Buffers' })
--- vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = 'Find Help' })
--- vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = 'Search current Word' })
--- vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Find by Grep' })
--- vim.keymap.set('n', '<leader>fu', require('telescope').extensions.undo.undo,
---   { desc = 'Open undo tree for current buffer' })
--- --#endregion
-
 --#region fzf-lua
 vim.keymap.set('n', '<leader>?', require('fzf-lua').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('fzf-lua').files, { desc = 'Search files' })

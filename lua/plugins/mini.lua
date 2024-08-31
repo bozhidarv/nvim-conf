@@ -11,6 +11,7 @@ return {
           ['hint'] = { glyph = '', hl = 'LspDiagnosticsDefaultHint' },
         },
       }
+      MiniIcons.mock_nvim_web_devicons()
     end,
   },
   {
