@@ -3,12 +3,18 @@ return {
   'neovim/nvim-lspconfig',
   dependencies = {
     -- Automatically install LSPs to stdpath for neovim
-    { 'williamboman/mason.nvim',           config = true },
+    { 'williamboman/mason.nvim', config = true },
     'williamboman/mason-lspconfig.nvim',
 
     -- Additional lua configuration, makes nvim stuff amazing!
     { 'nvim-java/nvim-java' },
-    { 'Hoffs/omnisharp-extended-lsp.nvim', lazy = true },
+    {
+      'Hoffs/omnisharp-extended-lsp.nvim',
+      lazy = true,
+      dependencies = {
+        'nvim-telescope/telescope.nvim'
+      }
+    },
     { 'nanotee/sqls.nvim' },
   },
   opts = {

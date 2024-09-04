@@ -59,17 +59,17 @@ return {
     local is_windows = vim.fn.has 'win32' == 1
 
     --#region Dap adapters
-    dap.adapters.coreclr = {
-      type = 'executable',
-      command = vim.fn.stdpath 'data' .. '/mason/packages/netcoredbg/libexec/netcoredbg/netcoredbg',
-      args = { '--interpreter=vscode' },
-    }
 
     if not is_windows then
       dap.adapters.cppdbg = {
         id = 'cppdbg',
         type = 'executable',
         command = vim.fn.stdpath 'data' .. '/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
+      }
+      dap.adapters.coreclr = {
+        type = 'executable',
+        command = vim.fn.stdpath 'data' .. '/mason/packages/netcoredbg/libexec/netcoredbg/netcoredbg',
+        args = { '--interpreter=vscode' },
       }
     else
       dap.adapters.cppdbg = {
@@ -79,6 +79,11 @@ return {
         options = {
           detached = false,
         },
+      }
+      dap.adapters.coreclr = {
+        type = 'executable',
+        command = vim.fn.stdpath 'data' .. '\\mason\\packages\\netcoredbg\\netcoredbg\\netcoredbg.exe',
+        args = { '--interpreter=vscode' },
       }
     end
     --#endregion
