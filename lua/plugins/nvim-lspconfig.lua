@@ -12,8 +12,8 @@ return {
       'Hoffs/omnisharp-extended-lsp.nvim',
       lazy = true,
       dependencies = {
-        'nvim-telescope/telescope.nvim'
-      }
+        'nvim-telescope/telescope.nvim',
+      },
     },
     { 'nanotee/sqls.nvim' },
   },
@@ -127,7 +127,7 @@ return {
           },
         },
       },
-      tsserver = {
+      ts_ls = {
         documentFormatting = false,
         javascript = {
           inlayHints = {
