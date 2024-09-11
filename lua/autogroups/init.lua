@@ -42,7 +42,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
       { buffer = bufnr, desc = '[D]ocument [S]ymbols' })
     vim.keymap.set('n', '<leader>cS', require('fzf-lua').lsp_live_workspace_symbols,
       { buffer = bufnr, desc = '[W]orkspace [S]ymbols' })
-    vim.keymap.set('n', '<leader>cf', vim.lsp.buf.format, { buffer = bufnr, desc = 'Format buffer' })
+    vim.keymap.set('n', '<leader>cf', function()
+      require('conform').format { async = true }
+    end, { buffer = bufnr, desc = 'Format buffer' })
 
     -- See `:help K` for why this keymap
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr, desc = 'Hover Documentation' })
