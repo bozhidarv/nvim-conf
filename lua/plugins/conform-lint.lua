@@ -13,7 +13,8 @@ return {
       formatters_by_ft = {
         lua = { 'stylua' },
         python = { 'isort', 'black' },
-        javascript = { 'eslintd', 'prettierd', lsp_format = 'fallback', stop_after_first = true },
+        javascript = { 'eslint_d', lsp_format = 'fallback', stop_after_first = true },
+        typescript = { 'eslint_d', lsp_format = 'fallback', stop_after_first = true },
         go = { 'gofumpt', 'gofmt', 'goimports', 'golines' },
         sh = { 'shfmt' },
         bash = { 'shfmt' },
@@ -28,7 +29,7 @@ return {
         lsp_format = 'fallback',
       },
       -- Set up format-on-save
-      format_on_save = { timeout_ms = 500 },
+      -- format_on_save = { timeout_ms = 500 },
       -- Customize formatters
       formatters = {
         shfmt = {
@@ -49,11 +50,11 @@ return {
       linters_by_ft = {
         fish = { 'fish' },
         go = { 'golangcilint' },
-        javascript = { 'eslint_d' },
-        typescript = { 'eslint_d' },
-        javascriptreact = { 'eslint_d' },
-        typescriptreact = { 'eslint_d' },
-        svelte = { 'eslint_d' },
+        javascript = { 'eslint_d', 'editorconfig-checker' },
+        typescript = { 'eslint_d', 'editorconfig-checker' },
+        javascriptreact = { 'eslint_d', 'editorconfig-checker' },
+        typescriptreact = { 'eslint_d', 'editorconfig-checker' },
+        svelte = { 'eslint_d', 'editorconfig-checker' },
         -- Use the "*" filetype to run linters on all filetypes.
         -- ['*'] = { 'global linter' },
         -- Use the "_" filetype to run linters on filetypes that don't have other linters configured.
