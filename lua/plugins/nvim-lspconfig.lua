@@ -16,6 +16,7 @@ return {
       },
     },
     { 'nanotee/sqls.nvim' },
+    'hrsh7th/cmp-nvim-lsp',
   },
   opts = {
     inlay_hints = { enabled = true },
@@ -180,7 +181,7 @@ return {
 
     --#region LSP Configuration
     local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+    capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
     local mason_lspconfig = require 'mason-lspconfig'
     mason_lspconfig.setup {
