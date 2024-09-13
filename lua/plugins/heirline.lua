@@ -16,7 +16,13 @@ return {
         statusline = { -- UI statusbar
           hl = { fg = 'fg', bg = 'bg' },
           lib.component.mode(),
-          lib.component.git_branch(),
+          lib.component.git_branch {
+            on_click = {
+              callback = function()
+                require('fzf-lua').git_branches()
+              end,
+            },
+          },
           lib.component.file_info {
             file_icon = {},
             filetype = false,
