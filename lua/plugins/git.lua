@@ -4,7 +4,7 @@ return {
     'NeogitOrg/neogit',
     event = 'VeryLazy',
     dependencies = {
-      'nvim-lua/plenary.nvim', -- required
+      'nvim-lua/plenary.nvim',  -- required
       'sindrets/diffview.nvim', -- optional - Diff integration
 
       'ibhagwan/fzf-lua',
@@ -25,9 +25,10 @@ return {
       attach_to_untracked = true,
       current_line_blame = true,
       on_attach = function(bufnr)
-        vim.keymap.set('n', '<leader>ghp', require('gitsigns').prev_hunk, { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
-        vim.keymap.set('n', '<leader>ghn', require('gitsigns').next_hunk, { buffer = bufnr, desc = '[G]o to [N]ext Hunk' })
-        vim.keymap.set('n', '<leader>ghh', require('gitsigns').preview_hunk, { buffer = bufnr, desc = '[P]review [H]unk' })
+        vim.keymap.set('n', '<leader>gh', require('gitsigns').preview_hunk,
+          { buffer = bufnr, desc = 'Preview git hunk' })
+        vim.keymap.set('n', ']g', require('gitsigns').next_hunk, { buffer = bufnr, desc = 'Go to next git hunk' })
+        vim.keymap.set('n', '[g', require('gitsigns').prev_hunk, { buffer = bufnr, desc = 'Go to previous git hunk' })
       end,
     },
   },

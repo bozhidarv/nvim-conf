@@ -129,7 +129,7 @@ return {
         },
       },
       ts_ls = {
-        documentFormatting = false,
+        documentFormatting = true,
         javascript = {
           inlayHints = {
             includeInlayEnumMemberValueHints = true,
