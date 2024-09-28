@@ -28,7 +28,7 @@ return {
               clear_suggestion = '<C-]>',
               accept_word = '<C-k>',
             },
-            log_level = 'debug',
+            log_level = 'off',
           }
         end,
       },
