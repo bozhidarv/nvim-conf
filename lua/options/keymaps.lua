@@ -59,9 +59,14 @@ end
 --#endregion
 
 --#region Git
-vim.keymap.set('n', '<leader>gf', require('neogit').open, { desc = 'Open neogit' })
-vim.keymap.set('n', '<leader>gp', ':Neogit pull<CR>', { desc = 'Neogit pull' })
-vim.keymap.set('n', '<leader>gP', ':Neogit push<CR>', { desc = 'Neogit push' })
+-- vim.keymap.set('n', '<leader>gf', require('neogit').open, { desc = 'Open neogit' })
+vim.keymap.set('n', '<leader>gg', function()
+  local Terminal = require('toggleterm.terminal').Terminal
+  local lazygit = Terminal:new { cmd = 'lazygit', hidden = true }
+  lazygit:toggle()
+end, { desc = 'Open neogit' })
+-- vim.keymap.set('n', '<leader>gp', ':Neogit pull<CR>', { desc = 'Neogit pull' })
+-- vim.keymap.set('n', '<leader>gP', ':Neogit push<CR>', { desc = 'Neogit push' })
 --#endregion
 
 --#region Trouble.nvim
@@ -145,7 +150,7 @@ vim.keymap.set('n', '<leader>he', function()
   harpoon:list():select(3)
 end, { desc = 'Open third harpoon item' })
 vim.keymap.set('n', '<leader>hr', function()
-  harpoon:list():select(4)
+  -- harpoon:list():select(4)
 end, { desc = 'Open fourth harpoon item' })
 vim.keymap.set('n', '<leader>hc', function()
   harpoon:list():clear()
@@ -155,4 +160,8 @@ end, { desc = 'Clear harpoon items' })
 
 --#region Neotree
 vim.keymap.set('n', '<leader>ft', ':Neotree filesystem toggle right<CR>', { desc = 'Toggle filetree' })
+--#endregion
+
+--#region Terminal
+vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]], { desc = 'Toggle filetree' })
 --#endregion
