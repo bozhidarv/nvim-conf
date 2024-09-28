@@ -14,10 +14,24 @@ return {
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
       'folke/lazydev.nvim',
-      'github/copilot.vim',
+      -- 'github/copilot.vim',
 
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
+      {
+        'supermaven-inc/supermaven-nvim',
+        branch = 'rust-binary',
+        config = function()
+          require('supermaven-nvim').setup {
+            keymaps = {
+              accept_suggestion = '<C-j>',
+              clear_suggestion = '<C-]>',
+              accept_word = '<C-k>',
+            },
+            log_level = 'debug',
+          }
+        end,
+      },
     },
     config = function()
       --#region LuaSnip Setup
@@ -49,9 +63,10 @@ return {
             behavior = cmp.ConfirmBehavior.Replace,
             select = true,
           },
-          ['<C-j>'] = cmp.mapping(function(_)
-            vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n', true)
-          end),
+          -- ['<C-j>'] = cmp.mapping(function(_)
+          --   vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)),
+          --     'n', true)
+          -- end),
           ['<C-l>'] = cmp.mapping(function()
             if luasnip.expand_or_locally_jumpable() then
               luasnip.expand_or_jump()
@@ -67,7 +82,20 @@ return {
           expandable_indicator = false,
           fields = { 'kind', 'abbr', 'menu' },
           format = function(_, vim_item)
-            local icon, hl_group = MiniIcons.get('lsp', vim_item.kind:lower())
+            --@type string
+            local icon = ''
+            local hl_group = ''
+
+            if vim_item.kind == 'Supermaven' then
+              icon = ''
+              vim.api.nvim_set_hl(0, 'CmpItemKindSupermaven', { fg = '#6CC644' })
+              hl_group = 'CmpItemKindSupermaven'
+            else
+              icon, hl_group = MiniIcons.get('lsp', vim_item.kind:lower())
+            end
+
+            -- icon, hl_group = MiniIcons.get('lsp', vim_item.kind:lower())
+
             vim_item.menu = '[' .. vim_item.kind .. ']'
             vim_item.menu_hl_group = hl_group
             if icon then
@@ -83,7 +111,8 @@ return {
           { name = 'luasnip' },
           { name = 'path' },
           { name = 'vim-dadbod-completion' },
-          { name = 'lazydev', group_index = 0 },
+          { name = 'supermaven' },
+          { name = 'lazydev',              group_index = 0 },
         },
       }
       --#endregion

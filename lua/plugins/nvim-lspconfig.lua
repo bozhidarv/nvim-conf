@@ -153,6 +153,9 @@ return {
           },
         },
       },
+      angularls = {
+        filetypes = { 'typescript', 'html', 'typescriptreact', 'typescript.tsx', 'htmlangular' },
+      },
       lua_ls = {
         settings = {
           Lua = {
