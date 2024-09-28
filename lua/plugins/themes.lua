@@ -131,4 +131,10 @@ return {
     opts = {},
   },
   { 'rose-pine/neovim', name = 'rose-pine' },
+  {
+    'eldritch-theme/eldritch.nvim',
+    lazy = false,
+    priority = 1000,
+    opts = {},
+  },
 }
