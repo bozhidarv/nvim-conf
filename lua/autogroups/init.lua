@@ -8,25 +8,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
-vim.api.nvim_create_autocmd('ExitPre', {
-  callback = function(_)
-    local unsaved_buffers = vim.fn.getbufinfo { buflisted = 1, bufmodified = 1 }
-
-    if #unsaved_buffers == 0 then
-      vim.cmd 'qall!'
-    end
-
-    if #unsaved_buffers > 1 then
-      require('fzf-lua').buffers {
-        actions = {
-          ['ctrl-x'] = { fn = require('fzf-lua.actions').buf_del, reload = true },
-          ['ctrl-w'] = { fn = require('options.utils').fzf_lua_save_buffer_action, reload = true },
-        },
-      }
-    end
-  end,
-})
-
 local format_is_enabled = true
 vim.api.nvim_create_user_command('KickstartFormatToggle', function()
   format_is_enabled = not format_is_enabled
