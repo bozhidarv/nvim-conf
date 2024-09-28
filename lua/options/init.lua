@@ -31,14 +31,6 @@ vim.o.breakindent = true
 -- Save undo history
 vim.o.undofile = true
 
--- Set terminal to pwsh for windows
---
-if vim.fn.has 'win32' == 1 then
-  vim.opt.shell = 'pwsh'
-  --Fix for nvim not including diff and windows not having it in PATH
-  vim.g.undotree_DiffCommand = vim.fn.stdpath 'config' .. '\\bin\\diff.exe'
-end
-
 -- Case-insensitive searching UNLESS \C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
