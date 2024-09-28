@@ -71,6 +71,26 @@ vim.filetype.add {
   },
 }
 
+-- Set terminal to pwsh for windows
+
+if vim.fn.has 'win32' == 1 then
+  local powershell_options = {
+    shell = 'pwsh',
+    shellcmdflag =
+    '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;',
+    shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait',
+    shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode',
+    shellquote = '',
+    shellxquote = '',
+  }
+
+  for option, value in pairs(powershell_options) do
+    vim.opt[option] = value
+  end
+  --Fix for nvim not including diff and windows not having it in PATH
+  vim.g.undotree_DiffCommand = vim.fn.stdpath 'config' .. '\\bin\\diff.exe'
+end
+
 require('lazy').setup 'plugins'
 
 require('nvim-treesitter.install').prefer_git = false
