@@ -1,5 +1,15 @@
+--- Event arguments table
+---@class event_args
+---@field id number Autocommand ID.
+---@field event string Name of the triggered event. See |autocmd-events|.
+---@field group number|nil Autocommand group ID, if any.
+---@field match string Expanded value of `<amatch>`.
+---@field buf number Expanded value of `<abuf>`.
+---@field data any Arbitrary data passed from |nvim_exec_autocmds()|.
+---@field file string Expanded value of `<afile>`.
+
 -- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
+-- See `:help vim.highlight.on_yank()
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
@@ -14,7 +24,10 @@ vim.api.nvim_create_user_command('KickstartFormatToggle', function()
   print('Setting autoformatting to: ' .. tostring(format_is_enabled))
 end, {})
 
+---@type table<integer, integer>
 local _augroups = {}
+
+---@param client vim.lsp.Client
 local get_augroup = function(client)
   if not _augroups[client.id] then
     local group_name = 'kickstart-lsp-format-' .. client.name
@@ -31,7 +44,9 @@ end
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('kickstart-lsp-attach-format', { clear = true }),
   -- This is where we attach the autoformatting for reasonable clients
+  ---@param args event_args
   callback = function(args)
+    ---@type integer
     local client_id = args.data.client_id
     local client = vim.lsp.get_client_by_id(client_id)
     local bufnr = args.buf
@@ -75,6 +90,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+  ---@param event event_args
   callback = function(event)
     local bufnr = event.buf
     vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { buffer = bufnr, desc = '[R]e[n]ame' })
