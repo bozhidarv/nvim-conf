@@ -111,7 +111,7 @@ return {
           { name = 'luasnip' },
           { name = 'path' },
           { name = 'vim-dadbod-completion' },
-          { name = 'supermaven' },
+          -- { name = 'supermaven' },
           { name = 'lazydev',              group_index = 0 },
         },
       }
