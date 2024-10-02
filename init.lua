@@ -68,7 +68,6 @@ end
 dofile(vim.g.base46_cache .. 'defaults')
 dofile(vim.g.base46_cache .. 'statusline')
 dofile(vim.g.base46_cache .. 'syntax')
-dofile(vim.g.base46_cache .. 'treesitter')
 
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.

@@ -7,6 +7,7 @@ return {
   },
   build = ':TSUpdate',
   config = function()
+    dofile(vim.g.base46_cache .. 'treesitter')
     --#region Treesitter setup
     ---@diagnostic disable-next-line: missing-fields
     require('nvim-treesitter.configs').setup {
