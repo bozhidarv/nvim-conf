@@ -43,6 +43,8 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.hidden = true
+
+vim.g.base46_cache = vim.fn.stdpath 'data' .. '/base46_cache/'
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -58,6 +60,15 @@ if not vim.loop.fs_stat(lazypath) then
   }
 end
 vim.opt.rtp:prepend(lazypath)
+
+for _, v in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
+  dofile(vim.g.base46_cache .. v)
+end
+
+dofile(vim.g.base46_cache .. 'defaults')
+dofile(vim.g.base46_cache .. 'statusline')
+dofile(vim.g.base46_cache .. 'syntax')
+dofile(vim.g.base46_cache .. 'treesitter')
 
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
