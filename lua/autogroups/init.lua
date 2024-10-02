@@ -38,6 +38,12 @@ local get_augroup = function(client)
   return _augroups[client.id]
 end
 
+vim.api.nvim_create_user_command('LazyGitOpen', function()
+  local Terminal = require('toggleterm.terminal').Terminal
+  local lazygit = Terminal:new { cmd = 'lazygit', hidden = true }
+  lazygit:toggle()
+end, {})
+
 -- Whenever an LSP attaches to a buffer, we will run this function.
 --
 -- See `:help LspAttach` for more information about this autocmd event.
@@ -93,7 +99,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   ---@param event event_args
   callback = function(event)
     local bufnr = event.buf
-    vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { buffer = bufnr, desc = '[R]e[n]ame' })
+    vim.keymap.set('n', '<leader>cr', require 'nvchad.lsp.renamer', { buffer = bufnr, desc = '[R]e[n]ame' })
     vim.keymap.set('n', '<leader>ca', require('fzf-lua').lsp_code_actions, { buffer = bufnr, desc = '[C]ode [A]ction' })
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)

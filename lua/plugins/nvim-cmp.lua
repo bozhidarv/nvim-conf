@@ -42,7 +42,7 @@ return {
 
       --#region cmp Setup
       local cmp = require 'cmp'
-      cmp.setup {
+      local cmp_options = {
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -78,34 +78,6 @@ return {
             end
           end, { 'i', 's' }),
         },
-        formatting = {
-          expandable_indicator = false,
-          fields = { 'kind', 'abbr', 'menu' },
-          format = function(_, vim_item)
-            --@type string
-            local icon = ''
-            local hl_group = ''
-
-            if vim_item.kind == 'Supermaven' then
-              icon = ''
-              vim.api.nvim_set_hl(0, 'CmpItemKindSupermaven', { fg = '#6CC644' })
-              hl_group = 'CmpItemKindSupermaven'
-            else
-              icon, hl_group = MiniIcons.get('lsp', vim_item.kind:lower())
-            end
-
-            -- icon, hl_group = MiniIcons.get('lsp', vim_item.kind:lower())
-
-            vim_item.menu = '[' .. vim_item.kind .. ']'
-            vim_item.menu_hl_group = hl_group
-            if icon then
-              vim_item.kind = icon
-              vim_item.kind_hl_group = hl_group
-              return vim_item
-            end
-            return vim_item
-          end,
-        },
         sources = {
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
@@ -115,6 +87,11 @@ return {
           { name = 'lazydev',              group_index = 0 },
         },
       }
+
+      cmp_options = vim.tbl_deep_extend('force', cmp_options, require 'nvchad.cmp')
+
+      cmp.setup(cmp_options)
+
       --#endregion
     end,
   },

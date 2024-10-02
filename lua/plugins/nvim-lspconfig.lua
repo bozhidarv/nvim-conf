@@ -15,7 +15,10 @@ return {
         'nvim-telescope/telescope.nvim',
       },
     },
-    { 'nanotee/sqls.nvim' },
+    {
+      'nanotee/sqls.nvim',
+      cond = vim.fn.has 'win32' ~= 1,
+    },
     'hrsh7th/cmp-nvim-lsp',
   },
   opts = {
@@ -38,19 +41,6 @@ return {
         cmd = {
           'clangd',
           '--offset-encoding=utf-16',
-        },
-      },
-      sqls = {
-        settings = {
-          sqls = {
-            connections = {
-              {
-                driver = 'postgresql',
-                dataSourceName =
-                'host=127.0.0.1 port=5432 user=postgres password=poll-api dbname=postgres sslmode=disable',
-              },
-            },
-          },
         },
       },
       jdtls = {
@@ -179,6 +169,22 @@ return {
         },
       },
     }
+    if vim.fn.has 'win32' ~= 1 then
+      servers['sqls'] = {
+        settings = {
+          sqls = {
+            connections = {
+              {
+                driver = 'postgresql',
+                dataSourceName =
+                'host=127.0.0.1 port=5432 user=postgres password=poll-api dbname=postgres sslmode=disable',
+              },
+            },
+          },
+        },
+      }
+    end
+
     --#endregion
 
     --#region LSP Configuration

@@ -16,6 +16,7 @@ return {
     'theHamsta/nvim-dap-virtual-text',
   },
   config = function()
+    dofile(vim.g.base46_cache .. 'dap')
     local dap = require 'dap'
     local dapui = require 'dapui'
 

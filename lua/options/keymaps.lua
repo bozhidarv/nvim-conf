@@ -60,11 +60,7 @@ end
 
 --#region Git
 -- vim.keymap.set('n', '<leader>gf', require('neogit').open, { desc = 'Open neogit' })
-vim.keymap.set('n', '<leader>gg', function()
-  local Terminal = require('toggleterm.terminal').Terminal
-  local lazygit = Terminal:new { cmd = 'lazygit', hidden = true }
-  lazygit:toggle()
-end, { desc = 'Open neogit' })
+vim.keymap.set('n', '<leader>gg', '<CMD>LazyGitOpen<CR>', { desc = 'Open lazygit' })
 -- vim.keymap.set('n', '<leader>gp', ':Neogit pull<CR>', { desc = 'Neogit pull' })
 -- vim.keymap.set('n', '<leader>gP', ':Neogit push<CR>', { desc = 'Neogit push' })
 --#endregion

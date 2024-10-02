@@ -1,6 +1,6 @@
 return {
-  { 'Bilal2453/luvit-meta',       lazy = true }, -- optional `vim.uv` typings}
-  { 'justinsgithub/wezterm-types' },
+  { 'Bilal2453/luvit-meta',        lazy = true }, -- optional `vim.uv` typings}
+  { 'justinsgithub/wezterm-types', lazy = true },
   {
     'folke/lazydev.nvim',
     ft = 'lua', -- only load on lua files
