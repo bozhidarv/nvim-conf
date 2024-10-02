@@ -106,11 +106,18 @@ if vim.fn.has 'win32' == 1 then
   vim.keymap.set('n', '<C-k>', ':SmartCursorMoveUp<CR>', { silent = true, desc = 'Navigate up' })
   vim.keymap.set('n', '<C-h>', ':SmartCursorMoveLeft<CR>', { silent = true, desc = 'Navigate left' })
   vim.keymap.set('n', '<C-l>', ':SmartCursorMoveRight<CR>', { silent = true, desc = 'Navigate right' })
+
+  vim.keymap.set('n', '<A-j>', ':SmartResizeDown<CR>', { silent = true, desc = 'Resize down' })
+  vim.keymap.set('n', '<A-k>', ':SmartResizeUp<CR>', { silent = true, desc = 'Resize up' })
+  vim.keymap.set('n', '<A-h>', ':SmartResizeLeft<CR>', { silent = true, desc = 'Resize left' })
+  vim.keymap.set('n', '<A-l>', ':SmartResizeRight<CR>', { silent = true, desc = 'Resize right' })
 else
   vim.keymap.set('n', '<C-j>', ':TmuxNavigateDown<CR>', { silent = true, desc = 'Navigate down' })
   vim.keymap.set('n', '<C-k>', ':TmuxNavigateUp<CR>', { silent = true, desc = 'Navigate up' })
   vim.keymap.set('n', '<C-h>', ':TmuxNavigateLeft<CR>', { silent = true, desc = 'Navigate left' })
   vim.keymap.set('n', '<C-l>', ':TmuxNavigateRight<CR>', { silent = true, desc = 'Navigate right' })
+
+  --TODO: Add resizing keybindings analagous to the :Smart* ones but for tmux
 end
 --#endregion
 
