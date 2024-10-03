@@ -46,6 +46,7 @@ vim.keymap.set('n', '<leader>fh', require('fzf-lua').helptags, { desc = 'Find He
 vim.keymap.set('n', '<leader>fm', require('fzf-lua').manpages, { desc = 'Find Manpages' })
 vim.keymap.set('n', '<leader>fw', require('fzf-lua').grep_visual, { desc = 'Search current Word' })
 vim.keymap.set('n', '<leader>fg', require('fzf-lua').live_grep_native, { desc = 'Find by Grep' })
+vim.keymap.set('n', '<leader>fk', require('fzf-lua').keymaps, { desc = 'Find keymaps' })
 vim.keymap.set('n', '<leader>fu', vim.cmd.UndotreeToggle, { desc = 'Open undo tree for current buffer' })
 --#endregion
 

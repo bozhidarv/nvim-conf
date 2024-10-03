@@ -1,7 +1,7 @@
 return {
 
   base46 = {
-    theme = 'onedark', -- default theme
+    theme = 'tokyonight', -- default theme
     integrations = { 'dap', 'trouble', 'todo' },
   },
 
@@ -55,7 +55,7 @@ return {
       { txt = '󰈚  Recent Files', keys = 'Spc ?', cmd = 'FzfLua oldfiles' },
       { txt = '󰈭  Find Word', keys = 'Spc f w', cmd = 'FzfLua grep_visual' },
       { txt = '󰊢  LazyGit', keys = 'Spc g g', cmd = 'LazyGitOpen' },
-      { txt = '  Mappings', keys = 'Spc c h', cmd = 'NvCheatsheet' },
+      { txt = '  Mappings', keys = 'Spc f k', cmd = 'FzfLua keymaps' },
     },
   },
 }
