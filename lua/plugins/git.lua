@@ -1,16 +1,16 @@
 return {
-  -- { 'sindrets/diffview.nvim' },
-  -- {
-  --   'NeogitOrg/neogit',
-  --   event = 'VeryLazy',
-  --   dependencies = {
-  --     'nvim-lua/plenary.nvim',  -- required
-  --     'sindrets/diffview.nvim', -- optional - Diff integration
-  --
-  --     'ibhagwan/fzf-lua',
-  --   },
-  --   config = true,
-  -- },
+  { 'sindrets/diffview.nvim' },
+  {
+    'NeogitOrg/neogit',
+    event = 'VeryLazy',
+    dependencies = {
+      'nvim-lua/plenary.nvim',  -- required
+      'sindrets/diffview.nvim', -- optional - Diff integration
+
+      'ibhagwan/fzf-lua',
+    },
+    config = true,
+  },
   {
     'lewis6991/gitsigns.nvim',
     opts = {

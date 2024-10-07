@@ -60,10 +60,10 @@ end
 --#endregion
 
 --#region Git
--- vim.keymap.set('n', '<leader>gf', require('neogit').open, { desc = 'Open neogit' })
+vim.keymap.set('n', '<leader>gf', require('neogit').open, { desc = 'Open neogit' })
 vim.keymap.set('n', '<leader>gg', '<CMD>LazyGitOpen<CR>', { desc = 'Open lazygit' })
--- vim.keymap.set('n', '<leader>gp', ':Neogit pull<CR>', { desc = 'Neogit pull' })
--- vim.keymap.set('n', '<leader>gP', ':Neogit push<CR>', { desc = 'Neogit push' })
+vim.keymap.set('n', '<leader>gp', ':Neogit pull<CR>', { desc = 'Neogit pull' })
+vim.keymap.set('n', '<leader>gP', ':Neogit push<CR>', { desc = 'Neogit push' })
 --#endregion
 
 --#region Trouble.nvim
@@ -161,7 +161,7 @@ vim.keymap.set('n', '<leader>he', function()
   harpoon:list():select(3)
 end, { desc = 'Open third harpoon item' })
 vim.keymap.set('n', '<leader>hr', function()
-  -- harpoon:list():select(4)
+  harpoon:list():select(4)
 end, { desc = 'Open fourth harpoon item' })
 vim.keymap.set('n', '<leader>hc', function()
   harpoon:list():clear()
