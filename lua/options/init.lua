@@ -50,6 +50,7 @@ vim.o.termguicolors = true
 vim.o.relativenumber = true
 
 vim.opt.colorcolumn = '100'
+vim.o.laststatus = 3
 
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
