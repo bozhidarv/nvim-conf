@@ -60,10 +60,10 @@ end
 --#endregion
 
 --#region Git
--- vim.keymap.set('n', '<leader>gf', require('neogit').open, { desc = 'Open neogit' })
+vim.keymap.set('n', '<leader>gf', require('neogit').open, { desc = 'Open neogit' })
 vim.keymap.set('n', '<leader>gg', '<CMD>LazyGitOpen<CR>', { desc = 'Open lazygit' })
--- vim.keymap.set('n', '<leader>gp', ':Neogit pull<CR>', { desc = 'Neogit pull' })
--- vim.keymap.set('n', '<leader>gP', ':Neogit push<CR>', { desc = 'Neogit push' })
+vim.keymap.set('n', '<leader>gp', ':Neogit pull<CR>', { desc = 'Neogit pull' })
+vim.keymap.set('n', '<leader>gP', ':Neogit push<CR>', { desc = 'Neogit push' })
 --#endregion
 
 --#region Trouble.nvim
