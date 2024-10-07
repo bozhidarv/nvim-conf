@@ -1,10 +1,10 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
--- local colorscheme = require('options.utils').colorscheme
+local colorscheme = require('options.utils').colorscheme
 local isTransparent = require('options.utils').checkTransperancy
 
--- vim.cmd.colorscheme(colorscheme)
+vim.cmd.colorscheme(colorscheme)
 
 if isTransparent() then
   vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })

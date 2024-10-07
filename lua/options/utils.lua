@@ -19,7 +19,7 @@ M.checkTransperancy = function()
   return false
 end
 
-M.colorscheme = 'onedark'
+M.colorscheme = 'tokyonight'
 
 M.fzf_lua_save_buffer_action = function(selected, opts)
   local path = require 'fzf-lua.path'
