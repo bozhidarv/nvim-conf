@@ -35,6 +35,25 @@ return {
     end
     --#endregion
 
+    local border = {
+      { '🭽', 'FloatBorder' },
+      { '▔', 'FloatBorder' },
+      { '🭾', 'FloatBorder' },
+      { '▕', 'FloatBorder' },
+      { '🭿', 'FloatBorder' },
+      { '▁', 'FloatBorder' },
+      { '🭼', 'FloatBorder' },
+      { '▏', 'FloatBorder' },
+    }
+
+    -- LSP settings (for overriding per client)
+    local handlers = {
+      ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover,
+        { border = 'rounded', max_width = 100, max_height = 10, scrollbar = true }),
+      ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help,
+        { border = 'rounded', max_width = 100, max_height = 10 }),
+    }
+
     --#region Default LSP Servers
     local servers = {
       clangd = {
@@ -80,6 +99,7 @@ return {
               parameterNames = true,
               rangeVariableTypes = true,
             },
+            hoverKind = 'FullDocumentation',
           },
         },
       },
@@ -197,6 +217,7 @@ return {
         function(server_name)
           local server = servers[server_name] or {}
           server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+          server.handlers = handlers
           require('lspconfig')[server_name].setup(server)
         end,
       },

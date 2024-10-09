@@ -9,6 +9,8 @@ return {
         build = 'make install_jsregexp',
       },
       'saadparwaiz1/cmp_luasnip',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
+      'hrsh7th/cmp-cmdline',
 
       -- Adds LSP completion capabilities
       'hrsh7th/cmp-nvim-lsp',
@@ -42,7 +44,19 @@ return {
 
       --#region cmp Setup
       local cmp = require 'cmp'
+      ---@type cmp.ConfigSchema
       local cmp_options = {
+        window = {
+          completion = { -- rounded border; thin-style scrollbar
+            border = 'rounded',
+            scrollbar = '║',
+          },
+          documentation = { -- no border; native-style scrollbar
+            border = 'rounded',
+            scrollbar = '║',
+            -- other options
+          },
+        },
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -79,10 +93,12 @@ return {
           end, { 'i', 's' }),
         },
         formatting = {
-          expandable_indicator = false,
+          expandable_indicator = true,
           fields = { 'kind', 'abbr', 'menu' },
-          format = function(_, vim_item)
-            --@type string
+          ---@param entry cmp.Entry
+          ---@param vim_item vim.CompletedItem
+          format = function(entry, vim_item)
+            ---@type string
             local icon = ''
             local hl_group = ''
             if vim_item.kind == 'Supermaven' then
@@ -108,12 +124,32 @@ return {
           { name = 'luasnip' },
           { name = 'path' },
           { name = 'vim-dadbod-completion' },
+          { name = 'nvim_lsp_signature_help' },
+          { name = 'hrsh7th/cmp-cmdline' },
           -- { name = 'supermaven' },
-          { name = 'lazydev',              group_index = 0 },
+          { name = 'lazydev',                group_index = 0 },
         },
       }
 
       cmp.setup(cmp_options)
+
+      cmp.setup.cmdline({ '/', '?' }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = 'buffer' },
+        },
+      })
+
+      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = 'path' },
+        }, {
+          { name = 'cmdline' },
+        }),
+        matching = { disallow_symbol_nonprefix_matching = false },
+      })
 
       --#endregion
     end,
