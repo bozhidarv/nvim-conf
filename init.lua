@@ -66,12 +66,6 @@ vim.opt.rtp:prepend(lazypath)
 --  You can also configure plugins after the setup call,
 --    as they will be available in your neovim runtime.
 
-vim.filetype.add {
-  pattern = {
-    ['.*%.component%.html'] = 'htmlangular', -- Sets the filetype to `htmlangular` if it matches the pattern
-  },
-}
-
 -- Set terminal to pwsh for windows
 
 if vim.fn.has 'win32' == 1 then
