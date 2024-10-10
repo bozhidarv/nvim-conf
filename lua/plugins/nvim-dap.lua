@@ -71,6 +71,18 @@ return {
         command = vim.fn.stdpath 'data' .. '/mason/packages/netcoredbg/libexec/netcoredbg/netcoredbg',
         args = { '--interpreter=vscode' },
       }
+      dap.adapters.codelldb = {
+        type = 'server',
+        port = '${port}',
+        executable = {
+          -- CHANGE THIS to your path!
+          command = vim.fn.stdpath 'data' .. '/mason/packages/codelldb/codelldb',
+          args = { '--port', '${port}' },
+
+          -- On windows you may have to uncomment this:
+          -- detached = false,
+        },
+      }
     else
       dap.adapters.cppdbg = {
         id = 'cppdbg',
@@ -135,6 +147,18 @@ return {
             ignoreFailures = false,
           },
         },
+      },
+    }
+    dap.configurations.rust = {
+      {
+        name = 'Launch file',
+        type = 'codelldb',
+        request = 'launch',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
       },
     }
     dap.configurations.c = dap.configurations.cpp
