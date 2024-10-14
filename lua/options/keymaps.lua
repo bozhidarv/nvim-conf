@@ -26,28 +26,55 @@ vim.keymap.set('n', '<leader>sv', ':vsplit<CR>', { desc = 'Verical split' })
 --#endregion
 
 --#region fzf-lua
-vim.keymap.set('n', '<leader>?', require('fzf-lua').oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader><space>', require('fzf-lua').files, { desc = 'Search files' })
-vim.keymap.set('n', '<leader>/', function()
-  -- You can pass additional configuration to telescope to change theme, layout, etc.
-  require('fzf-lua').lgrep_curbuf()
-end, { desc = '[/] Fuzzily search in current buffer' })
-vim.keymap.set('n', '<leader>ff', require('fzf-lua').git_files, { desc = 'Find Git Files' })
-vim.keymap.set('n', '<leader>fF', require('fzf-lua').files, { desc = 'Find Files' })
-vim.keymap.set('n', '<leader>fb', function()
-  require('fzf-lua').buffers {
-    actions = {
-      ['ctrl-x'] = { fn = require('fzf-lua.actions').buf_del, reload = true },
-      ['ctrl-w'] = { fn = require('options.utils').fzf_lua_save_buffer_action, reload = true },
-    },
-  }
-end, { desc = 'Find Buffers' })
-vim.keymap.set('n', '<leader>fh', require('fzf-lua').helptags, { desc = 'Find Help' })
-vim.keymap.set('n', '<leader>fm', require('fzf-lua').manpages, { desc = 'Find Manpages' })
-vim.keymap.set('n', '<leader>fw', require('fzf-lua').grep_visual, { desc = 'Search current Word' })
-vim.keymap.set('n', '<leader>fg', require('fzf-lua').live_grep_native, { desc = 'Find by Grep' })
-vim.keymap.set('n', '<leader>fk', require('fzf-lua').keymaps, { desc = 'Find keymaps' })
-vim.keymap.set('n', '<leader>fu', vim.cmd.UndotreeToggle, { desc = 'Open undo tree for current buffer' })
+local picker = require('options.utils').picker
+if picker == 'fzf-lua' then
+  vim.keymap.set('n', '<leader>?', require('fzf-lua').oldfiles, { desc = '[?] Find recently opened files' })
+  vim.keymap.set('n', '<leader><space>', require('fzf-lua').files, { desc = 'Search files' })
+  vim.keymap.set('n', '<leader>/', function()
+    -- You can pass additional configuration to telescope to change theme, layout, etc.
+    require('fzf-lua').lgrep_curbuf()
+  end, { desc = '[/] Fuzzily search in current buffer' })
+  vim.keymap.set('n', '<leader>ff', require('fzf-lua').git_files, { desc = 'Find Git Files' })
+  vim.keymap.set('n', '<leader>fF', require('fzf-lua').files, { desc = 'Find Files' })
+  vim.keymap.set('n', '<leader>fb', function()
+    require('fzf-lua').buffers {
+      actions = {
+        ['ctrl-x'] = { fn = require('fzf-lua.actions').buf_del, reload = true },
+        ['ctrl-w'] = { fn = require('options.utils').fzf_lua_save_buffer_action, reload = true },
+      },
+    }
+  end, { desc = 'Find Buffers' })
+  vim.keymap.set('n', '<leader>fh', require('fzf-lua').helptags, { desc = 'Find Help' })
+  vim.keymap.set('n', '<leader>fm', require('fzf-lua').manpages, { desc = 'Find Manpages' })
+  vim.keymap.set('n', '<leader>fw', require('fzf-lua').grep_visual, { desc = 'Search current Word' })
+  vim.keymap.set('n', '<leader>fg', require('fzf-lua').live_grep_native, { desc = 'Find by Grep' })
+  vim.keymap.set('n', '<leader>fk', require('fzf-lua').keymaps, { desc = 'Find keymaps' })
+  vim.keymap.set('n', '<leader>fu', vim.cmd.UndotreeToggle, { desc = 'Open undo tree for current buffer' })
+elseif picker == 'telescope' then
+  vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+  vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, { desc = 'Search files' })
+  vim.keymap.set('n', '<leader>/', function()
+    -- You can pass additional configuration to telescope to change theme, layout, etc.
+    require('telescope.builtin').live_grep()
+  end, { desc = '[/] Fuzzily search in current buffer' })
+  vim.keymap.set('n', '<leader>ff', require('telescope.builtin').git_files, { desc = 'Find Git Files' })
+  vim.keymap.set('n', '<leader>fF', require('telescope.builtin').find_files, { desc = 'Find Files' })
+  vim.keymap.set('n', '<leader>fb', function()
+    -- require('telescope.builtin').buffers {
+    --   actions = {
+    --     ['ctrl-x'] = { fn = require('telescope.builtin.actions').buf_del, reload = true },
+    --     ['ctrl-w'] = { fn = require('options.utils').fzf_lua_save_buffer_action, reload = true },
+    --   },
+    -- }
+    require('telescope.builtin').buffers()
+  end, { desc = 'Find Buffers' })
+  vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = 'Find Help' })
+  vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = 'Find Manpages' })
+  vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = 'Search current Word' })
+  vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Find by Grep' })
+  vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = 'Find keymaps' })
+  vim.keymap.set('n', '<leader>fu', vim.cmd.UndotreeToggle, { desc = 'Open undo tree for current buffer' })
+end
 --#endregion
 
 --#region Oil.nvim
@@ -175,4 +202,8 @@ vim.keymap.set('n', '<leader>ft', ':Neotree filesystem toggle right<CR>', { desc
 
 --#region Terminal
 vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]], { desc = 'Toggle filetree' })
+--#endregion
+
+--#region Markdown
+vim.keymap.set('n', '<leader>mt', ':Markview<CR>', { desc = 'Toggle markview' })
 --#endregion

@@ -21,6 +21,8 @@ end
 
 M.colorscheme = 'tokyonight'
 
+M.picker = 'telescope'
+
 M.fzf_lua_save_buffer_action = function(selected, opts)
   local path = require 'fzf-lua.path'
   local utils = require 'fzf-lua.utils'
