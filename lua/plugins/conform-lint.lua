@@ -22,9 +22,11 @@ return {
         c = { 'clang-format' },
         cpp = { 'clang-format' },
         yaml = { 'prettierd' },
+        markdown = { 'prettierd' },
         astro = { 'prettierd' },
         css = { 'prettierd' },
         cs = { 'csharpier' },
+        rust = { 'rustfmt' },
       },
       -- Set default options
       default_format_opts = {
