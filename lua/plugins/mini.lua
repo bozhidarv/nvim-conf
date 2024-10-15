@@ -1,5 +1,3 @@
-local add = MiniDeps.add
-
 require('mini.icons').setup {
   lsp = {
     ['error'] = { glyph = ' ', hl = 'LspDiagnosticsDefaultError' },
@@ -54,19 +52,53 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
   end,
 })
 
-require('mini.statusline').setup {
-  -- Content of statusline as functions which return statusline string. See
-  -- `:h statusline` and code of default contents (used instead of `nil`).
-  content = {
-    -- Content for active window
-    active = nil,
-    -- Content for inactive window(s)
-    inactive = nil,
-  },
-
-  -- Whether to use icons by default
+local signs = require('options.utils').lspSigns
+local statusline = require 'mini.statusline'
+-- set use_icons to true if you have a Nerd Font
+statusline.setup {
   use_icons = true,
-
-  -- Whether to set Vim's settings for statusline (make it always shown)
-  set_vim_settings = true,
 }
+
+---@diagnostic disable-next-line: duplicate-set-field
+statusline.section_location = function()
+  return '%2l:%-2v'
+end
+
+statusline.section_lsp = function()
+  return ''
+end
+
+---@diagnostic disable-next-line: duplicate-set-field
+statusline.section_diagnostics = function(_)
+  local count = {}
+
+  local severities = vim.diagnostic.severity
+
+  for level in pairs(vim.diagnostic.severity) do
+    count[level] = vim.tbl_count(vim.diagnostic.get(0, { severity = level }))
+  end
+
+  if count[severities.ERROR] == 0 and count[severities.WARN] == 0 and count[severities.HINT] == 0 and count[severities.INFO] == 0 then
+    return ''
+  end
+
+  local errors = ''
+  local warnings = ''
+  local hints = ''
+  local info = ''
+
+  if count[severities.ERROR] ~= 0 then
+    errors = signs.Error .. ' ' .. count[severities.E] .. ' '
+  end
+  if count[severities.WARN] ~= 0 then
+    warnings = signs.Warn .. ' ' .. count[severities.WARN] .. ' '
+  end
+  if count[severities.HINT] ~= 0 then
+    hints = signs.Hint .. ' ' .. count[severities.HINT] .. ' '
+  end
+  if count[severities.HINT] ~= 0 then
+    info = signs.Info .. ' ' .. count[severities.HINT] .. ' '
+  end
+
+  return '|' .. errors .. warnings .. hints .. info .. '|'
+end
