@@ -1,10 +1,10 @@
-return {
-  'folke/trouble.nvim',
-  dependencies = {
-    { 'folke/todo-comments.nvim', opts = {} },
-  },
-  opts = {},
-  config = function()
-    require('trouble').setup()
-  end,
+local add = MiniDeps.add
+
+add {
+  source='folke/trouble.nvim',
+  depends = {
+    'folke/todo-comments.nvim'
+  }
 }
+
+require('trouble').setup()

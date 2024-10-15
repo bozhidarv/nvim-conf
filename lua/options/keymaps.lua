@@ -6,6 +6,10 @@ vim.keymap.set('n', '<C-k>', '<C-w>k', { silent = true })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
 --#endregion
 
+--#region buffers
+vim.keymap.set('n', '<leader>C', ':bd<CR>', { silent = true, desc = 'Close buffer' })
+--#endregion
+
 --#region Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -143,10 +147,6 @@ vim.keymap.set('n', '<A-l>', ':SmartResizeRight<CR>', { silent = true, desc = 'R
 --
 --   --TODO: Add resizing keybindings analagous to the :Smart* ones but for tmux
 -- end
---#endregion
-
---#region buffers
-vim.keymap.set('n', '<leader>C', ':bd<CR>', { silent = true, desc = 'Close buffer' })
 --#endregion
 
 --#region tabs
