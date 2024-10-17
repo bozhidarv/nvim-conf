@@ -103,7 +103,7 @@ statusline.section_diagnostics = function(_)
   return '|' .. errors .. warnings .. hints .. info .. '|'
 end
 
-require('mini.diff').setup({
+require('mini.diff').setup {
   -- Options for how hunks are visualized
   view = {
     -- Visualization style. Possible values are 'sign' and 'number'.
@@ -158,4 +158,6 @@ require('mini.diff').setup({
     -- Whether to wrap around edges during hunk navigation
     wrap_goto = false,
   },
-})
+}
+
+require('mini.git').setup {}

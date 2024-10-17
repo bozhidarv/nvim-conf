@@ -59,11 +59,15 @@ end
 --#endregion
 
 --#region Git
-vim.keymap.set('n', '<leader>gf', ':Git<CR>', { desc = 'Open git fugitive' })
 vim.keymap.set('n', '<leader>gg', '<CMD>LazyGitOpen<CR>', { desc = 'Open lazygit' })
 vim.keymap.set('n', '<leader>gh', function()
-  require("mini.diff").toggle_overlay(0)
+  require('mini.diff').toggle_overlay(0)
 end, { desc = 'Toggle mini.diff overlay' })
+vim.keymap.set('n', '<leader>gp', ':Git pull<CR>', { desc = 'Git pull' })
+vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = 'Git push' })
+vim.keymap.set('n', '<leader>gd', ':Git diff %<CR>', { desc = 'Git diff current file' })
+vim.keymap.set('n', '<leader>gD', ':Git diff<CR>', { desc = 'Git diff repo' })
+vim.keymap.set('n', '<leader>gw', ':Git diff <C-R><C-W> <CR>', { desc = 'Git diff cword' })
 
 --#endregion
 
