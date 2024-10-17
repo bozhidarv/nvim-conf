@@ -64,8 +64,20 @@ statusline.section_location = function()
   return '%2l:%-2v'
 end
 
+---@diagnostic disable-next-line: duplicate-set-field
 statusline.section_lsp = function()
   return ''
+end
+
+---@diagnostic disable-next-line: duplicate-set-field
+statusline.section_filename = function()
+  local buf = vim.api.nvim_get_current_buf()
+  local res = (vim.fn.expand '%')
+  local buf_modified = vim.api.nvim_buf_get_option(buf, 'modified')
+  if buf_modified then
+    res = res .. ' [+]'
+  end
+  return res
 end
 
 ---@diagnostic disable-next-line: duplicate-set-field
