@@ -44,22 +44,6 @@ vim.g.maplocalleader = ' '
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.hidden = true
 
--- Install package manager
---    https://github.com/folke/lazy.nvim
---    `:help lazy.nvim.txt` for more info
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system {
-    'git',
-    'clone',
-    '--filter=blob:none',
-    'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable', --latest stable release
-    lazypath,
-  }
-end
-vim.opt.rtp:prepend(lazypath)
-
 -- NOTE: Here is where you install your plugins.
 --  You can configure plugins using the `config` key.
 --
@@ -71,8 +55,7 @@ vim.opt.rtp:prepend(lazypath)
 if vim.fn.has 'win32' == 1 then
   local powershell_options = {
     shell = 'pwsh',
-    shellcmdflag =
-    '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;',
+    shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;',
     shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait',
     shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode',
     shellquote = '',
@@ -86,7 +69,29 @@ if vim.fn.has 'win32' == 1 then
   vim.g.undotree_DiffCommand = vim.fn.stdpath 'config' .. '\\bin\\diff.exe'
 end
 
-require('lazy').setup 'plugins'
+-- Clone 'mini.nvim' manually in a way that it gets managed by 'mini.deps'
+local path_package = vim.fn.stdpath 'data' .. '/site/'
+local mini_path = path_package .. 'pack/deps/start/mini.nvim'
+if not vim.loop.fs_stat(mini_path) then
+  vim.cmd 'echo "Installing `mini.nvim`" | redraw'
+  local clone_cmd = {
+    'git',
+    'clone',
+    '--filter=blob:none',
+    'https://github.com/echasnovski/mini.nvim',
+    mini_path,
+  }
+  vim.fn.system(clone_cmd)
+  vim.cmd 'packadd mini.nvim | helptags ALL'
+  vim.cmd 'echo "Installed `mini.nvim`" | redraw'
+end
+
+-- Set up 'mini.deps' (customize to your liking)
+require('mini.deps').setup { path = { package = path_package } }
+
+for _, file in ipairs(vim.fn.readdir(vim.fn.stdpath 'config' .. '/lua/plugins', [[v:val =~ '\.lua$']])) do
+  require('plugins.' .. file:gsub('%.lua$', ''))
+end
 
 require('nvim-treesitter.install').prefer_git = false
 require('nvim-treesitter.install').compilers = { 'clang', 'gcc' }

@@ -1,3 +1,3 @@
-return {
-  'mbbill/undotree',
+MiniDeps.add {
+  source = 'mbbill/undotree',
 }

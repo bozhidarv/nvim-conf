@@ -100,7 +100,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(event)
     local bufnr = event.buf
     vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { buffer = bufnr, desc = '[R]e[n]ame' })
-    vim.keymap.set('n', '<leader>ca', require('fzf-lua').lsp_code_actions, { buffer = bufnr, desc = '[C]ode [A]ction' })
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = '[C]ode [A]ction' })
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)
     local picker = require('options.utils').picker

@@ -6,6 +6,10 @@ vim.keymap.set('n', '<C-k>', '<C-w>k', { silent = true })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
 --#endregion
 
+--#region buffers
+vim.keymap.set('n', '<leader>C', ':bd<CR>', { silent = true, desc = 'Close buffer' })
+--#endregion
+
 --#region Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -26,55 +30,23 @@ vim.keymap.set('n', '<leader>sv', ':vsplit<CR>', { desc = 'Verical split' })
 --#endregion
 
 --#region fzf-lua
-local picker = require('options.utils').picker
-if picker == 'fzf-lua' then
-  vim.keymap.set('n', '<leader>?', require('fzf-lua').oldfiles, { desc = '[?] Find recently opened files' })
-  vim.keymap.set('n', '<leader><space>', require('fzf-lua').files, { desc = 'Search files' })
-  vim.keymap.set('n', '<leader>/', function()
-    -- You can pass additional configuration to telescope to change theme, layout, etc.
-    require('fzf-lua').lgrep_curbuf()
-  end, { desc = '[/] Fuzzily search in current buffer' })
-  vim.keymap.set('n', '<leader>ff', require('fzf-lua').git_files, { desc = 'Find Git Files' })
-  vim.keymap.set('n', '<leader>fF', require('fzf-lua').files, { desc = 'Find Files' })
-  vim.keymap.set('n', '<leader>fb', function()
-    require('fzf-lua').buffers {
-      actions = {
-        ['ctrl-x'] = { fn = require('fzf-lua.actions').buf_del, reload = true },
-        ['ctrl-w'] = { fn = require('options.utils').fzf_lua_save_buffer_action, reload = true },
-      },
-    }
-  end, { desc = 'Find Buffers' })
-  vim.keymap.set('n', '<leader>fh', require('fzf-lua').helptags, { desc = 'Find Help' })
-  vim.keymap.set('n', '<leader>fm', require('fzf-lua').manpages, { desc = 'Find Manpages' })
-  vim.keymap.set('n', '<leader>fw', require('fzf-lua').grep_visual, { desc = 'Search current Word' })
-  vim.keymap.set('n', '<leader>fg', require('fzf-lua').live_grep_native, { desc = 'Find by Grep' })
-  vim.keymap.set('n', '<leader>fk', require('fzf-lua').keymaps, { desc = 'Find keymaps' })
-  vim.keymap.set('n', '<leader>fu', vim.cmd.UndotreeToggle, { desc = 'Open undo tree for current buffer' })
-elseif picker == 'telescope' then
-  vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-  vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, { desc = 'Search files' })
-  vim.keymap.set('n', '<leader>/', function()
-    -- You can pass additional configuration to telescope to change theme, layout, etc.
-    require('telescope.builtin').live_grep()
-  end, { desc = '[/] Fuzzily search in current buffer' })
-  vim.keymap.set('n', '<leader>ff', require('telescope.builtin').git_files, { desc = 'Find Git Files' })
-  vim.keymap.set('n', '<leader>fF', require('telescope.builtin').find_files, { desc = 'Find Files' })
-  vim.keymap.set('n', '<leader>fb', function()
-    -- require('telescope.builtin').buffers {
-    --   actions = {
-    --     ['ctrl-x'] = { fn = require('telescope.builtin.actions').buf_del, reload = true },
-    --     ['ctrl-w'] = { fn = require('options.utils').fzf_lua_save_buffer_action, reload = true },
-    --   },
-    -- }
-    require('telescope.builtin').buffers()
-  end, { desc = 'Find Buffers' })
-  vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = 'Find Help' })
-  vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = 'Find Manpages' })
-  vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = 'Search current Word' })
-  vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Find by Grep' })
-  vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = 'Find keymaps' })
-  vim.keymap.set('n', '<leader>fu', vim.cmd.UndotreeToggle, { desc = 'Open undo tree for current buffer' })
-end
+vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, { desc = 'Search files' })
+vim.keymap.set('n', '<leader>/', function()
+  -- You can pass additional configuration to telescope to change theme, layout, etc.
+  require('telescope.builtin').live_grep()
+end, { desc = '[/] Fuzzily search in current buffer' })
+vim.keymap.set('n', '<leader>ff', require('telescope.builtin').git_files, { desc = 'Find Git Files' })
+vim.keymap.set('n', '<leader>fF', require('telescope.builtin').find_files, { desc = 'Find Files' })
+vim.keymap.set('n', '<leader>fb', function()
+  require('telescope.builtin').buffers()
+end, { desc = 'Find Buffers' })
+vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = 'Find Help' })
+vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = 'Find Manpages' })
+vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = 'Search current Word' })
+vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Find by Grep' })
+vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = 'Find keymaps' })
+vim.keymap.set('n', '<leader>fu', vim.cmd.UndotreeToggle, { desc = 'Open undo tree for current buffer' })
 --#endregion
 
 --#region Oil.nvim
@@ -87,10 +59,16 @@ end
 --#endregion
 
 --#region Git
-vim.keymap.set('n', '<leader>gf', require('neogit').open, { desc = 'Open neogit' })
 vim.keymap.set('n', '<leader>gg', '<CMD>LazyGitOpen<CR>', { desc = 'Open lazygit' })
-vim.keymap.set('n', '<leader>gp', ':Neogit pull<CR>', { desc = 'Neogit pull' })
-vim.keymap.set('n', '<leader>gP', ':Neogit push<CR>', { desc = 'Neogit push' })
+vim.keymap.set('n', '<leader>gh', function()
+  require('mini.diff').toggle_overlay(0)
+end, { desc = 'Toggle mini.diff overlay' })
+vim.keymap.set('n', '<leader>gp', ':Git pull<CR>', { desc = 'Git pull' })
+vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = 'Git push' })
+vim.keymap.set('n', '<leader>gd', ':Git diff %<CR>', { desc = 'Git diff current file' })
+vim.keymap.set('n', '<leader>gD', ':Git diff<CR>', { desc = 'Git diff repo' })
+vim.keymap.set('n', '<leader>gw', ':Git diff <C-R><C-W> <CR>', { desc = 'Git diff cword' })
+
 --#endregion
 
 --#region Trouble.nvim
@@ -135,22 +113,11 @@ vim.keymap.set('n', '<A-j>', ':SmartResizeDown<CR>', { silent = true, desc = 'Re
 vim.keymap.set('n', '<A-k>', ':SmartResizeUp<CR>', { silent = true, desc = 'Resize up' })
 vim.keymap.set('n', '<A-h>', ':SmartResizeLeft<CR>', { silent = true, desc = 'Resize left' })
 vim.keymap.set('n', '<A-l>', ':SmartResizeRight<CR>', { silent = true, desc = 'Resize right' })
--- else
---   vim.keymap.set('n', '<C-j>', ':TmuxNavigateDown<CR>', { silent = true, desc = 'Navigate down' })
---   vim.keymap.set('n', '<C-k>', ':TmuxNavigateUp<CR>', { silent = true, desc = 'Navigate up' })
---   vim.keymap.set('n', '<C-h>', ':TmuxNavigateLeft<CR>', { silent = true, desc = 'Navigate left' })
---   vim.keymap.set('n', '<C-l>', ':TmuxNavigateRight<CR>', { silent = true, desc = 'Navigate right' })
---
---   --TODO: Add resizing keybindings analagous to the :Smart* ones but for tmux
--- end
---#endregion
-
---#region buffers
-vim.keymap.set('n', '<leader>C', ':bd<CR>', { silent = true, desc = 'Close buffer' })
 --#endregion
 
 --#region tabs
 vim.keymap.set('n', '<leader>tc', ':tabclose<CR>', { silent = true, desc = 'Close tab' })
+vim.keymap.set('n', '<leader>tn', ':tabnew<CR>', { silent = true, desc = 'New tab' })
 vim.keymap.set('n', '[T', ':tabprevious<CR>', { silent = true, desc = 'Previous tab' })
 vim.keymap.set('n', ']T', ':tabNext<CR>', { silent = true, desc = 'Next tab' })
 --#endregion
@@ -196,14 +163,6 @@ end, { desc = 'Clear harpoon items' })
 
 --#endregion
 
---#region Neotree
-vim.keymap.set('n', '<leader>ft', ':Neotree filesystem toggle right<CR>', { desc = 'Toggle filetree' })
---#endregion
-
 --#region Terminal
 vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]], { desc = 'Toggle filetree' })
---#endregion
-
---#region Markdown
-vim.keymap.set('n', '<leader>mt', ':Markview<CR>', { desc = 'Toggle markview' })
 --#endregion
