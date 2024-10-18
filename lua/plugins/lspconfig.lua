@@ -16,10 +16,11 @@ add {
 }
 
 --#region Diagnostic Signs Configuration
-local signs = require('options.utils').lspSigns
-for type, icon in pairs(signs) do
-  local hl = 'DiagnosticSign' .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+local severities = vim.diagnostic.severity
+for level = 1, 4 do
+  local severity = string.lower(severities[level])
+  local hl = 'DiagnosticSign' .. require('options.utils').firstToUpper(severity)
+  vim.fn.sign_define(hl, { text = MiniIcons.get('lsp', severity), texthl = hl, numhl = hl })
 end
 --#endregion
 

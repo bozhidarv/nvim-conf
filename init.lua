@@ -55,7 +55,8 @@ vim.opt.hidden = true
 if vim.fn.has 'win32' == 1 then
   local powershell_options = {
     shell = 'pwsh',
-    shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;',
+    shellcmdflag =
+    '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;',
     shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait',
     shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode',
     shellquote = '',
@@ -88,6 +89,17 @@ end
 
 -- Set up 'mini.deps' (customize to your liking)
 require('mini.deps').setup { path = { package = path_package } }
+
+require('mini.icons').setup {
+  lsp = {
+    ['error'] = { glyph = '󰀨 ', hl = 'LspDiagnosticsDefaultError' },
+    ['warn'] = { glyph = ' ', hl = 'LspDiagnosticsDefaultWarning' },
+    ['info'] = { glyph = ' ', hl = 'LspDiagnosticsDefaultInformation' },
+    ['hint'] = { glyph = '󰌵 ', hl = 'LspDiagnosticsDefaultHint' },
+  },
+}
+
+MiniIcons.mock_nvim_web_devicons()
 
 for _, file in ipairs(vim.fn.readdir(vim.fn.stdpath 'config' .. '/lua/plugins', [[v:val =~ '\.lua$']])) do
   require('plugins.' .. file:gsub('%.lua$', ''))

@@ -1,14 +1,3 @@
-require('mini.icons').setup {
-  lsp = {
-    ['error'] = { glyph = ' ', hl = 'LspDiagnosticsDefaultError' },
-    ['warning'] = { glyph = ' ', hl = 'LspDiagnosticsDefaultWarning' },
-    ['info'] = { glyph = ' ', hl = 'LspDiagnosticsDefaultInformation' },
-    ['hint'] = { glyph = '', hl = 'LspDiagnosticsDefaultHint' },
-  },
-}
-
-MiniIcons.mock_nvim_web_devicons()
-
 require('mini.cursorword').setup {
   -- Delay (in ms) between when cursor moved and when highlighting appeared
   delay = 100,
@@ -52,25 +41,7 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
   end,
 })
 
-local signs = require('options.utils').lspSigns
-local statusline = require 'mini.statusline'
--- set use_icons to true if you have a Nerd Font
-statusline.setup {
-  use_icons = true,
-}
-
----@diagnostic disable-next-line: duplicate-set-field
-statusline.section_location = function()
-  return '%2l:%-2v'
-end
-
----@diagnostic disable-next-line: duplicate-set-field
-statusline.section_lsp = function()
-  return ''
-end
-
----@diagnostic disable-next-line: duplicate-set-field
-statusline.section_filename = function()
+local custom_filename = function()
   local buf = vim.api.nvim_get_current_buf()
 
   local buf_name = vim.api.nvim_buf_get_name(buf)
@@ -78,15 +49,13 @@ statusline.section_filename = function()
     return vim.fn.expand '%'
   end
 
-  local split = vim.fn.split(buf_name, '\\')
+  local split = vim.fn.split(buf_name, '/')
+  if vim.fn.has 'win32' == 1 then
+    split = vim.fn.split(buf_name, '\\')
+  end
   local res = split[vim.fn.len(split)]
 
-  local arrowStatusline = require 'arrow.statusline'
-  if arrowStatusline.is_on_arrow_file() then
-    res = arrowStatusline.text_for_statusline_with_icons() .. ' ' .. res
-  end
-
-  local buf_modified = vim.api.nvim_buf_get_option(buf, 'modified')
+  local buf_modified = vim.api.nvim_get_option_value('modified', { buf = buf })
   if buf_modified then
     res = res .. ' [+]'
   end
@@ -94,39 +63,66 @@ statusline.section_filename = function()
   return res
 end
 
----@diagnostic disable-next-line: duplicate-set-field
-statusline.section_diagnostics = function(_)
-  local count = {}
+local custom_location = function()
+  return '%2l:%-2v'
+end
 
+local custom_diagnostics = function(_)
   local severities = vim.diagnostic.severity
 
-  for level in pairs(vim.diagnostic.severity) do
-    count[level] = vim.tbl_count(vim.diagnostic.get(0, { severity = level }))
+  local diagnostics = ''
+
+  local currCount
+  for level = 1, 4 do
+    currCount = vim.tbl_count(vim.diagnostic.get(0, { severity = level }))
+    if currCount > 0 then
+      diagnostics = diagnostics .. MiniIcons.get('lsp', string.lower(severities[level])) .. currCount .. ' '
+    end
   end
 
-  if count[severities.ERROR] == 0 and count[severities.WARN] == 0 and count[severities.HINT] == 0 and count[severities.INFO] == 0 then
+  if diagnostics == '' then
     return ''
   end
+  return '| ' .. diagnostics .. '|'
+end
 
-  local errors = ''
-  local warnings = ''
-  local hints = ''
-  local info = ''
+local custom_arrow = function()
+  local arrowStatusline = require 'arrow.statusline'
+  if arrowStatusline.is_on_arrow_file() then
+    return arrowStatusline.text_for_statusline_with_icons()
+  end
+  return ''
+end
 
-  if count[severities.ERROR] ~= 0 then
-    errors = signs.Error .. ' ' .. count[severities.E] .. ' '
-  end
-  if count[severities.WARN] ~= 0 then
-    warnings = signs.Warn .. ' ' .. count[severities.WARN] .. ' '
-  end
-  if count[severities.HINT] ~= 0 then
-    hints = signs.Hint .. ' ' .. count[severities.HINT] .. ' '
-  end
-  if count[severities.HINT] ~= 0 then
-    info = signs.Info .. ' ' .. count[severities.HINT] .. ' '
-  end
+local statusline = require 'mini.statusline'
+-- set use_icons to true if you have a Nerd Font
+statusline.setup {}
 
-  return '|' .. errors .. warnings .. hints .. info .. '|'
+---@diagnostic disable-next-line: duplicate-set-field
+MiniStatusline.active = function()
+  local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
+  local git = MiniStatusline.section_git { trunc_width = 40 }
+  local diff = MiniStatusline.section_diff { trunc_width = 75 }
+  -- local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
+  local diagnostics = custom_diagnostics()
+  -- local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
+  local arrow = custom_arrow()
+  -- local filename = MiniStatusline.section_filename { trunc_width = 140 }
+  local filename = custom_filename()
+  local fileinfo = MiniStatusline.section_fileinfo { trunc_width = 120 }
+  -- local location = MiniStatusline.section_location { trunc_width = 75 }
+  -- local search = MiniStatusline.section_searchcount { trunc_width = 75 }
+  local location = custom_location()
+
+  return MiniStatusline.combine_groups {
+    { hl = mode_hl,                 strings = { mode } },
+    { hl = 'MiniStatuslineDevinfo', strings = { git, diff, diagnostics, arrow } },
+    '%<', -- Mark general truncate point
+    { hl = 'MiniStatuslineFilename', strings = { filename } },
+    '%=', -- End left alignment
+    { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+    { hl = mode_hl,                  strings = { location } },
+  }
 end
 
 require('mini.diff').setup {

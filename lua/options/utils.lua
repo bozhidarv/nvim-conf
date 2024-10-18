@@ -1,11 +1,8 @@
 local M = {}
 
-M.lspSigns = {
-  Error = ' ',
-  Warn = ' ',
-  Hint = ' ',
-  Info = ' ',
-}
+M.firstToUpper = function(str)
+  return (str:gsub('^%l', string.upper))
+end
 
 M.checkTransperancy = function()
   local isTrans = os.getenv 'NVIM_TRANSPARENT_BACKGROUND'
