@@ -29,7 +29,7 @@ vim.keymap.set('n', '<leader>sh', ':split<CR>', { desc = 'Horizontal split' })
 vim.keymap.set('n', '<leader>sv', ':vsplit<CR>', { desc = 'Verical split' })
 --#endregion
 
---#region fzf-lua
+--#region telescope
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, { desc = 'Search files' })
 vim.keymap.set('n', '<leader>/', function()
