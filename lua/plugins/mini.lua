@@ -72,7 +72,14 @@ end
 ---@diagnostic disable-next-line: duplicate-set-field
 statusline.section_filename = function()
   local buf = vim.api.nvim_get_current_buf()
-  local res = vim.api.nvim_buf_get_name(buf)
+
+  local buf_name = vim.api.nvim_buf_get_name(buf)
+  if vim.fn.empty(buf_name) == 1 then
+    return vim.fn.expand '%'
+  end
+
+  local split = vim.fn.split(buf_name, '\\')
+  local res = split[vim.fn.len(split)]
 
   local arrowStatusline = require 'arrow.statusline'
   if arrowStatusline.is_on_arrow_file() then
@@ -83,6 +90,7 @@ statusline.section_filename = function()
   if buf_modified then
     res = res .. ' [+]'
   end
+
   return res
 end
 
