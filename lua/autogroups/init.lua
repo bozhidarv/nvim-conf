@@ -103,8 +103,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = '[C]ode [A]ction' })
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)
-    local picker = require('options.utils').picker
-
     if client and client.name == 'sqls' then
       require('sqls').on_attach(client, bufnr)
     end

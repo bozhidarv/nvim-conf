@@ -18,6 +18,4 @@ end
 
 M.colorscheme = 'tokyonight'
 
-M.picker = 'telescope'
-
 return M
