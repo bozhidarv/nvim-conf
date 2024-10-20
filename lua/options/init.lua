@@ -64,6 +64,7 @@ vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
 vim.opt.statuscolumn = [[%!v:lua.require'custom.statuscol'.statuscolumn()]]
+vim.o.winbar = [[%f %m]]
 
 vim.g.copilot_no_tab_map = true
 

@@ -42,29 +42,30 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
 })
 
 local custom_filename = function()
-  local buf = vim.api.nvim_get_current_buf()
+  -- local buf = vim.api.nvim_get_current_buf()
+  --
+  -- local buf_name = vim.api.nvim_buf_get_name(buf)
+  -- if vim.fn.empty(buf_name) == 1 then
+  --   return vim.fn.expand '%'
+  -- end
+  --
+  -- local split = vim.fn.split(buf_name, '/')
+  -- if vim.fn.has 'win32' == 1 then
+  --   split = vim.fn.split(buf_name, '\\')
+  -- end
+  -- local res = split[vim.fn.len(split)]
 
-  local buf_name = vim.api.nvim_buf_get_name(buf)
-  if vim.fn.empty(buf_name) == 1 then
-    return vim.fn.expand '%'
-  end
+  -- local buf_modified = vim.api.nvim_get_option_value('modified', { buf = buf })
+  -- if buf_modified then
+  --   res = res .. ' [+]'
+  -- end
 
-  local split = vim.fn.split(buf_name, '/')
-  if vim.fn.has 'win32' == 1 then
-    split = vim.fn.split(buf_name, '\\')
-  end
-  local res = split[vim.fn.len(split)]
-
-  local buf_modified = vim.api.nvim_get_option_value('modified', { buf = buf })
-  if buf_modified then
-    res = res .. ' [+]'
-  end
-
-  return res
+  -- return res .. ' %m'
+  return '%t %m'
 end
 
 local custom_location = function()
-  return '%2l:%-2v'
+  return [[%2l:%-2v|%p%%]]
 end
 
 local custom_diagnostics = function(_)
@@ -89,7 +90,7 @@ end
 local custom_arrow = function()
   local arrowStatusline = require 'arrow.statusline'
   if arrowStatusline.is_on_arrow_file() then
-    return arrowStatusline.text_for_statusline_with_icons()
+    return '%#ArrowStatusLine#' .. arrowStatusline.text_for_statusline_with_icons()
   end
   return ''
 end
