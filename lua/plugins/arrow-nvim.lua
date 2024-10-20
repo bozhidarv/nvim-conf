@@ -6,10 +6,10 @@ add {
 
 require('arrow').setup {
   show_icons = true,
-  leader_key = '<leader>h', -- Recommended to be a single key
-  buffer_leader_key = 'm',  -- Per Buffer Mappings
+  leader_key = "'",        -- Recommended to be a single key
+  buffer_leader_key = 'm', -- Per Buffer Mappings
   mappings = {
-    edit = 'h',
+    edit = 'e',
     delete_mode = 'd',
     clear_all_items = 'C',
     toggle = 'a', -- used as save if separate_save_and_remove is true
