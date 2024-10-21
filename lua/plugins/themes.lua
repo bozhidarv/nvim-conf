@@ -46,7 +46,8 @@ require('tokyonight.init').setup {
     local prompt = '#2d3149'
     hl.ArrowStatusLine = {
       bg = c.fg_gutter,
-      fg = c.green2,
+      fg = c.orange,
+      bold = true,
     }
     hl.TelescopeNormal = {
       bg = c.bg_dark,
@@ -93,8 +94,3 @@ require('tokyonight.init').setup {
     -- telescope = true,
   },
 }
-local c = require 'tokyonight.colors.storm'
-vim.api.nvim_set_hl(0, 'ArrowStatusLine', {
-  bg = c.fg_gutter,
-  fg = c.green2,
-})
