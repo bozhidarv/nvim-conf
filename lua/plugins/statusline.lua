@@ -33,14 +33,15 @@ local custom_arrow = function()
   return ''
 end
 
-local statusline = require 'mini.statusline'
--- set use_icons to true if you have a Nerd Font
-statusline.setup {}
+local custom_git = function()
+  return '%{FugitiveStatusline()}'
+end
+require('mini.statusline').setup()
 
 ---@diagnostic disable-next-line: duplicate-set-field
-return function()
+MiniStatusline.active = function()
   local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
-  local git = MiniStatusline.section_git { trunc_width = 40 }
+  local git = custom_git()
   local diff = MiniStatusline.section_diff { trunc_width = 75 }
   -- local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
   local diagnostics = custom_diagnostics()

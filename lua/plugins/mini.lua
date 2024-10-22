@@ -41,8 +41,6 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
   end,
 })
 
-require('mini.statusline').active = require 'custom.statusbar'
-
 require('mini.diff').setup {
   -- Options for how hunks are visualized
   view = {
