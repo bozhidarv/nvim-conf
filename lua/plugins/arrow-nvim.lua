@@ -1,12 +1,10 @@
-local add = MiniDeps.add
-
-add {
+MiniDeps.add {
   source = 'otavioschwanck/arrow.nvim',
 }
 
 require('arrow').setup {
   show_icons = true,
-  leader_key = "'",        -- Recommended to be a single key
+  leader_key = "'", -- Recommended to be a single key
   buffer_leader_key = 'm', -- Per Buffer Mappings
   mappings = {
     edit = 'e',

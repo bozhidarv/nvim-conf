@@ -1,6 +1,4 @@
-local add = MiniDeps.add
-
-add {
+MiniDeps.add {
   source = 'kevinhwang91/nvim-ufo',
   depends = {
     'kevinhwang91/promise-async',

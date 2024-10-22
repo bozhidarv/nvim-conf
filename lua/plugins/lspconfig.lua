@@ -26,10 +26,8 @@ end
 
 -- LSP settings (for overriding per client)
 local handlers = {
-  ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover,
-    { border = 'rounded', max_width = 100, max_height = 10, scrollbar = true }),
-  ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help,
-    { border = 'rounded', max_width = 100, max_height = 10 }),
+  ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded', max_width = 100, max_height = 10, scrollbar = true }),
+  ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded', max_width = 100, max_height = 10 }),
 }
 
 --#region Default LSP Servers

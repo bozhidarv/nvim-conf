@@ -1,6 +1,4 @@
-local add = MiniDeps.add
-
-add {
+MiniDeps.add {
   source = 'stevearc/conform.nvim',
 }
 

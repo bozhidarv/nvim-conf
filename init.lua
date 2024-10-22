@@ -55,8 +55,7 @@ vim.opt.hidden = true
 if vim.fn.has 'win32' == 1 then
   local powershell_options = {
     shell = 'pwsh',
-    shellcmdflag =
-    '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;',
+    shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;',
     shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait',
     shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode',
     shellquote = '',

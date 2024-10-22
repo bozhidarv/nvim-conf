@@ -55,12 +55,12 @@ MiniStatusline.active = function()
   local location = custom_location()
 
   return MiniStatusline.combine_groups {
-    { hl = mode_hl,                 strings = { mode } },
+    { hl = mode_hl, strings = { mode } },
     { hl = 'MiniStatuslineDevinfo', strings = { git, diff, diagnostics, arrow } },
     '%<', -- Mark general truncate point
     { hl = 'MiniStatuslineFilename', strings = { filename } },
     '%=', -- End left alignment
     { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
-    { hl = mode_hl,                  strings = { location } },
+    { hl = mode_hl, strings = { location } },
   }
 end

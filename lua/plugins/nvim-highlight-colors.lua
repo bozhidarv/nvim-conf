@@ -1,10 +1,8 @@
-local add = MiniDeps.add
-
-add {
-  source = 'brenoprata10/nvim-highlight-colors'
+MiniDeps.add {
+  source = 'brenoprata10/nvim-highlight-colors',
 }
 
-require('nvim-highlight-colors').setup({
+require('nvim-highlight-colors').setup {
   ---Render style
   ---@usage 'background'|'foreground'|'virtual'
   render = 'virtual',
@@ -50,13 +48,13 @@ require('nvim-highlight-colors').setup({
   ---Label must be properly escaped with '%' to adhere to `string.gmatch`
   --- :help string.gmatch
   custom_colors = {
-    { label = '%-%-theme%-primary%-color',   color = '#0f1219' },
+    { label = '%-%-theme%-primary%-color', color = '#0f1219' },
     { label = '%-%-theme%-secondary%-color', color = '#5a5d64' },
   },
 
   -- Exclude filetypes or buftypes from highlighting e.g. 'exclude_buftypes = {'text'}'
   exclude_filetypes = {},
-  exclude_buftypes = {}
-})
+  exclude_buftypes = {},
+}
 
-require("nvim-highlight-colors").turnOn()
+require('nvim-highlight-colors').turnOn()

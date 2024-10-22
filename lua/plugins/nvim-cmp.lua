@@ -1,6 +1,4 @@
-local add = MiniDeps.add
-
-add {
+MiniDeps.add {
   source = 'hrsh7th/nvim-cmp',
   depends = {
     'L3MON4D3/LuaSnip',
@@ -105,7 +103,7 @@ local cmp_options = {
     { name = 'nvim_lsp_signature_help' },
     { name = 'hrsh7th/cmp-cmdline' },
     -- { name = 'supermaven' },
-    { name = 'lazydev',                group_index = 0 },
+    { name = 'lazydev', group_index = 0 },
   },
 }
 

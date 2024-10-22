@@ -130,29 +130,19 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 
     if client and client.name == 'omnisharp' then
-      vim.keymap.set('n', 'gd', require('omnisharp_extended').telescope_lsp_definition,
-        { buffer = bufnr, desc = '[G]oto [D]efinition' })
-      vim.keymap.set('n', 'gr', require('omnisharp_extended').telescope_lsp_references,
-        { buffer = bufnr, desc = '[G]oto [R]eferences' })
-      vim.keymap.set('n', 'gI', require('omnisharp_extended').telescope_lsp_implementation,
-        { buffer = bufnr, desc = '[G]oto [I]mplementation' })
-      vim.keymap.set('n', '<leader>D', require('omnisharp_extended').telescope_lsp_type_definition,
-        { buffer = bufnr, desc = 'Type [D]efinition' })
+      vim.keymap.set('n', 'gd', require('omnisharp_extended').telescope_lsp_definition, { buffer = bufnr, desc = '[G]oto [D]efinition' })
+      vim.keymap.set('n', 'gr', require('omnisharp_extended').telescope_lsp_references, { buffer = bufnr, desc = '[G]oto [R]eferences' })
+      vim.keymap.set('n', 'gI', require('omnisharp_extended').telescope_lsp_implementation, { buffer = bufnr, desc = '[G]oto [I]mplementation' })
+      vim.keymap.set('n', '<leader>D', require('omnisharp_extended').telescope_lsp_type_definition, { buffer = bufnr, desc = 'Type [D]efinition' })
     else
-      vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions,
-        { buffer = bufnr, desc = '[G]oto [D]efinition' })
-      vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references,
-        { buffer = bufnr, desc = '[G]oto [R]eferences' })
-      vim.keymap.set('n', 'gI', require('telescope.builtin').lsp_implementations,
-        { buffer = bufnr, desc = '[G]oto [I]mplementation' })
-      vim.keymap.set('n', '<leader>D', require('telescope.builtin').lsp_type_definitions,
-        { buffer = bufnr, desc = 'Type [D]efinition' })
+      vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions, { buffer = bufnr, desc = '[G]oto [D]efinition' })
+      vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, { buffer = bufnr, desc = '[G]oto [R]eferences' })
+      vim.keymap.set('n', 'gI', require('telescope.builtin').lsp_implementations, { buffer = bufnr, desc = '[G]oto [I]mplementation' })
+      vim.keymap.set('n', '<leader>D', require('telescope.builtin').lsp_type_definitions, { buffer = bufnr, desc = 'Type [D]efinition' })
     end
 
-    vim.keymap.set('n', '<leader>cs', require('telescope.builtin').lsp_document_symbols,
-      { buffer = bufnr, desc = '[D]ocument [S]ymbols' })
-    vim.keymap.set('n', '<leader>cS', require('telescope.builtin').lsp_dynamic_workspace_symbols,
-      { buffer = bufnr, desc = '[W]orkspace [S]ymbols' })
+    vim.keymap.set('n', '<leader>cs', require('telescope.builtin').lsp_document_symbols, { buffer = bufnr, desc = '[D]ocument [S]ymbols' })
+    vim.keymap.set('n', '<leader>cS', require('telescope.builtin').lsp_dynamic_workspace_symbols, { buffer = bufnr, desc = '[W]orkspace [S]ymbols' })
     vim.keymap.set('n', '<leader>cf', function()
       require('conform').format { async = true }
     end, { buffer = bufnr, desc = 'Format buffer' })
@@ -162,10 +152,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Lesser used LSP functionality
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc = '[G]oto [D]eclaration' })
-    vim.keymap.set('n', '<leader>cwa', vim.lsp.buf.add_workspace_folder,
-      { buffer = bufnr, desc = '[W]orkspace [A]dd Folder' })
-    vim.keymap.set('n', '<leader>cwr', vim.lsp.buf.remove_workspace_folder,
-      { buffer = bufnr, desc = '[W]orkspace [R]emove Folder' })
+    vim.keymap.set('n', '<leader>cwa', vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = '[W]orkspace [A]dd Folder' })
+    vim.keymap.set('n', '<leader>cwr', vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc = '[W]orkspace [R]emove Folder' })
     vim.keymap.set('n', '<leader>cwl', function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, { buffer = bufnr, desc = '[W]orkspace [L]ist Folders' })

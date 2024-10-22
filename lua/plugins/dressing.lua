@@ -1,5 +1,3 @@
-local add = MiniDeps.add
-
-add {
-  source='stevearc/dressing.nvim'
+MiniDeps.add {
+  source = 'stevearc/dressing.nvim',
 }
