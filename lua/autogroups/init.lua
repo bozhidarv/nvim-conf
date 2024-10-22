@@ -66,12 +66,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
       return
     end
 
-    -- Tsserver usually works poorly. Sorry you work with bad languages
-    -- You can remove this line if you know what you're doing :)
-    if client.name == 'tsserver' then
-      require('conform').format { bufnr = args.buf }
-      return
-    end
+    -- TODO: Check in typescript project before removing fully
+    -- -- Tsserver usually works poorly. Sorry you work with bad languages
+    -- -- You can remove this line if you know what you're doing :)
+    -- if client.name == 'tsserver' then
+    --   require('conform').format { bufnr = args.buf }
+    --   return
+    -- end
 
     -- Create an autocmd that will run *before* we save the buffer.
     --  Run the formatting command for the LSP that has just attached.
@@ -83,12 +84,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
           return
         end
         require('conform').format { bufnr = args.buf }
-        vim.lsp.buf.format {
-          async = false,
-          filter = function(c)
-            return c.id == client.id
-          end,
-        }
       end,
     })
   end,
