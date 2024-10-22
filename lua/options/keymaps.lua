@@ -25,8 +25,8 @@ vim.keymap.set('n', 'd_', '"_d', { silent = true, desc = 'Delete without yanking
 --#endregion
 
 --#region window splitting
-vim.keymap.set('n', '<leader>sh', ':split<CR>', { desc = 'Horizontal split' })
-vim.keymap.set('n', '<leader>sv', ':vsplit<CR>', { desc = 'Verical split' })
+vim.keymap.set('n', '<leader>-', ':split<CR>', { desc = 'Horizontal split' })
+vim.keymap.set('n', '<leader>|', ':vsplit<CR>', { desc = 'Verical split' })
 --#endregion
 
 --#region telescope
@@ -68,7 +68,8 @@ vim.keymap.set('n', '<leader>gp', ':Git pull<CR>', { desc = 'Git pull' })
 vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = 'Git push' })
 vim.keymap.set('n', '<leader>gd', ':Git diff %<CR>', { desc = 'Git diff current file' })
 vim.keymap.set('n', '<leader>gD', ':Git diff<CR>', { desc = 'Git diff repo' })
-vim.keymap.set('n', '<leader>gw', ':Git diff <C-R><C-W> <CR>', { desc = 'Git diff cword' })
+vim.keymap.set('n', '<leader>gml', ':diffget //2<CR>', { desc = 'Git merge conflict select left' })
+vim.keymap.set('n', '<leader>gmr', ':diffget //3<CR>', { desc = 'Git merge conflict select right' })
 --#endregion
 
 --#region Trouble.nvim
@@ -104,7 +105,6 @@ vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
 --#endregion
 
 --#region Multiplexer Navigation
--- if vim.fn.has 'win32' == 1 then
 vim.keymap.set('n', '<C-j>', ':SmartCursorMoveDown<CR>', { silent = true, desc = 'Navigate down' })
 vim.keymap.set('n', '<C-k>', ':SmartCursorMoveUp<CR>', { silent = true, desc = 'Navigate up' })
 vim.keymap.set('n', '<C-h>', ':SmartCursorMoveLeft<CR>', { silent = true, desc = 'Navigate left' })
