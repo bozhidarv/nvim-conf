@@ -60,6 +60,7 @@ end
 
 --#region Git
 vim.keymap.set('n', '<leader>gg', '<CMD>LazyGitOpen<CR>', { desc = 'Open lazygit' })
+vim.keymap.set('n', '<leader>gf', '<CMD>Git<CR>', { desc = 'Open fugitive' })
 vim.keymap.set('n', '<leader>gh', function()
   require('mini.diff').toggle_overlay(0)
 end, { desc = 'Toggle mini.diff overlay' })
@@ -68,7 +69,6 @@ vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = 'Git push' })
 vim.keymap.set('n', '<leader>gd', ':Git diff %<CR>', { desc = 'Git diff current file' })
 vim.keymap.set('n', '<leader>gD', ':Git diff<CR>', { desc = 'Git diff repo' })
 vim.keymap.set('n', '<leader>gw', ':Git diff <C-R><C-W> <CR>', { desc = 'Git diff cword' })
-
 --#endregion
 
 --#region Trouble.nvim
@@ -76,6 +76,8 @@ local trouble = require 'trouble'
 
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+
+vim.diagnostic.setqflist()
 
 vim.keymap.set('n', '<leader>qf', ':Trouble diagnostics toggle filter.buf=0<CR>',
   { desc = 'Toggle diagnostics list for file' })
