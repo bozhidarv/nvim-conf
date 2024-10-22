@@ -15,8 +15,8 @@ require('conform').setup {
     sh = { 'shfmt' },
     bash = { 'shfmt' },
     zsh = { 'shfmt' },
-    c = { 'clang-format' },
-    cpp = { 'clang-format' },
+    c = { 'clang_format' },
+    cpp = { 'clang_format' },
     yaml = { 'prettierd' },
     markdown = { 'prettierd' },
     astro = { 'prettierd' },
@@ -34,6 +34,11 @@ require('conform').setup {
   formatters = {
     shfmt = {
       prepend_args = { '-i', '2' },
+    },
+    clang_format = {
+      command = vim.fn.stdpath 'data' .. '/mason/packages/clang-format/venv/bin/clang-format',
+
+      args = '--style="{AlignAfterOpenBracket: false, ColumnLimit: 100}"',
     },
   },
 }
