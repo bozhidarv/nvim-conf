@@ -17,5 +17,5 @@ wk.add {
   { '<leader>gh', group = 'Hunk' },
   { '<leader>h', group = 'Harpoon' },
   { '<leader>s', group = 'Split' },
-  { '<leader>t', group = 'Tab' },
+  { '<leader>t', group = 'Neotest' },
 }

@@ -117,8 +117,8 @@ vim.keymap.set('n', '<A-l>', ':SmartResizeRight<CR>', { silent = true, desc = 'R
 --#endregion
 
 --#region tabs
-vim.keymap.set('n', '<leader>tc', ':tabclose<CR>', { silent = true, desc = 'Close tab' })
-vim.keymap.set('n', '<leader>tn', ':tabnew<CR>', { silent = true, desc = 'New tab' })
+vim.keymap.set('n', '<leader>Tc', ':tabclose<CR>', { silent = true, desc = 'Close tab' })
+vim.keymap.set('n', '<leader>Tn', ':tabnew<CR>', { silent = true, desc = 'New tab' })
 vim.keymap.set('n', '[T', ':tabprevious<CR>', { silent = true, desc = 'Previous tab' })
 vim.keymap.set('n', ']T', ':tabNext<CR>', { silent = true, desc = 'Next tab' })
 --#endregion
@@ -131,10 +131,22 @@ vim.keymap.set('n', '<esc><esc>', ':nohls<cr>', { silent = true, desc = 'Turn of
 vim.keymap.set('i', '<Plug>(vimrc:copilot-dummy-map)', 'copilot#Accept("")', { silent = true, expr = true, desc = 'Copilot dummy accept' })
 --#endregion
 
---#region Arrow.nvim
-
---#endregion Arrow.nvim
-
---#region Terminal
-vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]], { desc = 'Toggle filetree' })
---#endregion
+--#region neotest
+vim.keymap.set('n', '<leader>tc', function()
+  require('neotest').run.run()
+end, { silent = true, desc = 'Run closest test' })
+vim.keymap.set('n', '<leader>tf', function()
+  require('neotest').run.run(vim.fn.expand '%')
+end, { silent = true, desc = 'Run all tests in current file' })
+vim.keymap.set('n', '<leader>td', function()
+  require('neotest').run.run { strategy = 'dap' }
+end, { silent = true, desc = 'Debug current test' }) --#endregion neotest #region Terminal vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]], { desc = 'Toggle filetree' }) #endregion
+vim.keymap.set('n', '<leader>tt', function()
+  require('neotest').run.stop()
+end, { silent = true, desc = 'Terminate test' })
+vim.keymap.set('n', '<leader>ts', function()
+  require('neotest').summary.toggle()
+end, { silent = true, desc = 'Open summary' }) --#endregion neotest #region Terminal vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]], { desc = 'Toggle filetree' }) #endregion
+vim.keymap.set('n', '<leader>to', function()
+  require('neotest').output.open()
+end, { silent = true, desc = 'Open output panel' }) --#endregion neotest #region Terminal vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]], { desc = 'Toggle filetree' }) #endregion
