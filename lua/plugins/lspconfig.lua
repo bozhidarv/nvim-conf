@@ -25,9 +25,10 @@ end
 --#endregion
 
 -- LSP settings (for overriding per client)
+local custom_border = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' }
 local handlers = {
-  ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded', max_width = 100, max_height = 10, scrollbar = true }),
-  ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'rounded', max_width = 100, max_height = 10 }),
+  ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = custom_border, max_width = 100, max_height = 10, scrollbar = true }),
+  ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = custom_border, max_width = 100, max_height = 10 }),
 }
 
 --#region Default LSP Servers

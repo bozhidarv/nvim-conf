@@ -1,6 +1,8 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
+vim.o.background = 'dark'
+
 local colorscheme = require('options.utils').colorscheme
 local isTransparent = require('options.utils').checkTransperancy
 

@@ -44,6 +44,14 @@ vim.api.nvim_create_user_command('LazyGitOpen', function()
   lazygit:toggle()
 end, {})
 
+vim.api.nvim_create_user_command('ToggleBackground', function()
+  if vim.o.background == 'dark' then
+    vim.o.background = 'light'
+  else
+    vim.o.background = 'dark'
+  end
+end, {})
+
 -- Disable mini.indentscope for certain filetypes
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   desc = 'Disable indentscope for certain filetypes',

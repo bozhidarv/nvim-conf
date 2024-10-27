@@ -5,7 +5,7 @@ M.firstToUpper = function(str)
 end
 
 M.checkTransperancy = function()
-  local isTrans = os.getenv 'NVIM_TRANSPARENT_BACKGROUND'
+  local isTrans = os.getenv 'TRANSPARENT_BACKGROUND'
   -- vim.print(isTrans)
   if isTrans == nil then
     return false
@@ -16,6 +16,6 @@ M.checkTransperancy = function()
   return false
 end
 
-M.colorscheme = 'tokyonight'
+M.colorscheme = 'kanagawa'
 
 return M

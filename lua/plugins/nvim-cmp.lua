@@ -20,15 +20,16 @@ luasnip.config.setup {}
 
 --#region cmp Setup
 local cmp = require 'cmp'
+local custom_border = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' }
 ---@type cmp.ConfigSchema
 local cmp_options = {
   window = {
     completion = { -- rounded border; thin-style scrollbar
-      border = 'rounded',
+      border = custom_border,
       scrollbar = '║',
     },
     documentation = { -- no border; native-style scrollbar
-      border = 'rounded',
+      border = custom_border,
       scrollbar = '║',
       -- other options
     },

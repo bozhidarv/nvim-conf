@@ -35,8 +35,8 @@ require('tokyonight.init').setup {
 
   --- You can override specific color groups to use other groups or a hex color
   --- function will be called with a ColorScheme table
-  ---@param colors ColorScheme
-  on_colors = function(colors) end,
+  ---@param _ ColorScheme
+  on_colors = function(_) end,
 
   --- You can override specific highlights to use other groups or a hex color
   --- function will be called with a Highlights and ColorScheme table
@@ -92,5 +92,58 @@ require('tokyonight.init').setup {
     -- for all possible plugins, see:
     --   * https://github.com/folke/tokyonight.nvim/tree/main/lua/tokyonight/groups
     -- telescope = true,
+  },
+}
+
+add {
+  source = 'rebelot/kanagawa.nvim',
+}
+
+-- Default options:
+require('kanagawa').setup {
+  compile = false, -- enable compiling the colorscheme
+  undercurl = true, -- enable undercurls
+  commentStyle = { italic = true },
+  functionStyle = {},
+  keywordStyle = { italic = true },
+  statementStyle = { bold = true },
+  typeStyle = {},
+  transparent = require('options.utils').checkTransperancy(), -- do not set background color
+  dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+  terminalColors = true, -- define vim.g.terminal_color_{0,17}
+  colors = { -- add/modify theme and palette colors
+    palette = {},
+    theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
+  },
+  ---@type fun(colors: KanagawaColorsSpec): table<string, table>
+  overrides = function(c) -- add/modify highlights
+    local theme = c.theme
+    local trnsparent_floats = {}
+    if require('options.utils').checkTransperancy() then
+      trnsparent_floats = {
+         NormalFloat = { bg = "none" },
+        FloatBorder = { bg = "none" },
+        FloatTitle = { bg = "none" },
+      }
+    end
+    return vim.tbl_extend('force', trnsparent_floats, {
+      ArrowStatusLine = {
+        bg = c.theme.ui.bg_p1,
+        fg = c.theme.diag.warning,
+        bold = true,
+      },
+      TelescopeTitle = { fg = theme.ui.special, bold = true },
+      TelescopePromptNormal = { bg = theme.ui.bg_p1 },
+      TelescopePromptBorder = { fg = theme.ui.bg_p1, bg = theme.ui.bg_p1 },
+      TelescopeResultsNormal = { fg = theme.ui.fg_dim, bg = theme.ui.bg_m1 },
+      TelescopeResultsBorder = { fg = theme.ui.bg_m1, bg = theme.ui.bg_m1 },
+      TelescopePreviewNormal = { bg = theme.ui.bg_dim },
+      TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
+    })
+  end,
+  theme = 'dragon', -- Load "wave" theme when 'background' option is not set
+  background = { -- map the value of 'background' option to a theme
+    dark = 'dragon', -- try "dragon" !
+    light = 'lotus',
   },
 }
