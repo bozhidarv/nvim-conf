@@ -6,6 +6,10 @@ vim.keymap.set('n', '<C-k>', '<C-w>k', { silent = true })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
 --#endregion
 
+--#region ui
+vim.keymap.set('n', '<leader>ut', ':ToggleBackground<CR>', { silent = true })
+--#endregion
+
 --#region buffers
 vim.keymap.set('n', '<leader>C', ':bd<CR>', { silent = true, desc = 'Close buffer' })
 --#endregion
