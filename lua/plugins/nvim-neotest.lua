@@ -7,6 +7,9 @@ add {
     'nvim-lua/plenary.nvim',
     'antoinemadec/FixCursorHold.nvim',
     'nvim-treesitter/nvim-treesitter',
+    'Issafalcon/neotest-dotnet',
+    'vim-test/vim-test',
+    'nvim-neotest/neotest-vim-test',
   },
 }
 
@@ -20,5 +23,9 @@ require('neotest').setup {
       args = { '--no-capture' },
       dap_adapter = 'codelldb',
     },
+    require 'neotest-dotnet' {
+      dap = { adapter_name = 'coreclr' },
+    },
+    require 'neotest-vim-test' { ignore_filetypes = { 'rust', 'cs' } },
   },
 }

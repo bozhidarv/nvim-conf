@@ -124,6 +124,16 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+-- autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh({ bufnr = 0 })
+
+vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
+  group = vim.api.nvim_create_augroup('refresh-codelens', { clear = true }),
+  ---@param event event_args
+  callback = function(event)
+    vim.lsp.codelens.refresh { bufnr = event.buf }
+  end,
+})
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
   ---@param event event_args
@@ -137,17 +147,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
       require('sqls').on_attach(client, bufnr)
     end
 
-    if client and client.name == 'omnisharp' then
-      vim.keymap.set('n', 'gd', require('omnisharp_extended').telescope_lsp_definition, { buffer = bufnr, desc = '[G]oto [D]efinition' })
-      vim.keymap.set('n', 'gr', require('omnisharp_extended').telescope_lsp_references, { buffer = bufnr, desc = '[G]oto [R]eferences' })
-      vim.keymap.set('n', 'gI', require('omnisharp_extended').telescope_lsp_implementation, { buffer = bufnr, desc = '[G]oto [I]mplementation' })
-      vim.keymap.set('n', '<leader>D', require('omnisharp_extended').telescope_lsp_type_definition, { buffer = bufnr, desc = 'Type [D]efinition' })
-    else
-      vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions, { buffer = bufnr, desc = '[G]oto [D]efinition' })
-      vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, { buffer = bufnr, desc = '[G]oto [R]eferences' })
-      vim.keymap.set('n', 'gI', require('telescope.builtin').lsp_implementations, { buffer = bufnr, desc = '[G]oto [I]mplementation' })
-      vim.keymap.set('n', '<leader>D', require('telescope.builtin').lsp_type_definitions, { buffer = bufnr, desc = 'Type [D]efinition' })
-    end
+    vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions, { buffer = bufnr, desc = '[G]oto [D]efinition' })
+    vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, { buffer = bufnr, desc = '[G]oto [R]eferences' })
+    vim.keymap.set('n', 'gI', require('telescope.builtin').lsp_implementations, { buffer = bufnr, desc = '[G]oto [I]mplementation' })
+    vim.keymap.set('n', '<leader>D', require('telescope.builtin').lsp_type_definitions, { buffer = bufnr, desc = 'Type [D]efinition' })
 
     vim.keymap.set('n', '<leader>cs', require('telescope.builtin').lsp_document_symbols, { buffer = bufnr, desc = '[D]ocument [S]ymbols' })
     vim.keymap.set('n', '<leader>cS', require('telescope.builtin').lsp_dynamic_workspace_symbols, { buffer = bufnr, desc = '[W]orkspace [S]ymbols' })
@@ -172,7 +175,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.lsp.buf.format()
     end, { desc = 'Format current buffer with LSP' })
 
-    if client and (client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) or client.name == 'omnisharp') then
+    if client and (client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint)) then
       vim.keymap.set('n', '<leader>cth', function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr })
       end, { buffer = bufnr, desc = '[T]oggle Inlay [H]ints' })
