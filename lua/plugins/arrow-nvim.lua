@@ -40,13 +40,14 @@ vim.api.nvim_create_autocmd('BufEnter', {
     vim.api.nvim_create_user_command('ArrowAddAngularComponent', function(_)
       local ft_endings = { 'ts', 'html', 'scss' }
       local persist_api = require 'arrow.persist'
+      local arrow_utils = require 'arrow.utils'
 
       local file_name = vim.fn.expand '%:t'
       if file_name:match 'component' == nil then
-        vim.print('You are not in an Angular component')
+        vim.print 'You are not in an Angular component'
         return
       end
-      local full_filename = vim.fn.expand '%'
+      local full_filename = arrow_utils.get_current_buffer_path()
       local curr_filename = ''
       local curr_split = {}
       for i = 1, #ft_endings do
