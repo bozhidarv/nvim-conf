@@ -76,23 +76,15 @@ vim.keymap.set('n', '<leader>gml', ':diffget //2<CR>', { desc = 'Git merge confl
 vim.keymap.set('n', '<leader>gmr', ':diffget //3<CR>', { desc = 'Git merge conflict select right' })
 --#endregion
 
---#region Trouble.nvim
-local trouble = require 'trouble'
-
+--#region diagnostics
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-
-vim.diagnostic.setqflist()
-
-vim.keymap.set('n', '<leader>qf', ':Trouble diagnostics toggle filter.buf=0<CR>', { desc = 'Toggle diagnostics list for file' })
-
-vim.keymap.set('n', '<leader>qw', function()
-  trouble.toggle 'diagnostics'
-end, { desc = 'Toggle diagnostics list for workspace' })
+vim.keymap.set('n', '<leader>qf', vim.diagnostic.setloclist, { desc = 'Toggle diagnostics list for file' })
+vim.keymap.set('n', '<leader>qw', vim.diagnostic.setqflist, { desc = 'Toggle diagnostics list for workspace' })
 --#endregion
 
 --#region Todo-comments.nvim
-vim.keymap.set('n', '<leader>qt', ':TodoTrouble<CR>', { desc = 'Open todo comments in trouble', silent = true })
+vim.keymap.set('n', '<leader>qt', ':TodoQuickFix<CR>', { desc = 'Open todo comments in qf', silent = true })
 
 vim.keymap.set('n', ']t', function()
   require('todo-comments').jump_next()
@@ -127,6 +119,20 @@ vim.keymap.set('n', '[T', ':tabprevious<CR>', { silent = true, desc = 'Previous 
 vim.keymap.set('n', ']T', ':tabNext<CR>', { silent = true, desc = 'Next tab' })
 --#endregion
 
+--#region quickfix
+vim.keymap.set('n', '[q', ':cprev<CR>', { silent = true, desc = 'Previous quickfix item' })
+vim.keymap.set('n', ']q', ':cnext<CR>', { silent = true, desc = 'Next quickfix item' })
+vim.keymap.set('n', '<leader>qq', ':copen<CR>', { silent = true, desc = 'open quickfix list' })
+vim.keymap.set('n', '<leader>qc', ':cclose<CR>', { silent = true, desc = 'close quickfix list' })
+--#endregion
+
+--#region loclist
+vim.keymap.set('n', '[l', ':lprev<CR>', { silent = true, desc = 'Previous loclist item' })
+vim.keymap.set('n', ']l', ':lnext<CR>', { silent = true, desc = 'Next loclist item' })
+vim.keymap.set('n', '<leader>ll', ':lopen<CR>', { silent = true, desc = 'open loclist list' })
+vim.keymap.set('n', '<leader>lc', ':lclose<CR>', { silent = true, desc = 'close loclist list' })
+--#endregion
+
 --#region hlSearch
 vim.keymap.set('n', '<esc><esc>', ':nohls<cr>', { silent = true, desc = 'Turn off hlSearch' })
 --#endregion
@@ -143,14 +149,16 @@ vim.keymap.set('n', '<leader>tf', function()
   require('neotest').run.run(vim.fn.expand '%')
 end, { silent = true, desc = 'Run all tests in current file' })
 vim.keymap.set('n', '<leader>td', function()
+  ---@diagnostic disable-next-line: missing-fields
   require('neotest').run.run { strategy = 'dap' }
-end, { silent = true, desc = 'Debug current test' }) --#endregion neotest #region Terminal vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]], { desc = 'Toggle filetree' }) #endregion
+end, { silent = true, desc = 'Debug current test' })
 vim.keymap.set('n', '<leader>tt', function()
   require('neotest').run.stop()
 end, { silent = true, desc = 'Terminate test' })
 vim.keymap.set('n', '<leader>ts', function()
   require('neotest').summary.toggle()
-end, { silent = true, desc = 'Open summary' }) --#endregion neotest #region Terminal vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]], { desc = 'Toggle filetree' }) #endregion
+end, { silent = true, desc = 'Open summary' })
 vim.keymap.set('n', '<leader>to', function()
   require('neotest').output.open()
-end, { silent = true, desc = 'Open output panel' }) --#endregion neotest #region Terminal vim.keymap.set('t', '<esc><esc>', [[<C-\><C-n>]], { desc = 'Toggle filetree' }) #endregion
+end, { silent = true, desc = 'Open output panel' })
+--#endregion
