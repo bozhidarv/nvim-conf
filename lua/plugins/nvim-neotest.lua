@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 local add = MiniDeps.add
 
 add {

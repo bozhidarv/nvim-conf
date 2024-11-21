@@ -89,6 +89,18 @@ else
     command = vim.fn.stdpath 'data' .. '\\mason\\packages\\netcoredbg\\netcoredbg\\netcoredbg.exe',
     args = { '--interpreter=vscode' },
   }
+  dap.adapters.codelldb = {
+    type = 'server',
+    port = '${port}',
+    executable = {
+      -- CHANGE THIS to your path!
+      command = vim.fn.stdpath 'data' .. '\\mason\\packages\\codelldb\\extension\\adapter\\codelldb.exe',
+      args = { '--port', '${port}' },
+
+      -- On windows you may have to uncomment this:
+      -- detached = false,
+    },
+  }
 end
 --#endregion
 
