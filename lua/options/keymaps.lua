@@ -7,7 +7,15 @@ vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
 --#endregion
 
 --#region ui
-vim.keymap.set('n', '<leader>ut', ':ToggleBackground<CR>', { silent = true })
+vim.keymap.set('n', '<leader>ut', ':ToggleBackground<CR>', { silent = true, desc = 'Toggle dark/light background' })
+vim.keymap.set('n', '<leader>uw', function()
+  vim.print(vim.o.wrap)
+  if vim.o.wrap then
+    vim.opt.wrap = false
+  else
+    vim.opt.wrap = true
+  end
+end, { silent = true, desc = 'Toggle word wrapping' })
 --#endregion
 
 --#region buffers
