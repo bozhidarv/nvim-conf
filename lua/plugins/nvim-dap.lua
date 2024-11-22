@@ -13,6 +13,8 @@ MiniDeps.add {
 local dap = require 'dap'
 local dapui = require 'dapui'
 
+require('dap-go').setup()
+
 dapui.setup()
 
 require('nvim-dap-virtual-text').setup {}
