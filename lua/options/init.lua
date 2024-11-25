@@ -22,6 +22,11 @@ vim.wo.number = true
 -- Enable mouse mode
 vim.o.mouse = 'a'
 
+if vim.fn.executable 'rg' then
+  vim.o.grepprg = 'rg --vimgrep --smart-case --hidden --engine auto'
+  vim.o.grepformat = '%f:%l:%c:%m'
+end
+
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
