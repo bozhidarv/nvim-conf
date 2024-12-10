@@ -2,15 +2,15 @@ MiniDeps.add {
   source = 'tpope/vim-fugitive',
 }
 
-MiniDeps.add {
-  source = 'braxtons12/blame_line.nvim',
-}
+-- MiniDeps.add {
+--   source = 'braxtons12/blame_line.nvim',
+-- }
 
-require('blame_line').setup {
-  show_in_visual = false,
-  show_in_insert = false,
-  prefix = '',
-}
+-- require('blame_line').setup {
+--   show_in_visual = false,
+--   show_in_insert = false,
+--   prefix = '',
+-- }
 
 require('mini.diff').setup {
   -- Options for how hunks are visualized
