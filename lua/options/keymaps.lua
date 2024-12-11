@@ -148,6 +148,7 @@ vim.keymap.set('n', '<esc><esc>', ':nohls<cr>', { silent = true, desc = 'Turn of
 
 --#region Github Copilot
 vim.keymap.set('i', '<Plug>(vimrc:copilot-dummy-map)', 'copilot#Accept("")', { silent = true, expr = true, desc = 'Copilot dummy accept' })
+vim.keymap.set('i', '<C-S-j>', '<Plug>(copilot-accept-word)', { silent = true, desc = 'Accept Copilot word' })
 --#endregion
 
 --#region neotest

@@ -54,10 +54,9 @@ local cmp_options = {
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     },
-    -- ['<C-j>'] = cmp.mapping(function(_)
-    --   vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)),
-    --     'n', true)
-    -- end),
+    ['<C-j>'] = cmp.mapping(function(_)
+      vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n', true)
+    end),
     ['<C-l>'] = cmp.mapping(function()
       if luasnip.expand_or_locally_jumpable() then
         luasnip.expand_or_jump()
