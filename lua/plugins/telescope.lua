@@ -40,6 +40,9 @@ require('telescope').setup {
     },
   },
   pickers = {
+    find_files = {
+      theme = 'ivy',
+    },
     lsp_document_symbols = {
       width = 0.25,
     },
