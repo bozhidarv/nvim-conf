@@ -222,7 +222,12 @@ capabilities.textDocument.foldingRange = {
   lineFoldingOnly = true,
 }
 
-require('mason').setup()
+require('mason').setup {
+  registries = {
+    'github:mason-org/mason-registry',
+    'github:Crashdummyy/mason-registry',
+  },
+}
 
 local mason_lspconfig = require 'mason-lspconfig'
 mason_lspconfig.setup {

@@ -1,15 +1,20 @@
 local add = MiniDeps.add
 
+local function build_telescope_fzf(params)
+  vim.notify('Building blink.cmp', vim.log.levels.INFO)
+  local obj = vim.system({ 'make' }, { cwd = params.path }):wait()
+  if obj.code == 0 then
+    vim.notify('Building jsregexp done', vim.log.levels.INFO)
+  else
+    vim.notify('Building jsregexp failed', vim.log.levels.ERROR)
+  end
+end
+
 if vim.fn.executable 'make' == 1 then
   add {
     source = 'nvim-telescope/telescope-fzf-native.nvim',
     hooks = {
-      post_checkout = function(params)
-        local handle = io.popen('cd ' .. params.path .. '&& make')
-        local result = handle:read '*a'
-        handle:close()
-        print(result)
-      end,
+      post_checkout = build_telescope_fzf,
     },
   }
 end

@@ -1,7 +1,30 @@
+local function build_jsregexp(params)
+  vim.notify('Building blink.cmp', vim.log.levels.INFO)
+  local obj = vim.system({ 'make', 'install_jsregexp' }, { cwd = params.path }):wait()
+  if obj.code == 0 then
+    vim.notify('Building jsregexp done', vim.log.levels.INFO)
+  else
+    vim.notify('Building jsregexp failed', vim.log.levels.ERROR)
+  end
+end
+
 MiniDeps.add {
   source = 'L3MON4D3/LuaSnip',
-  checkout = 'v2.*',
+  checkout = 'v2.3.0',
+  hooks = {
+    post_checkout = build_jsregexp,
+  },
 }
+
+local function build_blink(params)
+  vim.notify('Building blink.cmp', vim.log.levels.INFO)
+  local obj = vim.system({ 'cargo', 'build', '--release' }, { cwd = params.path }):wait()
+  if obj.code == 0 then
+    vim.notify('Building blink.cmp done', vim.log.levels.INFO)
+  else
+    vim.notify('Building blink.cmp failed', vim.log.levels.ERROR)
+  end
+end
 
 MiniDeps.add {
   source = 'saghen/blink.cmp',
@@ -10,147 +33,51 @@ MiniDeps.add {
     'folke/lazydev.nvim',
   },
   hooks = {
-    post_checkout = function() end,
+    post_install = build_blink,
+    post_checkout = build_blink,
   },
 }
 
 require('blink.cmp').setup {
+  snippets = {
+    expand = function(snippet)
+      require('luasnip').lsp_expand(snippet)
+    end,
+    active = function(filter)
+      if filter and filter.direction then
+        return require('luasnip').jumpable(filter.direction)
+      end
+      return require('luasnip').in_snippet()
+    end,
+    jump = function(direction)
+      require('luasnip').jump(direction)
+    end,
+  },
   sources = {
-    -- add lazydev to your completion providers
-    default = { 'lsp', 'path', 'snippets', 'buffer', 'lazydev' },
+    default = { 'lsp', 'path', 'luasnip', 'buffer', 'lazydev' },
     providers = {
-      -- dont show LuaLS require statements when lazydev has items
       lazydev = {
         name = 'LazyDev',
         module = 'lazydev.integrations.blink',
         fallbacks = { 'lsp' },
       },
-    },
-  },
-  completion = {
-    menu = {
-      enabled = true,
-      min_width = 15,
-      max_height = 10,
-      border = 'padded',
-      winblend = 0,
-      winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
-      -- Keep the cursor X lines away from the top/bottom of the window
-      scrolloff = 2,
-      -- Note that the gutter will be disabled when border ~= 'none'
-      scrollbar = true,
-      -- Which directions to show the window,
-      -- falling back to the next direction when there's not enough space
-      direction_priority = { 's', 'n' },
-
-      -- Whether to automatically show the window when new completion items are available
-      auto_show = true,
-
-      -- Screen coordinates of the command line
-      cmdline_position = function()
-        if vim.g.ui_cmdline_pos ~= nil then
-          local pos = vim.g.ui_cmdline_pos -- (1, 0)-indexed
-          return { pos[1] - 1, pos[2] }
-        end
-        local height = (vim.o.cmdheight == 0) and 1 or vim.o.cmdheight
-        return { vim.o.lines - height, 0 }
-      end,
-
-      -- Controls how the completion items are rendered on the popup window
-      draw = {
-        -- Aligns the keyword you've typed to a component in the menu
-        align_to_component = 'label', -- or 'none' to disable
-        -- Left and right padding, optionally { left, right } for different padding on each side
-        padding = 1,
-        -- Gap between columns
-        gap = 1,
-        -- Use treesitter to highlight the label text of completions from these sources
-        treesitter = {},
-        -- Recommended to enable it just for the LSP source
-        -- treesitter = { 'lsp' }
-
-        -- Components to render, grouped by column
-        columns = { { 'kind_icon' }, { 'label', 'label_description', gap = 1 } },
-        -- for a setup similar to nvim-cmp: https://github.com/Saghen/blink.cmp/pull/245#issuecomment-2463659508
-        -- columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind" } },
-
-        -- Definitions for possible components to render. Each component defines:
-        --   ellipsis: whether to add an ellipsis when truncating the text
-        --   width: control the min, max and fill behavior of the component
-        --   text function: will be called for each item
-        --   highlight function: will be called only when the line appears on screen
-        components = {
-          kind_icon = {
-            ellipsis = false,
-            text = function(ctx)
-              return ctx.kind_icon .. ctx.icon_gap
-            end,
-            highlight = function(ctx)
-              return require('blink.cmp.completion.windows.render.tailwind').get_hl(ctx) or ('BlinkCmpKind' .. ctx.kind)
-            end,
-          },
-
-          kind = {
-            ellipsis = false,
-            width = { fill = true },
-            text = function(ctx)
-              return ctx.kind
-            end,
-            highlight = function(ctx)
-              return require('blink.cmp.completion.windows.render.tailwind').get_hl(ctx) or ('BlinkCmpKind' .. ctx.kind)
-            end,
-          },
-
-          label = {
-            width = { fill = true, max = 60 },
-            text = function(ctx)
-              return ctx.label .. ctx.label_detail
-            end,
-            highlight = function(ctx)
-              -- label and label details
-              local highlights = {
-                { 0, #ctx.label, group = ctx.deprecated and 'BlinkCmpLabelDeprecated' or 'BlinkCmpLabel' },
-              }
-              if ctx.label_detail then
-                table.insert(highlights, { #ctx.label, #ctx.label + #ctx.label_detail, group = 'BlinkCmpLabelDetail' })
-              end
-
-              -- characters matched on the label by the fuzzy matcher
-              for _, idx in ipairs(ctx.label_matched_indices) do
-                table.insert(highlights, { idx, idx + 1, group = 'BlinkCmpLabelMatch' })
-              end
-
-              return highlights
-            end,
-          },
-
-          label_description = {
-            width = { max = 30 },
-            text = function(ctx)
-              return ctx.label_description
-            end,
-            highlight = 'BlinkCmpLabelDescription',
-          },
-
-          source_name = {
-            width = { max = 30 },
-            text = function(ctx)
-              return ctx.source_name
-            end,
-            highlight = 'BlinkCmpSource',
-          },
+      luasnip = {
+        name = 'Luasnip',
+        module = 'blink.cmp.sources.luasnip',
+        opts = {
+          -- Whether to use show_condition for filtering snippets
+          use_show_condition = true,
+          -- Whether to show autosnippets in the completion list
+          show_autosnippets = true,
         },
       },
     },
+  },
+  completion = {
     documentation = {
-      -- Controls whether the documentation window will automatically show when selecting a completion item
       auto_show = true,
-      -- Delay before showing the documentation window
       auto_show_delay_ms = 500,
-      -- Delay before updating the documentation window when selecting a new item,
-      -- while an existing item is still visible
       update_delay_ms = 50,
-      -- Whether to use treesitter highlighting, disable if you run into performance issues
       treesitter_highlighting = true,
       window = {
         min_width = 10,
@@ -159,19 +86,12 @@ require('blink.cmp').setup {
         border = 'padded',
         winblend = 0,
         winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None',
-        -- Note that the gutter will be disabled when border ~= 'none'
         scrollbar = true,
-        -- Which directions to show the documentation window,
-        -- for each of the possible menu window directions,
-        -- falling back to the next direction when there's not enough space
         direction_priority = {
           menu_north = { 'e', 'w', 'n', 's' },
           menu_south = { 'e', 'w', 's', 'n' },
         },
       },
-    },
-    ghost_text = {
-      enabled = true,
     },
   },
   keymap = {
@@ -188,13 +108,7 @@ require('blink.cmp').setup {
     },
   },
   appearance = {
-    highlight_ns = vim.api.nvim_create_namespace 'blink_cmp',
-    -- Sets the fallback highlight groups to nvim-cmp's highlight groups
-    -- Useful for when your theme doesn't support blink.cmp
-    -- Will be removed in a future release
     use_nvim_cmp_as_default = true,
-    -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
-    -- Adjusts spacing to ensure icons are aligned
     nerd_font_variant = 'mono',
     kind_icons = {
       Method = MiniIcons.get('lsp', 'method'),
