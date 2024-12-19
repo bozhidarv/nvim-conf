@@ -3,7 +3,7 @@ local add = MiniDeps.add
 add {
   source = 'folke/tokyonight.nvim',
   -- Use 'master' while monitoring updates in 'main'
-  checkout = 'master',
+  checkout = 'main',
   monitor = 'main',
   -- Perform action after every checkout
   hooks = {
