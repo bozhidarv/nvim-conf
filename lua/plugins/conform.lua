@@ -36,7 +36,7 @@ require('conform').setup {
     clang_format = {
       command = vim.fn.stdpath 'data' .. '/mason/packages/clang-format/venv/bin/clang-format',
 
-      args = '--style="{AlignAfterOpenBracket: false, ColumnLimit: 100}"',
+      args = '--style="{AlignAfterOpenBracket: false, ColumnLimit: 100, BreakTemplateDeclarations: Yes}"',
     },
   },
 }

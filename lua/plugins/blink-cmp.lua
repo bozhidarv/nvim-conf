@@ -1,5 +1,5 @@
 local function build_jsregexp(params)
-  vim.notify('Building blink.cmp', vim.log.levels.INFO)
+  vim.notify('Building jsregexp', vim.log.levels.INFO)
   local obj = vim.system({ 'make', 'install_jsregexp' }, { cwd = params.path }):wait()
   if obj.code == 0 then
     vim.notify('Building jsregexp done', vim.log.levels.INFO)

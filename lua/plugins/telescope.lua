@@ -1,12 +1,12 @@
 local add = MiniDeps.add
 
 local function build_telescope_fzf(params)
-  vim.notify('Building blink.cmp', vim.log.levels.INFO)
+  vim.notify('Building fzf', vim.log.levels.INFO)
   local obj = vim.system({ 'make' }, { cwd = params.path }):wait()
   if obj.code == 0 then
-    vim.notify('Building jsregexp done', vim.log.levels.INFO)
+    vim.notify('Building fzf done', vim.log.levels.INFO)
   else
-    vim.notify('Building jsregexp failed', vim.log.levels.ERROR)
+    vim.notify('Building fzf failed', vim.log.levels.ERROR)
   end
 end
 

@@ -102,8 +102,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end
 
     -- TODO: Check in typescript project before removing fully
-    -- -- Tsserver usually works poorly. Sorry you work with bad languages
-    -- -- You can remove this line if you know what you're doing :)
+    --
+    -- Tsserver usually works poorly. Sorry you work with bad languages
+    -- You can remove this line if you know what you're doing :)
     -- if client.name == 'tsserver' then
     --   require('conform').format { bufnr = args.buf }
     --   return
@@ -123,8 +124,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     })
   end,
 })
-
--- autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh({ bufnr = 0 })
 
 vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
   group = vim.api.nvim_create_augroup('refresh-codelens', { clear = true }),
