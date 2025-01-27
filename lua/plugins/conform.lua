@@ -21,6 +21,7 @@ require('conform').setup {
     css = { 'prettierd' },
     cs = { 'csharpier' },
     rust = { 'rustfmt' },
+    zig = { 'zig fmt' },
   },
   -- Set default options
   default_format_opts = {
