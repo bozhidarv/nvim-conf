@@ -54,25 +54,17 @@ require('blink.cmp').setup {
     end,
   },
   sources = {
-    default = { 'lsp', 'path', 'luasnip', 'buffer', 'lazydev' },
+    default = { "lazydev", "lsp", "path", "snippets", "buffer" },
     providers = {
       lazydev = {
-        name = 'LazyDev',
-        module = 'lazydev.integrations.blink',
-        fallbacks = { 'lsp' },
-      },
-      luasnip = {
-        name = 'Luasnip',
-        module = 'blink.cmp.sources.luasnip',
-        opts = {
-          -- Whether to use show_condition for filtering snippets
-          use_show_condition = true,
-          -- Whether to show autosnippets in the completion list
-          show_autosnippets = true,
-        },
+        name = "LazyDev",
+        module = "lazydev.integrations.blink",
+        -- make lazydev completions top priority (see `:h blink.cmp`)
+        score_offset = 100,
       },
     },
   },
+  -- snippets = { preset = 'default' | 'luasnip' },
   completion = {
     documentation = {
       auto_show = true,
@@ -103,7 +95,8 @@ require('blink.cmp').setup {
     ['<C-h>'] = { 'snippet_backward', 'fallback' },
     ['<C-j>'] = {
       function(_)
-        vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n', true)
+        vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n',
+          true)
       end,
     },
   },
