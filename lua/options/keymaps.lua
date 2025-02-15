@@ -172,3 +172,7 @@ vim.keymap.set('n', '<leader>to', function()
   require('neotest').output.open()
 end, { silent = true, desc = 'Open output panel' })
 --#endregion
+
+--#region neotree
+vim.keymap.set('n', '<leader>ft', '<CMD>Neotree reveal right toggle<CR>', { silent = true, desc = 'Open neotree' })
+--#endregion
