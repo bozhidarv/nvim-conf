@@ -54,11 +54,11 @@ require('blink.cmp').setup {
     end,
   },
   sources = {
-    default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+    default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
     providers = {
       lazydev = {
-        name = "LazyDev",
-        module = "lazydev.integrations.blink",
+        name = 'LazyDev',
+        module = 'lazydev.integrations.blink',
         -- make lazydev completions top priority (see `:h blink.cmp`)
         score_offset = 100,
       },
@@ -95,8 +95,7 @@ require('blink.cmp').setup {
     ['<C-h>'] = { 'snippet_backward', 'fallback' },
     ['<C-j>'] = {
       function(_)
-        vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n',
-          true)
+        vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n', true)
       end,
     },
   },
