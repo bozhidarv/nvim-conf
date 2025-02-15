@@ -167,4 +167,16 @@ dap.configurations.rust = {
     stopOnEntry = false,
   },
 }
+dap.configurations.zig = {
+  {
+    name = 'Launch',
+    type = 'codelldb',
+    request = 'launch',
+    program = '${workspaceFolder}/zig-out/bin/${workspaceFolderBasename}',
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
+    args = {},
+  },
+}
+
 dap.configurations.c = dap.configurations.cpp
