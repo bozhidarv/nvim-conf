@@ -22,7 +22,8 @@ require('fzf-lua').setup {
     },
     fzf = {
       true,
-      ['ctrl-u'] = false,
+      ['ctrl-d'] = 'preview-page-down',
+      ['ctrl-u'] = 'preview-page-up',
     },
   },
   fzf_opts = {

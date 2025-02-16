@@ -75,6 +75,7 @@ vim.keymap.set('n', '<leader>fh', require('fzf-lua').helptags, { desc = 'Find He
 vim.keymap.set('n', '<leader>fc', require('fzf-lua').colorschemes, { desc = 'Find colorschemes' })
 vim.keymap.set('n', '<leader>fm', require('fzf-lua').manpages, { desc = 'Find Manpages' })
 vim.keymap.set('n', '<leader>fk', require('fzf-lua').keymaps, { desc = 'Find keymaps' })
+vim.keymap.set('n', '<leader>gs', require('fzf-lua').git_status, { desc = 'Show git status' })
 --#endregion
 
 --#region undotree
