@@ -22,6 +22,8 @@ vim.wo.number = true
 -- Enable mouse mode
 vim.o.mouse = 'a'
 
+vim.opt.guicursor = ''
+
 if vim.fn.executable 'rg' then
   vim.o.grepprg = 'rg --vimgrep --smart-case --hidden --engine auto'
   vim.o.grepformat = '%f:%l:%c:%m'
