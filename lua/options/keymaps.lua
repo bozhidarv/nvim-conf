@@ -83,11 +83,20 @@ vim.keymap.set('n', '<leader>fu', vim.cmd.UndotreeToggle, { desc = 'Open undo tr
 --#endregion
 
 --#region Oil.nvim
-if not package.loaded['oil'] then
-  vim.keymap.set('n', '<leader>e', '<CMD>Explore<CR>', { desc = 'Open file explorer' })
-else
-  vim.keymap.set('n', '<leader>e', '<CMD>Oil<CR>', { desc = 'Open file explorer' })
-end
+-- if not package.loaded['oil'] then
+--   vim.keymap.set('n', '<leader>e', '<CMD>Explore<CR>', { desc = 'Open file explorer' })
+-- else
+--   vim.keymap.set('n', '<leader>e', '<CMD>Oil<CR>', { desc = 'Open file explorer' })
+-- end
+--#endregion
+
+--#region mini.files
+vim.keymap.set('n', '<leader>e', function()
+  local buf_name = vim.api.nvim_buf_get_name(0)
+  local path = vim.fn.filereadable(buf_name) == 1 and buf_name or vim.fn.getcwd()
+  MiniFiles.open(path)
+  MiniFiles.reveal_cwd()
+end, { desc = 'Open mini.files' })
 --#endregion
 
 --#region Git
