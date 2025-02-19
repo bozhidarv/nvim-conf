@@ -79,12 +79,24 @@ add {
 }
 
 --#region Diagnostic Signs Configuration
+
+--- @type vim.diagnostic.Severity
 local severities = vim.diagnostic.severity
+
+--- @type vim.diagnostic.Opts.Signs
+local signs_config = { text = {}, numhl = {} }
+
 for level = 1, 4 do
   local severity = string.lower(severities[level])
-  local hl = 'DiagnosticSign' .. require('options.utils').firstToUpper(severity)
-  vim.fn.sign_define(hl, { text = MiniIcons.get('lsp', severity), texthl = hl, numhl = hl })
+  local num_hl_name = 'DiagnosticSign' .. require('options.utils').firstToUpper(severity)
+
+  table.insert(signs_config.numhl, num_hl_name)
+  signs_config.text = vim.tbl_extend('force', signs_config.text, { [severities[level]] = MiniIcons.get('lsp', severity) })
 end
+
+vim.diagnostic.config {
+  signs = signs_config,
+}
 --#endregion
 
 -- LSP settings (for overriding per client)
