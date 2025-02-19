@@ -65,7 +65,9 @@ vim.keymap.set('n', '<leader>?', require('fzf-lua').oldfiles, { desc = '[?] Find
 vim.keymap.set('n', '<leader><space>', function()
   require('fzf-lua').files { hidden = false }
 end, { desc = 'Search files' })
-vim.keymap.set('n', '<leader>fF', require('fzf-lua').files, { desc = 'Find Files' })
+vim.keymap.set('n', '<leader>fF', function()
+  require('fzf-lua').files { hidden = true, no_ignore = true }
+end, { desc = 'Find Files' })
 vim.keymap.set('n', '<leader>ff', require('fzf-lua').git_files, { desc = 'Find Git Files' })
 vim.keymap.set('n', '<leader>fb', require('fzf-lua').buffers, { desc = 'Find Buffers' })
 vim.keymap.set('n', '<leader>/', require('fzf-lua').grep_curbuf, { desc = '[/] Fuzzily search in current buffer' })
