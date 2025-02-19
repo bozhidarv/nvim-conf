@@ -8,7 +8,7 @@ MiniDeps.add {
 local actions = require 'fzf-lua.actions'
 
 require('fzf-lua').setup {
-  -- 'telescope',
+  -- 'default-title',
   'ivy',
   defaults = {
     file_icons = 'mini',
@@ -39,6 +39,12 @@ require('fzf-lua').setup {
     ['--border'] = 'none',
     ['--highlight-line'] = true, -- fzf >= v0.53
   },
+  grep = {
+    winopts = require('fzf-lua.profiles.ivy').winopts,
+  },
+  grep_curbuf = {
+    winopts = require('fzf-lua.profiles.ivy').winopts,
+  },
   git = {
     status = {
       prompt = 'GitStatus❯ ',
@@ -57,6 +63,9 @@ require('fzf-lua').setup {
         ['ctrl-s'] = { fn = actions.git_stage_unstage, reload = true },
         ['ctrl-x'] = { fn = actions.git_reset, reload = true },
       },
+    },
+    blame = {
+      winopts = require('fzf-lua.profiles.ivy').winopts,
     },
   },
 }
