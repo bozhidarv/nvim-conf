@@ -34,7 +34,13 @@ local custom_arrow = function()
 end
 
 local custom_git = function()
-  return '%{FugitiveStatusline()}'
+  local first_split = vim.fn.split(vim.api.nvim_eval_statusline('%{FugitiveStatusline()}', {}).str, '[Git(')[1]
+  local second_split = vim.fn.split(first_split, ')]')[1]
+
+  if second_split == 'v:null' then
+    return ''
+  end
+  return ' ' .. second_split
 end
 require('mini.statusline').setup()
 
