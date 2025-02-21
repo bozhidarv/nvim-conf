@@ -20,18 +20,15 @@ luasnip.config.setup {}
 
 --#region cmp Setup
 local cmp = require 'cmp'
-local custom_border = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' }
 ---@type cmp.ConfigSchema
-local cmp_options = {
+cmp.setup {
   window = {
-    completion = { -- rounded border; thin-style scrollbar
-      border = custom_border,
-      scrollbar = '║',
+    completion = {
+      scrollbar = true,
+      side_padding = 0,
     },
-    documentation = { -- no border; native-style scrollbar
-      border = custom_border,
-      scrollbar = '║',
-      -- other options
+    documentation = {
+      scrollbar = true,
     },
   },
   snippet = {
@@ -50,10 +47,6 @@ local cmp_options = {
     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
     ['<C-d>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete {},
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
     ['<C-j>'] = cmp.mapping(function(_)
       vim.api.nvim_feedkeys(vim.fn['copilot#Accept'](vim.api.nvim_replace_termcodes('<Tab>', true, true, true)), 'n', true)
     end),
@@ -71,24 +64,17 @@ local cmp_options = {
   formatting = {
     expandable_indicator = true,
     fields = { 'kind', 'abbr', 'menu' },
-    ---@param entry cmp.Entry
+
+    ---@param _ cmp.Entry
     ---@param vim_item vim.CompletedItem
-    format = function(entry, vim_item)
+    format = function(_, vim_item)
       ---@type string
-      local icon = ''
-      local hl_group = ''
-      if vim_item.kind == 'Supermaven' then
-        icon = ''
-        vim.api.nvim_set_hl(0, 'CmpItemKindSupermaven', { fg = '#6CC644' })
-        hl_group = 'CmpItemKindSupermaven'
-      else
-        icon, hl_group = MiniIcons.get('lsp', vim_item.kind:lower())
-      end
-      -- icon, hl_group = MiniIcons.get('lsp', vim_item.kind:lower())
+      local icon, hl_group = MiniIcons.get('lsp', vim_item.kind:lower())
+
       vim_item.menu = '[' .. vim_item.kind .. ']'
       vim_item.menu_hl_group = hl_group
       if icon then
-        vim_item.kind = icon
+        vim_item.kind = icon .. ' '
         vim_item.kind_hl_group = hl_group
         return vim_item
       end
@@ -102,12 +88,9 @@ local cmp_options = {
     { name = 'vim-dadbod-completion' },
     { name = 'nvim_lsp_signature_help' },
     { name = 'hrsh7th/cmp-cmdline' },
-    -- { name = 'supermaven' },
     { name = 'lazydev', group_index = 0 },
   },
 }
-
-cmp.setup(cmp_options)
 
 cmp.setup.cmdline({ '/', '?' }, {
   mapping = cmp.mapping.preset.cmdline(),

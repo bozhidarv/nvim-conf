@@ -29,6 +29,9 @@ if vim.fn.executable 'rg' then
   vim.o.grepformat = '%f:%l:%c:%m'
 end
 
+-- Limit completion window height
+vim.opt.pumheight = 10
+
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
