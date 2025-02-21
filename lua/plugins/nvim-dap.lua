@@ -167,15 +167,40 @@ dap.configurations.rust = {
     stopOnEntry = false,
   },
 }
+
+local splitStr = function(inputstr)
+  split = '%s'
+  local t = {}
+  for str in string.gmatch(inputstr, '([^%s]+)') do
+    table.insert(t, str)
+  end
+  return t
+end
+
 dap.configurations.zig = {
   {
-    name = 'Launch',
+    name = 'Run Program',
     type = 'codelldb',
     request = 'launch',
-    program = '${workspaceFolder}/zig-out/bin/${workspaceFolderBasename}',
+    program = function()
+      co = coroutine.running()
+      if co then
+        cb = function(item)
+          coroutine.resume(co, item)
+        end
+      end
+      cb = vim.schedule_wrap(cb)
+      vim.ui.select(vim.fn.glob(vim.fn.getcwd() .. '**/zig-out/**/*', false, true), {
+        prompt = 'Select executable',
+        kind = 'file',
+      }, cb)
+      return coroutine.yield()
+    end,
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
-    args = {},
+    args = function()
+      return splitStr(vim.fn.input 'Args: ')
+    end,
   },
 }
 
