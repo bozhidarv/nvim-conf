@@ -1,5 +1,5 @@
 local custom_filename = function()
-  return '%t %m'
+  return '%f%m%r'
 end
 
 local custom_location = function()
