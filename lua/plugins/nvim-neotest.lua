@@ -11,6 +11,7 @@ add {
     'Issafalcon/neotest-dotnet',
     'vim-test/vim-test',
     'nvim-neotest/neotest-vim-test',
+    'lawrence-laz/neotest-zig',
   },
 }
 
@@ -28,5 +29,10 @@ require('neotest').setup {
       dap = { adapter_name = 'coreclr' },
     },
     require 'neotest-vim-test' { ignore_filetypes = { 'rust', 'cs' } },
+    require 'neotest-zig' {
+      dap = {
+        adapter = 'lldb',
+      },
+    },
   },
 }
