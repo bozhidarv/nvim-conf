@@ -72,11 +72,15 @@ require('fzf-lua').setup {
 
 require('fzf-lua').register_ui_select {
   winopts = {
-    relative = 'editor',
-    row = 0.48,
-    col = 0.48,
-    height = 0.2,
-    width = 0.2,
-    win_border = true,
+    height = 0.3, -- window height
+    width = 0.3, -- window width
+    row = 0.47, -- window row position (0=top, 1=bottom)
+    col = 0.47, -- window col position (0=left, 1=right)
+    border = 'rounded',
+    backdrop = 60,
+    fullscreen = false, -- start fullscreen?
+    preview = {
+      hidden = true, -- start preview hidden
+    },
   },
 }
