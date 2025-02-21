@@ -41,6 +41,13 @@ vim.keymap.set('n', '<leader>-', ':split<CR>', { desc = 'Horizontal split' })
 vim.keymap.set('n', '<leader>|', ':vsplit<CR>', { desc = 'Verical split' })
 --#endregion
 
+--#region remove unneeded lsp keymaps
+vim.keymap.del('n', 'grr')
+vim.keymap.del('n', 'gra')
+vim.keymap.del('n', 'gri')
+vim.keymap.del('n', 'grn')
+--#endregion
+
 --#region telescope
 -- vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 -- vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, { desc = 'Search files' })
