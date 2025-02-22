@@ -84,3 +84,5 @@ if vim.g.vscode then
 else
   require 'options.keymaps'
 end
+
+require 'custom.notes-plugin'

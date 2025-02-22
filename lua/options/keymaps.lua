@@ -48,6 +48,10 @@ vim.keymap.del('n', 'gri')
 vim.keymap.del('n', 'grn')
 --#endregion
 
+--#region Disable help on F1
+vim.keymap.set({ 'i', 'n' }, '<F1>', '<nop>', {})
+--#endregion
+
 --#region telescope
 -- vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 -- vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, { desc = 'Search files' })
