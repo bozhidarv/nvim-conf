@@ -21,7 +21,6 @@ require('conform').setup {
     css = { 'prettierd' },
     cs = { 'csharpier' },
     rust = { 'rustfmt' },
-    zig = { 'zigfmt' },
   },
   -- Set default options
   default_format_opts = {
@@ -39,5 +38,9 @@ require('conform').setup {
 
       args = '--style="{AlignAfterOpenBracket: false, ColumnLimit: 100, BreakTemplateDeclarations: Yes}"',
     },
+    -- zigfmt = {
+    --   command = 'zig',
+    --   args = { 'fmt', '--stdin' },
+    -- },
   },
 }
