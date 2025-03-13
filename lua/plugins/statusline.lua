@@ -47,7 +47,8 @@ require('mini.statusline').setup()
 ---@diagnostic disable-next-line: duplicate-set-field
 MiniStatusline.active = function()
   local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
-  local git = custom_git()
+  -- local git = custom_git()
+  local git = MiniStatusline.section_git { trunc_width = 75 }
   local diff = MiniStatusline.section_diff { trunc_width = 75 }
   -- local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
   local diagnostics = custom_diagnostics()

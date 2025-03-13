@@ -115,7 +115,9 @@ end, { desc = 'Open mini.files' })
 
 --#region Git
 vim.keymap.set('n', '<leader>gg', '<CMD>LazyGitOpen<CR>', { desc = 'Open lazygit' })
-vim.keymap.set('n', '<leader>gf', '<CMD>Git<CR>', { desc = 'Open fugitive' })
+vim.keymap.set('n', '<leader>gf', function()
+  require('neogit').open { kind = 'split_above' }
+end, { desc = 'Open fugitive' })
 vim.keymap.set('n', '<leader>gh', function()
   require('mini.diff').toggle_overlay(0)
 end, { desc = 'Toggle mini.diff overlay' })

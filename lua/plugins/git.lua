@@ -1,6 +1,16 @@
 MiniDeps.add {
-  source = 'tpope/vim-fugitive',
+  source = 'NeogitOrg/neogit',
+  depends = {
+    'nvim-lua/plenary.nvim', -- required
+    'sindrets/diffview.nvim', -- optional - Diff integration
+
+    'ibhagwan/fzf-lua', -- optional
+  },
 }
+
+require('neogit').setup {}
+
+require('mini.git').setup()
 
 require('mini.diff').setup {
   -- Options for how hunks are visualized
