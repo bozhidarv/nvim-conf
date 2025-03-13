@@ -3,16 +3,6 @@
 
 vim.o.background = 'dark'
 
-local colorscheme = require('options.utils').colorscheme
-local isTransparent = require('options.utils').checkTransperancy
-
-vim.cmd.colorscheme(colorscheme)
-
-if isTransparent() then
-  vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
-  vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
-end
-
 -- Set highlight on search
 vim.o.hlsearch = true
 
@@ -86,3 +76,14 @@ else
 end
 
 require 'custom.notes-plugin'
+
+local colorscheme = require('options.utils').colorscheme
+
+vim.cmd.colorscheme(colorscheme)
+
+local isTransparent = require('options.utils').checkTransperancy
+
+if isTransparent() then
+  vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
+  vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
+end

@@ -16,6 +16,6 @@ M.checkTransperancy = function()
   return false
 end
 
-M.colorscheme = 'kanagawa'
+M.colorscheme = 'nordic'
 
 return M
