@@ -28,69 +28,43 @@ local function create_file_with_dirs(filepath)
   end
 end
 
-local function toggle_notes()
-  if notes_winid and vim.api.nvim_win_is_valid(notes_winid) then
-    if notes_bufnr and vim.api.nvim_buf_is_valid(notes_bufnr) then
-      vim.api.nvim_buf_delete(notes_bufnr, { force = true }) -- Close window if open
-    else
-      vim.api.nvim_win_close(notes_winid, true) -- Close window if open
-    end
+local win_opened = false
 
-    notes_winid = nil
-    notes_bufnr = nil
-    return
-  end
+-- Function to open a file in a floating window
+local function open_file_in_float(filepath)
+  -- Create a new buffer
+  local buf = vim.api.nvim_create_buf(false, true) -- false: not listed, true: scratch buffer
 
-  local file = vim.fn.stdpath 'data' .. '/notes/notes.md' -- Ensure correct file path
-  notes_bufnr = vim.api.nvim_create_buf(false, true)
+  -- Define floating window dimensions and position
+  local width = math.floor(vim.o.columns * 0.8) -- 80% of editor width
+  local height = math.floor(vim.o.lines * 0.8) -- 80% of editor height
+  local row = math.floor((vim.o.lines - height) / 2) -- Center vertically
+  local col = math.floor((vim.o.columns - width) / 2) -- Center horizontally
 
-  if vim.fn.filereadable(file) == 1 then
-    local lines = vim.fn.readfile(file, '', 1000)
-    vim.api.nvim_buf_set_lines(notes_bufnr, 0, -1, false, lines)
-  else
-    vim.api.nvim_buf_set_lines(notes_bufnr, 0, -1, false, { '# Notes', '' }) -- Initialize empty file with a header
-  end
-
-  vim.api.nvim_set_option_value('filetype', 'markdown', { buf = notes_bufnr })
-  vim.api.nvim_set_option_value('buftype', '', { buf = notes_bufnr })
-  vim.api.nvim_set_option_value('modifiable', true, { buf = notes_bufnr })
-  -- vim.api.nvim_buf_set_option(buf, 'readonly', false)
-
-  -- Get editor dimensions
-  local width = math.floor(vim.o.columns * 0.7)
-  local height = math.floor(vim.o.lines * 0.7)
-  local row = math.floor((vim.o.lines - height) / 2)
-  local col = math.floor((vim.o.columns - width) / 2)
-
-  -- Create the floating window
-  notes_winid = vim.api.nvim_open_win(notes_bufnr, true, {
+  -- Floating window configuration
+  local opts = {
     relative = 'editor',
     width = width,
     height = height,
     row = row,
     col = col,
-    border = 'rounded',
-  })
+    border = 'rounded', -- Optional: adds a rounded border
+  }
 
-  if vim.fn.empty(cursor_pos) == 0 then
-    vim.api.nvim_win_set_cursor(notes_winid, cursor_pos)
+  -- Open the floating window with the buffer
+  local _ = vim.api.nvim_open_win(buf, true, opts)
+
+  -- Load the file into the buffer
+  if filepath and vim.fn.filereadable(filepath) == 0 then
+    create_file_with_dirs(filepath)
   end
 
-  vim.api.nvim_create_autocmd('BufLeave', {
-    desc = '',
-    callback = function()
-      if vim.fn.filereadable(file) then
-        create_file_with_dirs(file)
-      end
-      cursor_pos = vim.api.nvim_win_get_cursor(notes_winid)
-      local lines = vim.api.nvim_buf_get_lines(notes_bufnr, 0, -1, false)
-      vim.fn.writefile(lines, file, 's')
-    end,
-    buffer = notes_bufnr,
-  })
+  vim.api.nvim_command('edit ' .. vim.fn.fnameescape(filepath))
 
-  -- Set keymap to close with 'q'
-  vim.api.nvim_buf_set_keymap(notes_bufnr, 'n', 'q', '<cmd>ToggleNotes<CR>', { noremap = true, silent = true })
+  -- Ensure the buffer is modifiable
+  vim.api.nvim_set_option_value('filetype', 'markdown', { buf = notes_bufnr })
+  vim.api.nvim_set_option_value('buftype', '', { buf = notes_bufnr })
+  vim.api.nvim_set_option_value('modifiable', true, { buf = notes_bufnr })
 
   vim.keymap.set('n', '<C-N>', function()
     local keys = vim.api.nvim_replace_termcodes('o- [ ] ', true, false, true)
@@ -111,6 +85,38 @@ local function toggle_notes()
   end, { noremap = true, silent = true, buffer = notes_bufnr })
 end
 
-vim.api.nvim_create_user_command('ToggleNotes', toggle_notes, { desc = 'Toggle a floating notes.md window' })
+vim.api.nvim_create_user_command('ToggleNotes', function(args)
+  local filename = args.args
+  local bufnr = vim.api.nvim_get_current_buf()
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
 
-vim.keymap.set('n', '<F1>', '<cmd>ToggleNotes<CR>', { noremap = true, silent = true, desc = 'Open notes' })
+  if win_opened then
+    vim.api.nvim_win_close(vim.api.nvim_get_current_win(), false)
+    win_opened = false
+  end
+
+  if bufname == filename then
+    vim.api.nvim_buf_call(bufnr, function()
+      vim.api.nvim_command 'write'
+    end)
+  else
+    win_opened = true
+    open_file_in_float(filename)
+  end
+end, { desc = 'Toggle a floating notes.md window', nargs = 1 })
+
+local function get_local_note_name()
+  ---@type string
+  local str = vim.fn.getcwd():gsub(os.getenv 'HOME' .. '/', '')
+  str = str:gsub('/', '.')
+
+  return str
+end
+
+vim.keymap.set('n', '<F2>', '<cmd>ToggleNotes ' .. vim.fn.stdpath 'data' .. '/notes/notes.md' .. '<CR>', { noremap = true, silent = true, desc = 'Open notes' })
+vim.keymap.set(
+  'n',
+  '<F1>',
+  '<cmd>ToggleNotes ' .. vim.fn.stdpath 'data' .. '/notes/' .. get_local_note_name() .. '.md' .. '<CR>',
+  { noremap = true, silent = true, desc = 'Open notes' }
+)
