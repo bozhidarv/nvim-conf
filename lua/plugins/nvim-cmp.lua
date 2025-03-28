@@ -82,13 +82,13 @@ cmp.setup {
     end,
   },
   sources = {
+    { name = 'lazydev', group_index = 0 },
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'path' },
     { name = 'vim-dadbod-completion' },
     { name = 'nvim_lsp_signature_help' },
     { name = 'hrsh7th/cmp-cmdline' },
-    { name = 'lazydev', group_index = 0 },
   },
 }
 

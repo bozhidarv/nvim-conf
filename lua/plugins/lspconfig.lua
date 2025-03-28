@@ -198,9 +198,6 @@ local servers = {
             'require',
           },
         },
-        workspace = {
-          library = { vim.env.VIMRUNTIME },
-        },
         telemetry = {
           checkThirdParty = false,
           enable = false,
