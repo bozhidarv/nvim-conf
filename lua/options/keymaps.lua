@@ -114,15 +114,19 @@ end, { desc = 'Open mini.files' })
 --#endregion
 
 --#region Git
+vim.keymap.set('n', '<leader>gl', ':Git log --graph --decorate', { desc = 'Git log' })
+vim.keymap.set('n', '<leader>gp', ':Git pull<CR>', { desc = 'Git pull' })
+vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = 'Git push' })
+vim.keymap.set('n', '<leader>gd', ':Git diff %<CR>', { desc = 'Git diff current file' })
+vim.keymap.set('n', '<leader>gD', ':Git diff<CR>', { desc = 'Git diff repo' })
+vim.keymap.set('n', '<leader>gb', ':Git blame<CR>', { desc = 'Open git blame' })
+vim.keymap.set('n', '<leader>gh', function()
+  require('mini.diff').toggle_overlay(0)
+end, { desc = 'Toggle diff overlay' })
+vim.keymap.set('n', '<leader>gml', ':diffget //2<CR>', { desc = 'Git merge conflict select left' })
+vim.keymap.set('n', '<leader>gmr', ':diffget //3<CR>', { desc = 'Git merge conflict select right' })
 vim.keymap.set('n', '<leader>gg', '<CMD>LazyGitOpen<CR>', { desc = 'Open lazygit' })
-vim.keymap.set('n', '<leader>gf', function()
-  require('neogit').open { kind = 'split_above' }
-end, { desc = 'Open fugitive' })
-vim.keymap.set('n', '<leader>gl', ':Neogit log<CR>', { desc = 'Git log' })
-vim.keymap.set('n', '<leader>gp', ':Neogit pull<CR>', { desc = 'Git pull' })
-vim.keymap.set('n', '<leader>gP', ':Neogit push<CR>', { desc = 'Git push' })
-vim.keymap.set('n', '<leader>gd', ':Neogit diff<CR>', { desc = 'Git diff current file' })
-vim.keymap.set('n', '<leader>gb', require('gitsigns').blame, { desc = 'Open git blame' })
+vim.keymap.set('n', '<leader>gf', '<CMD>Git<CR>', { desc = 'Open fugitive' })
 --#endregion
 
 --#region diagnostics
