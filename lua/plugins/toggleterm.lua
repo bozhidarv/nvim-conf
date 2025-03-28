@@ -3,7 +3,7 @@ MiniDeps.add {
 }
 
 require('toggleterm').setup {
-  open_mapping = { '<C-\\>', '<C-t>' },
+  open_mapping = { '<C-\\>' },
   start_in_insert = true,
   direction = 'float',
 }

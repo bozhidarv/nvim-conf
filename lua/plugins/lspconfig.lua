@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 local add = MiniDeps.add
 
 add {
@@ -81,7 +82,6 @@ add {
 
 --#region Diagnostic Signs Configuration
 
---- @type vim.diagnostic.Severity
 local severities = vim.diagnostic.severity
 
 --- @type vim.diagnostic.Opts.Signs

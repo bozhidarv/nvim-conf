@@ -12,7 +12,7 @@ vim.wo.number = true
 -- Enable mouse mode
 vim.o.mouse = 'a'
 
-vim.opt.guicursor = ''
+vim.opt.guicursor = 'a:block,a:blinkon0'
 
 if vim.fn.executable 'rg' then
   vim.o.grepprg = 'rg --vimgrep --smart-case --hidden --engine auto'
@@ -40,8 +40,10 @@ vim.o.smartcase = true
 -- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
 
+-- Set scrolloff
+vim.o.scrolloff = 10
+
 -- Decrease update time
-vim.o.updatetime = 250
 vim.o.updatetime = 1000
 
 ---FixCursorHold is dependancy of neotest
