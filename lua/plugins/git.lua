@@ -27,3 +27,9 @@ require('mini.diff').setup {
     wrap_goto = false,
   },
 }
+
+vim.api.nvim_create_user_command('LazyGitOpen', function()
+  local Terminal = require('toggleterm.terminal').Terminal
+  local lazygit = Terminal:new { cmd = 'lazygit', hidden = true }
+  lazygit:toggle()
+end, {})

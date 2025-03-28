@@ -1,4 +1,13 @@
 ---@diagnostic disable: missing-fields
+
+vim.api.nvim_create_user_command('ToggleBackground', function()
+  if vim.o.background == 'dark' then
+    vim.o.background = 'light'
+  else
+    vim.o.background = 'dark'
+  end
+end, {})
+
 local add = MiniDeps.add
 
 add {
@@ -155,7 +164,7 @@ require('nordic').setup {
 
   ---@type fun(highlights: Highlights, palette: ExtendedPalette)
   on_highlight = function(highlights, palette)
-    highlights.ArrowStatusLine = {
+    highlights['ArrowStatusLine'] = {
       bg = palette.grey1,
       fg = palette.warn,
     }

@@ -8,12 +8,6 @@ add {
 require('roslyn').setup {
   {
     config = {
-      -- Here you can pass in any options that that you would like to pass to `vim.lsp.start`.
-      -- Use `:h vim.lsp.ClientConfig` to see all possible options.
-      -- The only options that are overwritten and won't have any effect by setting here:
-      --     - `name`
-      --     - `cmd`
-      --     - `root_dir`
       settings = {
         ['csharp|inlay_hints'] = {
           csharp_enable_inlay_hints_for_implicit_object_creation = true,
@@ -34,45 +28,17 @@ require('roslyn').setup {
         },
       },
     },
-
-    --[[
-    -- if you installed `roslyn-ls` by nix, use the following:
-      exe = 'Microsoft.CodeAnalysis.LanguageServer',
-    ]]
     exe = {
       'dotnet',
       vim.fs.joinpath(vim.fn.stdpath 'data', 'roslyn', 'Microsoft.CodeAnalysis.LanguageServer.dll'),
     },
-
-    -- NOTE: Set `filewatching` to false if you experience performance problems.
-    -- Defaults to true, since turning it off is a hack.
-    -- If you notice that the server is _super_ slow, it is probably because of file watching
-    -- Neovim becomes super unresponsive on some large codebases, because it schedules the file watching on the event loop.
-    -- This issue goes away by disabling this capability, but roslyn will fallback to its own file watching,
-    -- which can make the server super slow to initialize.
-    -- Setting this option to false will indicate to the server that neovim will do the file watching.
-    -- However, in `hacks.lua` I will also just don't start off any watchers, which seems to make the server
-    -- a lot faster to initialize.
     filewatching = true,
-
-    -- Optional function that takes an array of solutions as the only argument. Return the solution you
-    -- want to use. If it returns `nil`, then it falls back to guessing the solution like normal
-    -- Example:
-    --
-    -- choose_sln = function(sln)
-    --     return vim.iter(sln):find(function(item)
-    --         if string.match(item, "Foo.sln") then
-    --             return item
-    --         end
-    --     end)
-    -- end
     choose_sln = nil,
   },
 }
 
 add {
   source = 'neovim/nvim-lspconfig',
-  -- Supply dependencies near target plugin
   depends = {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
@@ -116,11 +82,6 @@ local servers = {
     },
   },
   jdtls = {
-    -- cmd = {
-    --   'jdtls',
-    --   '-data',
-    --   vim.fn.stdpath 'data' .. '/lspconfig/jdtls-workspace',
-    -- },
     settings = {
       java = {
         configuration = {
@@ -251,3 +212,163 @@ mason_lspconfig.setup {
   },
   ensure_installed = vim.tbl_keys(servers),
 }
+
+local format_is_enabled = true
+vim.api.nvim_create_user_command('ToggleFormatOnSave', function()
+  format_is_enabled = not format_is_enabled
+  print('Setting autoformatting to: ' .. tostring(format_is_enabled))
+end, {})
+
+---@type table<integer, integer>
+local _augroups = {}
+
+---@param client vim.lsp.Client
+local get_augroup = function(client)
+  if not _augroups[client.id] then
+    local group_name = 'lsp-format-' .. client.name
+    local id = vim.api.nvim_create_augroup(group_name, { clear = true })
+    _augroups[client.id] = id
+  end
+
+  return _augroups[client.id]
+end
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('lsp-attach-format-on-save', { clear = true }),
+  -- This is where we attach the autoformatting for reasonable clients
+  callback = function(args)
+    ---@type integer
+    local client_id = args.data.client_id
+    local client = vim.lsp.get_client_by_id(client_id)
+    local bufnr = args.buf
+
+    if client == nil then
+      return
+    end
+
+    -- Only attach to clients that support document formatting
+    if not client.server_capabilities.documentFormattingProvider then
+      return
+    end
+
+    -- Create an autocmd that will run *before* we save the buffer.
+    --  Run the formatting command for the LSP that has just attached.
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      group = get_augroup(client),
+      buffer = bufnr,
+      callback = function()
+        if not format_is_enabled then
+          return
+        end
+        require('conform').format { bufnr = args.buf }
+      end,
+    })
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
+  group = vim.api.nvim_create_augroup('refresh-codelens', { clear = true }),
+  callback = function(event)
+    vim.lsp.codelens.refresh { bufnr = event.buf }
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+  group = vim.api.nvim_create_augroup('set-compiler', { clear = true }),
+  callback = function(event)
+    local compilers_by_ft = {
+      zig = 'zig_build',
+      go = 'go',
+    }
+
+    if compilers_by_ft[vim.bo.filetype] == nil then
+      return
+    end
+    vim.cmd('compiler ' .. compilers_by_ft[vim.bo.filetype])
+    vim.lsp.codelens.refresh { bufnr = event.buf }
+
+    vim.keymap.set('n', '<leader>cm', ':make<CR>', { buffer = event.buf, desc = 'Compile' })
+    -- Autocommand to run after :make
+    vim.api.nvim_create_autocmd('QuickFixCmdPost', {
+      pattern = 'make',
+      callback = function()
+        local qflist = vim.fn.getqflist()
+        local diagnostics = vim.diagnostic.fromqflist(qflist)
+        vim.diagnostic.set(vim.api.nvim_create_namespace 'make_diagnostics', 0, diagnostics)
+      end,
+    })
+  end,
+})
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
+  callback = function(event)
+    local bufnr = event.buf
+    vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { buffer = bufnr, desc = '[R]e[n]ame' })
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = '[C]ode [A]ction' })
+
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+    vim.keymap.set('n', 'gd', require('fzf-lua').lsp_definitions, { buffer = bufnr, desc = '[G]oto [D]efinition' })
+    vim.keymap.set('n', 'gr', require('fzf-lua').lsp_references, { buffer = bufnr, desc = '[G]oto [R]eferences' })
+    vim.keymap.set('n', 'gI', require('fzf-lua').lsp_implementations, { buffer = bufnr, desc = '[G]oto [I]mplementation' })
+    vim.keymap.set('n', '<leader>D', require('fzf-lua').lsp_typedefs, { buffer = bufnr, desc = 'Type [D]efinition' })
+    vim.keymap.set('n', '<leader>cs', require('fzf-lua').lsp_document_symbols, { buffer = bufnr, desc = '[D]ocument [S]ymbols' })
+    vim.keymap.set('n', '<leader>cS', require('fzf-lua').lsp_live_workspace_symbols, { buffer = bufnr, desc = '[W]orkspace [S]ymbols' })
+
+    vim.keymap.set('n', '<leader>cf', function()
+      require('conform').format { async = true }
+    end, { buffer = bufnr, desc = 'Format buffer' })
+
+    -- See `:help K` for why this keymap
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr, desc = 'Hover Documentation' })
+    vim.keymap.set('n', '<leader>ck', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'Signature Documentation' })
+
+    -- Lesser used LSP functionality
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc = '[G]oto [D]eclaration' })
+    vim.keymap.set('n', '<leader>cwa', vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = '[W]orkspace [A]dd Folder' })
+    vim.keymap.set('n', '<leader>cwr', vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc = '[W]orkspace [R]emove Folder' })
+    vim.keymap.set('n', '<leader>cwl', function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, { buffer = bufnr, desc = '[W]orkspace [L]ist Folders' })
+    vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'Signature Documentation' })
+
+    -- Create a command `:Format` local to the LSP buffer
+    vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+      vim.lsp.buf.format()
+    end, { desc = 'Format current buffer with LSP' })
+
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
+      local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
+      vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+        buffer = event.buf,
+        group = highlight_augroup,
+        callback = function()
+          vim.lsp.buf.document_highlight()
+        end,
+      })
+
+      vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+        buffer = event.buf,
+        group = highlight_augroup,
+        callback = function()
+          vim.lsp.buf.clear_references()
+        end,
+      })
+
+      vim.api.nvim_create_autocmd('LspDetach', {
+        group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
+        callback = function(event2)
+          vim.lsp.buf.clear_references()
+          vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
+        end,
+      })
+    end
+
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+      vim.keymap.set('n', '<leader>cth', function()
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr })
+      end, { buffer = bufnr, desc = '[T]oggle Inlay [H]ints' })
+    end
+  end,
+})
