@@ -52,25 +52,6 @@ vim.keymap.del('n', 'grn')
 vim.keymap.set({ 'i', 'n' }, '<F1>', '<nop>', {})
 --#endregion
 
---#region telescope
--- vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
--- vim.keymap.set('n', '<leader><space>', require('telescope.builtin').find_files, { desc = 'Search files' })
--- vim.keymap.set('n', '<leader>/', function()
---   -- You can pass additional configuration to telescope to change theme, layout, etc.
---   require('telescope.builtin').live_grep()
--- end, { desc = '[/] Fuzzily search in current buffer' })
--- vim.keymap.set('n', '<leader>ff', require('telescope.builtin').git_files, { desc = 'Find Git Files' })
--- vim.keymap.set('n', '<leader>fF', require('telescope.builtin').find_files, { desc = 'Find Files' })
--- vim.keymap.set('n', '<leader>fb', function()
---   require('telescope.builtin').buffers()
--- end, { desc = 'Find Buffers' })
--- vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = 'Find Help' })
--- vim.keymap.set('n', '<leader>fm', require('telescope.builtin').man_pages, { desc = 'Find Manpages' })
--- vim.keymap.set('n', '<leader>fw', require('telescope.builtin').grep_string, { desc = 'Search current Word' })
--- vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = 'Find by Grep' })
--- vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = 'Find keymaps' })
---#endregion
-
 --#region fzf-lua
 vim.keymap.set('n', '<leader>?', require('fzf-lua').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', function()
@@ -94,14 +75,6 @@ vim.keymap.set('n', '<leader>gs', require('fzf-lua').git_status, { desc = 'Show 
 
 --#region undotree
 vim.keymap.set('n', '<leader>fu', vim.cmd.UndotreeToggle, { desc = 'Open undo tree for current buffer' })
---#endregion
-
---#region Oil.nvim
--- if not package.loaded['oil'] then
---   vim.keymap.set('n', '<leader>e', '<CMD>Explore<CR>', { desc = 'Open file explorer' })
--- else
---   vim.keymap.set('n', '<leader>e', '<CMD>Oil<CR>', { desc = 'Open file explorer' })
--- end
 --#endregion
 
 --#region mini.files
