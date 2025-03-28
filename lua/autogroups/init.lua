@@ -139,6 +139,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
   callback = function(event)
     local compilers_by_ft = {
       zig = 'zig_build',
+      go = 'go',
     }
 
     if compilers_by_ft[vim.bo.filetype] == nil then
