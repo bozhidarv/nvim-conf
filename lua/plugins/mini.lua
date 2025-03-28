@@ -1,5 +1,3 @@
-require('mini.cursorword').setup()
-
 require('mini.indentscope').setup {
   draw = {
     delay = 0,

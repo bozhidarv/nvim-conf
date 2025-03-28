@@ -169,6 +169,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { buffer = bufnr, desc = '[R]e[n]ame' })
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = '[C]ode [A]ction' })
 
+    ---@type vim.lsp.Client
     local client = vim.lsp.get_client_by_id(event.data.client_id)
 
     -- vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions, { buffer = bufnr, desc = '[G]oto [D]efinition' })
@@ -207,7 +208,34 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.lsp.buf.format()
     end, { desc = 'Format current buffer with LSP' })
 
-    if client and (client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint)) then
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
+      local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
+      vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+        buffer = event.buf,
+        group = highlight_augroup,
+        callback = function()
+          vim.lsp.buf.document_highlight()
+        end,
+      })
+
+      vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+        buffer = event.buf,
+        group = highlight_augroup,
+        callback = function()
+          vim.lsp.buf.clear_references()
+        end,
+      })
+
+      vim.api.nvim_create_autocmd('LspDetach', {
+        group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
+        callback = function(event2)
+          vim.lsp.buf.clear_references()
+          vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
+        end,
+      })
+    end
+
+    if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
       vim.keymap.set('n', '<leader>cth', function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = bufnr })
       end, { buffer = bufnr, desc = '[T]oggle Inlay [H]ints' })

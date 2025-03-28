@@ -42,6 +42,11 @@ vim.wo.signcolumn = 'yes'
 
 -- Decrease update time
 vim.o.updatetime = 250
+vim.o.updatetime = 1000
+
+---FixCursorHold is dependancy of neotest
+---@see https://github.com/antoinemadec/FixCursorHold.nvim
+vim.g.cursorhold_updatetime = 300
 vim.o.timeout = true
 vim.o.timeoutlen = 300
 

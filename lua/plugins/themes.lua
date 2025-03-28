@@ -159,5 +159,14 @@ require('nordic').setup {
       bg = palette.grey1,
       fg = palette.warn,
     }
+    highlights.LspReferenceRead = {
+      bg = palette.grey4,
+    }
+    highlights.LspReferenceText = {
+      bg = palette.grey4,
+    }
+    highlights.LspReferenceWrite = {
+      bg = palette.grey4,
+    }
   end,
 }
