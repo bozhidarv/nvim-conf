@@ -34,23 +34,21 @@ local custom_arrow = function()
 end
 
 local custom_git = function()
-  local cmd = vim.api.nvim_exec2('!git rev-parse --abbrev-ref HEAD', { output = true })
+  local first_split = vim.fn.split(vim.api.nvim_eval_statusline('%{FugitiveStatusline()}', {}).str, '[Git(')[1]
+  local second_split = vim.fn.split(first_split, ')]')[1]
 
-  local output = cmd.output
-  local branch = vim.fn.split(output, '\n')[3]
-
-  if branch == nil then
+  if second_split == 'v:null' then
     return ''
   end
-  return ' ' .. branch
+  return ' ' .. second_split
 end
 require('mini.statusline').setup()
 
 ---@diagnostic disable-next-line: duplicate-set-field
 MiniStatusline.active = function()
   local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
-  -- local git = custom_git()
-  local git = MiniStatusline.section_git { trunc_width = 75 }
+  local git = custom_git()
+  -- local git = MiniStatusline.section_git { trunc_width = 75 }
   local diff = MiniStatusline.section_diff { trunc_width = 75 }
   -- local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
   local diagnostics = custom_diagnostics()
