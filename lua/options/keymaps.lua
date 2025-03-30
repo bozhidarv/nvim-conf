@@ -121,11 +121,6 @@ vim.keymap.set('n', '[t', function()
 end, { desc = 'Previous todo comment' })
 --#endregion
 
---#region ufo.nvim
-vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
---#endregion
-
 --#region Multiplexer Navigation
 vim.keymap.set('n', '<C-j>', ':SmartCursorMoveDown<CR>', { silent = true, desc = 'Navigate down' })
 vim.keymap.set('n', '<C-k>', ':SmartCursorMoveUp<CR>', { silent = true, desc = 'Navigate up' })
