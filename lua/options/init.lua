@@ -21,6 +21,7 @@ end
 
 -- Limit completion window height
 vim.opt.pumheight = 10
+vim.o.completeopt = 'menuone,menu,noinsert,popup,fuzzy'
 
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.
