@@ -20,11 +20,11 @@ require('bigfile').setup {
     'indent_blankline',
     'illuminate',
     'lsp',
-    'treesitter',
+    -- 'treesitter',
     'syntax',
     'matchparen',
     'vimopts',
-    'filetype',
+    -- 'filetype',
     nvim_highlight,
   },
 }

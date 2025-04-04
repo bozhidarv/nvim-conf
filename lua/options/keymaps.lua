@@ -29,7 +29,7 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 
 --#region Remap for moving highlighted line in visual mode
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { silent = true })
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { silent = true })
+vim.keymap.set('v', 'K', ":m '<-2<cR>gv=gv", { silent = true })
 --#endregion
 
 --#region QOL keymaps
@@ -103,8 +103,13 @@ vim.keymap.set('n', '<leader>gf', '<CMD>Git<CR>', { desc = 'Open fugitive' })
 --#endregion
 
 --#region diagnostics
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+--vim.keymap.set('n', 'ge', function()
+vim.keymap.set('n', '[d', function()
+  require('options.utils').jumpWithVirtLineDiagnostics(-1)
+end, { desc = 'Go to previous diagnostic message' })
+vim.keymap.set('n', ']d', function()
+  require('options.utils').jumpWithVirtLineDiagnostics(1)
+end, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>qf', vim.diagnostic.setloclist, { desc = 'Toggle diagnostics list for file' })
 vim.keymap.set('n', '<leader>qw', vim.diagnostic.setqflist, { desc = 'Toggle diagnostics list for workspace' })
 --#endregion

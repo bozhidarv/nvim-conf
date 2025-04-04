@@ -63,6 +63,7 @@ end
 
 vim.diagnostic.config {
   signs = signs_config,
+  virtual_text = true,
 }
 --#endregion
 
@@ -340,6 +341,22 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.lsp.buf.format()
     end, { desc = 'Format current buffer with LSP' })
 
+    -- NOTE: For when I find out how to use lazydev.nvim with this
+    -- if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_completion, event.buf) then
+    --   client.server_capabilities.completionProvider.triggerCharacters = vim.split('qwertyuiopasdfghjklzxcvbnm. ', '')
+    --   vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
+    --   vim.keymap.set('i', '<C-Space>', vim.lsp.completion.get, { buffer = bufnr, desc = 'Activate completion' })
+    --
+    --   local ls = require 'lazydev'
+    --
+    --   vim.keymap.set('i', '<C-h>', function()
+    --     vim.snippet.jump(-1)
+    --   end, { buffer = bufnr, desc = 'Jump to previous part of the snippet' })
+    --   vim.keymap.set('i', '<C-l>', function()
+    --     vim.snippet.jump(1)
+    --   end, { buffer = bufnr, desc = 'Jump to next part of the snippet' })
+    -- end
+
     if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
       local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -365,6 +382,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
           vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
         end,
       })
+    end
+
+    -- Prefer LSP folding if client supports it
+    if client and client:supports_method 'textDocument/foldingRange' then
+      local win = vim.api.nvim_get_current_win()
+      vim.wo[win][0].foldexpr = 'v:lua.vim.lsp.foldexpr()'
     end
 
     if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then

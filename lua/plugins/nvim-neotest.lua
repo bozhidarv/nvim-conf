@@ -31,7 +31,7 @@ require('neotest').setup {
     require 'neotest-vim-test' { ignore_filetypes = { 'rust', 'cs' } },
     require 'neotest-zig' {
       dap = {
-        adapter = 'lldb',
+        adapter = 'codelldb',
       },
     },
   },
