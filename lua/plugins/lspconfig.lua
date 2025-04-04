@@ -278,14 +278,15 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
   group = vim.api.nvim_create_augroup('set-compiler', { clear = true }),
   callback = function(event)
     local compilers_by_ft = {
-      zig = 'zig_build',
-      go = 'go',
+      zig = 'zig\\ build',
+      go = 'go\\ build\\ %',
+      odin = 'odin\\ build\\ .\\ -error-pos-style:unix\\ -debug',
     }
 
     if compilers_by_ft[vim.bo.filetype] == nil then
       return
     end
-    vim.cmd('compiler ' .. compilers_by_ft[vim.bo.filetype])
+    vim.cmd('set mp=' .. compilers_by_ft[vim.bo.filetype])
     vim.lsp.codelens.refresh { bufnr = event.buf }
 
     vim.keymap.set('n', '<leader>cm', ':make<CR>', { buffer = event.buf, desc = 'Compile' })
