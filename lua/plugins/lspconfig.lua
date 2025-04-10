@@ -70,8 +70,10 @@ vim.diagnostic.config {
 -- LSP settings (for overriding per client)
 local custom_border = { '🭽', '▔', '🭾', '▕', '🭿', '▁', '🭼', '▏' }
 local handlers = {
-  ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = custom_border, max_width = 100, max_height = 10, scrollbar = true }),
-  ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = custom_border, max_width = 100, max_height = 10 }),
+  ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover,
+    { border = custom_border, max_width = 100, max_height = 10, scrollbar = true }),
+  ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help,
+    { border = custom_border, max_width = 100, max_height = 10 }),
 }
 
 --#region Default LSP Servers
@@ -314,10 +316,13 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     vim.keymap.set('n', 'gd', require('fzf-lua').lsp_definitions, { buffer = bufnr, desc = '[G]oto [D]efinition' })
     vim.keymap.set('n', 'gr', require('fzf-lua').lsp_references, { buffer = bufnr, desc = '[G]oto [R]eferences' })
-    vim.keymap.set('n', 'gI', require('fzf-lua').lsp_implementations, { buffer = bufnr, desc = '[G]oto [I]mplementation' })
+    vim.keymap.set('n', 'gI', require('fzf-lua').lsp_implementations,
+      { buffer = bufnr, desc = '[G]oto [I]mplementation' })
     vim.keymap.set('n', '<leader>D', require('fzf-lua').lsp_typedefs, { buffer = bufnr, desc = 'Type [D]efinition' })
-    vim.keymap.set('n', '<leader>cs', require('fzf-lua').lsp_document_symbols, { buffer = bufnr, desc = '[D]ocument [S]ymbols' })
-    vim.keymap.set('n', '<leader>cS', require('fzf-lua').lsp_live_workspace_symbols, { buffer = bufnr, desc = '[W]orkspace [S]ymbols' })
+    vim.keymap.set('n', '<leader>cs', require('fzf-lua').lsp_document_symbols,
+      { buffer = bufnr, desc = '[D]ocument [S]ymbols' })
+    vim.keymap.set('n', '<leader>cS', require('fzf-lua').lsp_live_workspace_symbols,
+      { buffer = bufnr, desc = '[W]orkspace [S]ymbols' })
 
     vim.keymap.set('n', '<leader>cf', function()
       require('conform').format { async = true }
@@ -329,8 +334,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- Lesser used LSP functionality
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc = '[G]oto [D]eclaration' })
-    vim.keymap.set('n', '<leader>cwa', vim.lsp.buf.add_workspace_folder, { buffer = bufnr, desc = '[W]orkspace [A]dd Folder' })
-    vim.keymap.set('n', '<leader>cwr', vim.lsp.buf.remove_workspace_folder, { buffer = bufnr, desc = '[W]orkspace [R]emove Folder' })
+    vim.keymap.set('n', '<leader>cwa', vim.lsp.buf.add_workspace_folder,
+      { buffer = bufnr, desc = '[W]orkspace [A]dd Folder' })
+    vim.keymap.set('n', '<leader>cwr', vim.lsp.buf.remove_workspace_folder,
+      { buffer = bufnr, desc = '[W]orkspace [R]emove Folder' })
     vim.keymap.set('n', '<leader>cwl', function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, { buffer = bufnr, desc = '[W]orkspace [L]ist Folders' })

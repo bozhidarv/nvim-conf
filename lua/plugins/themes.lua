@@ -24,9 +24,9 @@ add {
 }
 
 require('tokyonight.init').setup {
-  style = 'night', -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
-  light_style = 'day', -- The theme is used when the background is set to light
-  transparent = false, -- Enable this to disable setting the background color
+  style = 'night',        -- The theme comes in three styles, `storm`, a darker variant `night` and `day`
+  light_style = 'day',    -- The theme is used when the background is set to light
+  transparent = false,    -- Enable this to disable setting the background color
   terminal_colors = true, -- Configure the colors used when opening a `:terminal` in Neovim
   styles = {
     -- Style to be applied to different syntax groups
@@ -34,8 +34,8 @@ require('tokyonight.init').setup {
     functions = {},
     variables = {},
     -- Background styles. Can be "dark", "transparent" or "normal"
-    sidebars = 'dark', -- style for sidebars, see below
-    floats = 'dark', -- style for floating windows
+    sidebars = 'dark',  -- style for sidebars, see below
+    floats = 'dark',    -- style for floating windows
   },
   day_brightness = 0.3, -- Adjusts the brightness of the colors of the **Day** style. Number between 0 and 1, from dull to vibrant colors
   dim_inactive = false, -- dims inactive windows
@@ -109,7 +109,7 @@ add {
 
 -- Default options:
 require('kanagawa').setup {
-  compile = false, -- enable compiling the colorscheme
+  compile = false,  -- enable compiling the colorscheme
   undercurl = true, -- enable undercurls
   commentStyle = { italic = true },
   functionStyle = {},
@@ -117,9 +117,9 @@ require('kanagawa').setup {
   statementStyle = { bold = true },
   typeStyle = {},
   transparent = require('options.utils').checkTransperancy(), -- do not set background color
-  dimInactive = false, -- dim inactive window `:h hl-NormalNC`
-  terminalColors = true, -- define vim.g.terminal_color_{0,17}
-  colors = { -- add/modify theme and palette colors
+  dimInactive = false,                                        -- dim inactive window `:h hl-NormalNC`
+  terminalColors = true,                                      -- define vim.g.terminal_color_{0,17}
+  colors = {                                                  -- add/modify theme and palette colors
     palette = {},
     theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
   },
@@ -149,8 +149,8 @@ require('kanagawa').setup {
       TelescopePreviewBorder = { bg = theme.ui.bg_dim, fg = theme.ui.bg_dim },
     })
   end,
-  theme = 'wave', -- Load "wave" theme when 'background' option is not set
-  background = { -- map the value of 'background' option to a theme
+  theme = 'wave',  -- Load "wave" theme when 'background' option is not set
+  background = {   -- map the value of 'background' option to a theme
     dark = 'wave', -- try "dragon" !
     light = 'lotus',
   },
@@ -161,7 +161,6 @@ add {
 }
 
 require('nordic').setup {
-
   ---@type fun(highlights: Highlights, palette: ExtendedPalette)
   on_highlight = function(highlights, palette)
     highlights['ArrowStatusLine'] = {
