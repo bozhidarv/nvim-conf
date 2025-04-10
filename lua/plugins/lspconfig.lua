@@ -217,7 +217,7 @@ mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
 
-local format_is_enabled = true
+local format_is_enabled = false
 vim.api.nvim_create_user_command('ToggleFormatOnSave', function()
   format_is_enabled = not format_is_enabled
   print('Setting autoformatting to: ' .. tostring(format_is_enabled))

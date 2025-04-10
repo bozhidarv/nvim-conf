@@ -8,6 +8,7 @@ vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
 
 --#region ui
 vim.keymap.set('n', '<leader>ut', ':ToggleBackground<CR>', { silent = true, desc = 'Toggle dark/light background' })
+vim.keymap.set('n', '<leader>uf', ':ToggleFormatOnSave<CR>', { silent = true, desc = 'Toggle format on save' })
 vim.keymap.set('n', '<leader>uw', function()
   vim.print(vim.o.wrap)
   if vim.o.wrap then
