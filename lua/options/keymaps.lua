@@ -196,3 +196,7 @@ vim.keymap.set('n', '<leader>xf', '<CMD>source %<CR>', { silent = true, desc = '
 vim.keymap.set('n', '<leader>xx', '<CMD>.lua<CR>', { silent = true, desc = 'Evaluate the line' })
 vim.keymap.set('v', '<leader>xx', '<CMD>.lua<CR>', { silent = true, desc = 'Evaluate the selection' })
 --#endregion
+
+--#region Compile
+vim.keymap.set('n', '<leader>cm', ':make<CR>', { desc = 'Compile' })
+--#endregion
