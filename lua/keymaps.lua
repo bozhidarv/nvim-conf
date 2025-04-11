@@ -248,6 +248,6 @@ end, { desc = 'Clear harpoon items' })
 --#endregion
 
 --#region notes-plugin
-vim.keymap.set('n', '<F2>', require('plugin.notes-plugin').toggle_global_note, { noremap = true, silent = true, desc = 'Open notes' })
-vim.keymap.set('n', '<F1>', require('plugin.notes-plugin').toggle_local_note, { noremap = true, silent = true, desc = 'Open notes' })
+vim.keymap.set('n', '<F2>', require('custom.notes-plugin').toggle_global_note, { noremap = true, silent = true, desc = 'Open notes' })
+vim.keymap.set('n', '<F1>', require('custom.notes-plugin').toggle_local_note, { noremap = true, silent = true, desc = 'Open notes' })
 --#endregion

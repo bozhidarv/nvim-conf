@@ -15,6 +15,7 @@ if not vim.uv.fs_stat(mini_path) then
   vim.cmd 'packadd mini.nvim | helptags ALL'
   vim.cmd 'echo "Installed `mini.nvim`" | redraw'
 end
+
 require('mini.deps').setup { path = { package = path_package } }
 
 require('mini.icons').setup {
@@ -37,7 +38,7 @@ for _, file in ipairs(vim.fn.readdir(vim.fn.stdpath 'config' .. '/lua/custom', [
   require('custom.' .. file:gsub('%.lua$', ''))
 end
 
-require('plugin.notes-plugin').setup()
+require('custom.notes-plugin').setup()
 
 vim.opt.statuscolumn = [[%!v:lua.require'custom.statuscol'.statuscolumn()]]
 
