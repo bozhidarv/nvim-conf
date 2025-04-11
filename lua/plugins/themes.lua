@@ -1,13 +1,4 @@
 ---@diagnostic disable: missing-fields
-
-vim.api.nvim_create_user_command('ToggleBackground', function()
-  if vim.o.background == 'dark' then
-    vim.o.background = 'light'
-  else
-    vim.o.background = 'dark'
-  end
-end, {})
-
 local add = MiniDeps.add
 
 add {
@@ -116,7 +107,7 @@ require('kanagawa').setup {
   keywordStyle = { italic = true },
   statementStyle = { bold = true },
   typeStyle = {},
-  transparent = require('options.utils').checkTransperancy(), -- do not set background color
+  transparent = require('utils').checkTransperancy(), -- do not set background color
   dimInactive = false,                                        -- dim inactive window `:h hl-NormalNC`
   terminalColors = true,                                      -- define vim.g.terminal_color_{0,17}
   colors = {                                                  -- add/modify theme and palette colors
@@ -127,7 +118,7 @@ require('kanagawa').setup {
   overrides = function(c) -- add/modify highlights
     local theme = c.theme
     local trnsparent_floats = {}
-    if require('options.utils').checkTransperancy() then
+    if require('utils').checkTransperancy() then
       trnsparent_floats = {
         NormalFloat = { bg = 'none' },
         FloatBorder = { bg = 'none' },

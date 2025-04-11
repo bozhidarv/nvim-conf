@@ -1,11 +1,7 @@
 ---@type integer | nil
 local notes_bufnr = nil
 
----@type integer | nil
-local notes_winid = nil
-
----@type integer[]
-local cursor_pos = {}
+local M = {}
 
 local function starts_with(str, prefix)
   return string.sub(str, 1, #prefix) == prefix
@@ -85,8 +81,15 @@ local function open_file_in_float(filepath)
   end, { noremap = true, silent = true, buffer = notes_bufnr })
 end
 
-vim.api.nvim_create_user_command('ToggleNotes', function(args)
-  local filename = args.args
+local function get_local_note_name()
+  ---@type string
+  local str = vim.fn.getcwd():gsub(os.getenv 'HOME' .. '/', '')
+  str = str:gsub('/', '.')
+
+  return str
+end
+
+local function tooggleNoteFloating(filename)
   local bufnr = vim.api.nvim_get_current_buf()
   local bufname = vim.api.nvim_buf_get_name(bufnr)
 
@@ -103,20 +106,21 @@ vim.api.nvim_create_user_command('ToggleNotes', function(args)
     win_opened = true
     open_file_in_float(filename)
   end
-end, { desc = 'Toggle a floating notes.md window', nargs = 1 })
-
-local function get_local_note_name()
-  ---@type string
-  local str = vim.fn.getcwd():gsub(os.getenv 'HOME' .. '/', '')
-  str = str:gsub('/', '.')
-
-  return str
 end
 
-vim.keymap.set('n', '<F2>', '<cmd>ToggleNotes ' .. vim.fn.stdpath 'data' .. '/notes/notes.md' .. '<CR>', { noremap = true, silent = true, desc = 'Open notes' })
-vim.keymap.set(
-  'n',
-  '<F1>',
-  '<cmd>ToggleNotes ' .. vim.fn.stdpath 'data' .. '/notes/' .. get_local_note_name() .. '.md' .. '<CR>',
-  { noremap = true, silent = true, desc = 'Open notes' }
-)
+M.setup = function()
+  vim.api.nvim_create_user_command('ToggleNotes', function(args)
+    local filename = args.args
+    tooggleNoteFloating(filename)
+  end, { desc = 'Toggle a floating notes.md window', nargs = 1 })
+end
+
+M.toggle_global_note = function()
+  tooggleNoteFloating(vim.fn.stdpath 'data' .. '/notes/notes.md')
+end
+
+M.toggle_local_note = function()
+  tooggleNoteFloating(vim.fn.stdpath 'data' .. '/notes/' .. get_local_note_name() .. '.md')
+end
+
+return M

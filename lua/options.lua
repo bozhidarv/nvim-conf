@@ -1,5 +1,28 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+vim.opt.clipboard = 'unnamedplus'
+vim.opt.hidden = true
+
+-- Set terminal to pwsh for windows
+
+if vim.fn.has 'win32' == 1 then
+  local powershell_options = {
+    shell = 'pwsh',
+    shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;',
+    shellredir = '-RedirectStandardOutput %s -NoNewWindow -Wait',
+    shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode',
+    shellquote = '',
+    shellxquote = '',
+  }
+
+  for option, value in pairs(powershell_options) do
+    vim.opt[option] = value
+  end
+  --Fix for nvim not including diff and windows not having it in PATH
+  vim.g.undotree_DiffCommand = vim.fn.stdpath 'config' .. '\\bin\\diff.exe'
+end
 
 vim.o.background = 'dark'
 
@@ -76,35 +99,4 @@ vim.o.foldmethod = 'expr'
 -- Default to treesitter folding
 vim.o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
-vim.opt.statuscolumn = [[%!v:lua.require'custom.statuscol'.statuscolumn()]]
-
 vim.g.copilot_no_tab_map = true
-
-if vim.g.vscode then
-  require 'options.vscode-keymaps'
-else
-  require 'options.keymaps'
-end
-
-require 'custom.notes-plugin'
-
-local colorscheme = require('options.utils').colorscheme
-
-vim.cmd.colorscheme(colorscheme)
-
-local isTransparent = require('options.utils').checkTransperancy
-
-if isTransparent() then
-  vim.api.nvim_set_hl(0, 'Normal', { bg = 'none' })
-  vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
-end
-
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()
-vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  group = vim.api.nvim_create_augroup('YankHighlight', { clear = true }),
-  pattern = '*',
-})

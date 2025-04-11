@@ -33,6 +33,10 @@ local custom_arrow = function()
   local items = harpoon:list().items
 
 
+  if #items == 0 then
+    return ''
+  end
+
   local index = -1
   for i = 1, length do
     local item = items[i]

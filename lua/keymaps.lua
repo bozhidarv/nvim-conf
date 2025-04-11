@@ -117,10 +117,10 @@ vim.keymap.set('n', '<leader>gf', '<CMD>Git<CR>', { desc = 'Open fugitive' })
 --#region diagnostics
 --vim.keymap.set('n', 'ge', function()
 vim.keymap.set('n', '[d', function()
-  require('options.utils').jumpWithVirtLineDiagnostics(-1)
+  require(' | updateutils').jumpWithVirtLineDiagnostics(-1)
 end, { desc = 'Go to previous diagnostic message' })
 vim.keymap.set('n', ']d', function()
-  require('options.utils').jumpWithVirtLineDiagnostics(1)
+  require('utils').jumpWithVirtLineDiagnostics(1)
 end, { desc = 'Go to next diagnostic message' })
 vim.keymap.set('n', '<leader>qf', vim.diagnostic.setloclist, { desc = 'Toggle diagnostics list for file' })
 vim.keymap.set('n', '<leader>qw', vim.diagnostic.setqflist, { desc = 'Toggle diagnostics list for workspace' })
@@ -213,8 +213,8 @@ vim.keymap.set('n', '<leader>cm', ':make<CR>', { desc = 'Compile' })
 --#endregion
 
 --#region harpoon
-if vim.fn.maparg('\'', 'n') ~= '' then
-  vim.keymap.del('n', '\'')
+if vim.fn.maparg("'", 'n') ~= '' then
+  vim.keymap.del('n', "'")
 end
 
 local harpoon = require 'harpoon'
@@ -245,4 +245,9 @@ end, { desc = 'Open fourth harpoon item' })
 vim.keymap.set('n', "'c", function()
   harpoon:list():clear()
 end, { desc = 'Clear harpoon items' })
+--#endregion
+
+--#region notes-plugin
+vim.keymap.set('n', '<F2>', require('plugin.notes-plugin').toggle_global_note, { noremap = true, silent = true, desc = 'Open notes' })
+vim.keymap.set('n', '<F1>', require('plugin.notes-plugin').toggle_local_note, { noremap = true, silent = true, desc = 'Open notes' })
 --#endregion
