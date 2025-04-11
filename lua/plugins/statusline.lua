@@ -26,11 +26,27 @@ local custom_diagnostics = function(_)
 end
 
 local custom_arrow = function()
-  local arrowStatusline = require 'arrow.statusline'
-  if arrowStatusline.is_on_arrow_file() then
-    return '%#ArrowStatusLine#' .. arrowStatusline.text_for_statusline_with_icons()
+  local harpoon = require 'harpoon'
+  local element = harpoon.config.default:create_list_item()
+
+  local length = harpoon:list():length()
+  local items = harpoon:list().items
+
+
+  local index = -1
+  for i = 1, length do
+    local item = items[i]
+    if element.value == item.value then
+      index = i
+      break
+    end
   end
-  return ''
+
+  if index == -1 then
+    return ''
+  end
+
+  return '%#HarpoonStatusLine# 󰣉 ' .. index
 end
 
 local custom_git = function()

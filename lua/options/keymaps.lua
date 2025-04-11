@@ -43,10 +43,21 @@ vim.keymap.set('n', '<leader>|', ':vsplit<CR>', { desc = 'Verical split' })
 --#endregion
 
 --#region remove unneeded lsp keymaps
-vim.keymap.del('n', 'grr')
-vim.keymap.del('n', 'gra')
-vim.keymap.del('n', 'gri')
-vim.keymap.del('n', 'grn')
+if vim.fn.maparg('grr', 'n') ~= '' then
+  vim.keymap.del('n', 'grr')
+end
+
+if vim.fn.maparg('gra', 'n') ~= '' then
+  vim.keymap.del('n', 'gra')
+end
+
+if vim.fn.maparg('gri', 'n') ~= '' then
+  vim.keymap.del('n', 'gri')
+end
+
+if vim.fn.maparg('grn', 'n') ~= '' then
+  vim.keymap.del('n', 'grn')
+end
 --#endregion
 
 --#region Disable help on F1
@@ -165,8 +176,7 @@ vim.keymap.set('n', '<esc><esc>', ':nohls<cr>', { silent = true, desc = 'Turn of
 --#endregion
 
 --#region Github Copilot
-vim.keymap.set('i', '<Plug>(vimrc:copilot-dummy-map)', 'copilot#Accept("")',
-  { silent = true, expr = true, desc = 'Copilot dummy accept' })
+vim.keymap.set('i', '<Plug>(vimrc:copilot-dummy-map)', 'copilot#Accept("")', { silent = true, expr = true, desc = 'Copilot dummy accept' })
 vim.keymap.set('i', '<C-S-j>', '<Plug>(copilot-accept-word)', { silent = true, desc = 'Accept Copilot word' })
 --#endregion
 
@@ -193,11 +203,46 @@ end, { silent = true, desc = 'Open output panel' })
 --#endregion
 
 --#region Evaluate lua
-vim.keymap.set('n', '<leader>xf', '<CMD>source %<CR>', { silent = true, desc = 'Evaluate the current file' })
+vim.keymap.set('n', '<leader>xf', '<CMD>luafile %<CR>', { silent = true, desc = 'Evaluate the current file' })
 vim.keymap.set('n', '<leader>xx', '<CMD>.lua<CR>', { silent = true, desc = 'Evaluate the line' })
 vim.keymap.set('v', '<leader>xx', '<CMD>.lua<CR>', { silent = true, desc = 'Evaluate the selection' })
 --#endregion
 
 --#region Compile
 vim.keymap.set('n', '<leader>cm', ':make<CR>', { desc = 'Compile' })
+--#endregion
+
+--#region harpoon
+if vim.fn.maparg('\'', 'n') ~= '' then
+  vim.keymap.del('n', '\'')
+end
+
+local harpoon = require 'harpoon'
+vim.keymap.set('n', "'h", function()
+  harpoon.ui:toggle_quick_menu(harpoon:list())
+end, { desc = 'Toggle harpoon quick menu' })
+vim.keymap.set('n', '<leader>ha', function()
+  harpoon:list():add()
+end, { desc = 'Add to harpoon list' })
+vim.keymap.set('n', '<leader>hp', function()
+  harpoon:list():prev { ui_nav_wrap = true }
+end, { desc = 'Open previous harpoon item' })
+vim.keymap.set('n', '<leader>hn', function()
+  harpoon:list():next { ui_nav_wrap = true }
+end, { desc = 'Open next harpoon item' })
+vim.keymap.set('n', "'q", function()
+  harpoon:list():select(1)
+end, { desc = 'Open first harpoon item' })
+vim.keymap.set('n', "'w", function()
+  harpoon:list():select(2)
+end, { desc = 'Open second harpoon item' })
+vim.keymap.set('n', "'e", function()
+  harpoon:list():select(3)
+end, { desc = 'Open third harpoon item' })
+vim.keymap.set('n', "'r", function()
+  harpoon:list():select(4)
+end, { desc = 'Open fourth harpoon item' })
+vim.keymap.set('n', "'c", function()
+  harpoon:list():clear()
+end, { desc = 'Clear harpoon items' })
 --#endregion
