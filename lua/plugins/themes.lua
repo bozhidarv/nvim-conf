@@ -43,7 +43,7 @@ require('tokyonight.init').setup {
   ---@param c ColorScheme
   on_highlights = function(hl, c)
     local prompt = '#2d3149'
-    hl.HarpoonStatusLine = {
+    hl.ArrowStatusLine = {
       bg = c.fg_gutter,
       fg = c.orange,
       bold = true,
@@ -126,7 +126,7 @@ require('kanagawa').setup {
       }
     end
     return vim.tbl_extend('force', trnsparent_floats, {
-      HarpoonStatusLine = {
+      ArrowStatusLine = {
         bg = c.theme.ui.bg_p1,
         fg = c.theme.diag.warning,
         bold = true,
@@ -154,7 +154,7 @@ add {
 require('nordic').setup {
   ---@type fun(highlights: Highlights, palette: ExtendedPalette)
   on_highlight = function(highlights, palette)
-    highlights['HarpoonStatusLine'] = {
+    highlights['ArrowStatusLine'] = {
       bg = palette.grey1,
       fg = palette.warn,
     }

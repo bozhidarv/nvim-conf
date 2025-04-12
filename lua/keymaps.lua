@@ -94,18 +94,16 @@ vim.keymap.set('n', '<leader>e', '<Cmd>Lf<CR>', { desc = 'Open lf.nvim' })
 --#endregion
 
 --#region Git
-vim.keymap.set('n', '<leader>gl', ':Git log --graph --decorate', { desc = 'Git log' })
+vim.keymap.set('n', '<leader>gl', '<CMD>LazyGitOpen log<CR>', { desc = 'Git log' })
 vim.keymap.set('n', '<leader>gp', ':Git pull<CR>', { desc = 'Git pull' })
 vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = 'Git push' })
-vim.keymap.set('n', '<leader>gd', ':Git diff %<CR>', { desc = 'Git diff current file' })
-vim.keymap.set('n', '<leader>gD', ':Git diff<CR>', { desc = 'Git diff repo' })
 vim.keymap.set('n', '<leader>gb', ':Git blame<CR>', { desc = 'Open git blame' })
 vim.keymap.set('n', '<leader>gh', function()
   require('mini.diff').toggle_overlay(0)
 end, { desc = 'Toggle diff overlay' })
 vim.keymap.set('n', '<leader>gml', ':diffget //2<CR>', { desc = 'Git merge conflict select left' })
 vim.keymap.set('n', '<leader>gmr', ':diffget //3<CR>', { desc = 'Git merge conflict select right' })
-vim.keymap.set('n', '<leader>gg', '<CMD>LazyGitOpen<CR>', { desc = 'Open lazygit' })
+vim.keymap.set('n', '<leader>gg', '<CMD>LazyGitOpen all<CR>', { desc = 'Open lazygit' })
 vim.keymap.set('n', '<leader>gf', '<CMD>Git<CR>', { desc = 'Open fugitive' })
 --#endregion
 
@@ -205,41 +203,6 @@ vim.keymap.set('v', '<leader>xx', '<CMD>.lua<CR>', { silent = true, desc = 'Eval
 
 --#region Compile
 vim.keymap.set('n', '<leader>cm', ':make<CR>', { desc = 'Compile' })
---#endregion
-
---#region harpoon
-if vim.fn.maparg("'", 'n') ~= '' then
-  vim.keymap.del('n', "'")
-end
-
-local harpoon = require 'harpoon'
-vim.keymap.set('n', "'h", function()
-  harpoon.ui:toggle_quick_menu(harpoon:list())
-end, { desc = 'Toggle harpoon quick menu' })
-vim.keymap.set('n', '<leader>ha', function()
-  harpoon:list():add()
-end, { desc = 'Add to harpoon list' })
-vim.keymap.set('n', '<leader>hp', function()
-  harpoon:list():prev { ui_nav_wrap = true }
-end, { desc = 'Open previous harpoon item' })
-vim.keymap.set('n', '<leader>hn', function()
-  harpoon:list():next { ui_nav_wrap = true }
-end, { desc = 'Open next harpoon item' })
-vim.keymap.set('n', "'q", function()
-  harpoon:list():select(1)
-end, { desc = 'Open first harpoon item' })
-vim.keymap.set('n', "'w", function()
-  harpoon:list():select(2)
-end, { desc = 'Open second harpoon item' })
-vim.keymap.set('n', "'e", function()
-  harpoon:list():select(3)
-end, { desc = 'Open third harpoon item' })
-vim.keymap.set('n', "'r", function()
-  harpoon:list():select(4)
-end, { desc = 'Open fourth harpoon item' })
-vim.keymap.set('n', "'c", function()
-  harpoon:list():clear()
-end, { desc = 'Clear harpoon items' })
 --#endregion
 
 --#region notes-plugin
