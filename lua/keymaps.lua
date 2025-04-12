@@ -89,13 +89,8 @@ vim.keymap.set('n', '<leader>gs', require('fzf-lua').git_status, { desc = 'Show 
 vim.keymap.set('n', '<leader>fu', vim.cmd.UndotreeToggle, { desc = 'Open undo tree for current buffer' })
 --#endregion
 
---#region mini.files
-vim.keymap.set('n', '<leader>e', function()
-  local buf_name = vim.api.nvim_buf_get_name(0)
-  local path = vim.fn.filereadable(buf_name) == 1 and buf_name or vim.fn.getcwd()
-  MiniFiles.open(path)
-  MiniFiles.reveal_cwd()
-end, { desc = 'Open mini.files' })
+--#region lf.nvim
+vim.keymap.set('n', '<leader>e', '<Cmd>Lf<CR>', { desc = 'Open lf.nvim' })
 --#endregion
 
 --#region Git
