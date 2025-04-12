@@ -246,3 +246,7 @@ end, { desc = 'Clear harpoon items' })
 vim.keymap.set('n', '<F2>', require('custom.notes-plugin').toggle_global_note, { noremap = true, silent = true, desc = 'Open notes' })
 vim.keymap.set('n', '<F1>', require('custom.notes-plugin').toggle_local_note, { noremap = true, silent = true, desc = 'Open notes' })
 --#endregion
+
+--#region Terminal mappings
+vim.api.nvim_set_keymap('t', '<ESC><ESC>', '<C-\\><C-n>', { noremap = true, desc = 'Enter normal mode' })
+--#endregion

@@ -28,8 +28,19 @@ require('mini.diff').setup {
   },
 }
 
+---@type Terminal
+local git_term = nil
 vim.api.nvim_create_user_command('LazyGitOpen', function()
-  local Terminal = require('toggleterm.terminal').Terminal
-  local lazygit = Terminal:new { cmd = 'lazygit', hidden = true }
-  lazygit:toggle()
+  if git_term == nil then
+    local Terminal = require('toggleterm.terminal').Terminal
+    local lazygit = Terminal:new {
+      cmd = 'lazygit',
+      hidden = true,
+      mappings = {
+        '<leader>gg',
+      },
+    }
+    git_term = lazygit
+  end
+  git_term:toggle()
 end, {})
