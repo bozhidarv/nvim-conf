@@ -29,16 +29,19 @@ require('mini.icons').setup {
 
 MiniIcons.mock_nvim_web_devicons()
 
-for _, file in ipairs(vim.fn.readdir(vim.fn.stdpath 'config' .. '/lua/plugins', [[v:val =~ '\.lua$']])) do
-  require('plugins.' .. file:gsub('%.lua$', ''))
+if vim.g.noplugins ~= true then
+  for _, file in ipairs(vim.fn.readdir(vim.fn.stdpath 'config' .. '/lua/plugins', [[v:val =~ '\.lua$']])) do
+    require('plugins.' .. file:gsub('%.lua$', ''))
+  end
+
+require 'custom.lsp'
+require 'custom.formatting'
+require 'custom.colors'
 end
 
-
-for _, file in ipairs(vim.fn.readdir(vim.fn.stdpath 'config' .. '/lua/custom', [[v:val =~ '\.lua$']])) do
-  require('custom.' .. file:gsub('%.lua$', ''))
-end
-
+require 'custom.compile'
 require('custom.notes-plugin').setup()
+
 
 vim.opt.statuscolumn = [[%!v:lua.require'custom.statuscol'.statuscolumn()]]
 
