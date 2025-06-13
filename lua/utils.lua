@@ -16,7 +16,7 @@ M.checkTransperancy = function()
   return false
 end
 
-M.colorscheme = 'nordic'
+M.colorscheme = 'tomorrow-night'
 
 M.jumpWithVirtLineDiagnostics = function(jumpCount)
   pcall(vim.api.nvim_del_augroup_by_name, 'jumpWithVirtLineDiags') -- prevent autocmd for repeated jumps

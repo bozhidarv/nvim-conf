@@ -1,5 +1,8 @@
-local colorscheme = require('utils').colorscheme
+local colorscheme = 'tomorrow-night'
 
+if vim.g.noplugins ~= true then
+  colorscheme = require('utils').colorscheme
+end
 vim.cmd.colorscheme(colorscheme)
 
 local isTransparent = require('utils').checkTransperancy
