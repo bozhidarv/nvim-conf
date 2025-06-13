@@ -35,6 +35,8 @@ vim.wo.number = true
 -- Enable mouse mode
 vim.o.mouse = 'a'
 
+vim.o.path = vim.o.path .. ',**'
+
 vim.opt.guicursor = 'a:block,a:blinkon0'
 
 if vim.fn.executable 'rg' then

@@ -155,7 +155,7 @@ if vim.g.noplugins ~= true then
   --#region diagnostics
   --vim.keymap.set('n', 'ge', function()
   vim.keymap.set('n', '[d', function()
-    require(' | updateutils').jumpWithVirtLineDiagnostics(-1)
+    require('utils').jumpWithVirtLineDiagnostics(-1)
   end, { desc = 'Go to previous diagnostic message' })
   vim.keymap.set('n', ']d', function()
     require('utils').jumpWithVirtLineDiagnostics(1)
@@ -216,4 +216,5 @@ if vim.g.noplugins ~= true then
   --#endregion
 else
   vim.keymap.set('n', '<leader>e', '<Cmd>Explore<CR>', { desc = 'Open netrw' })
+  vim.keymap.set('n', '<leader><space>', ':find ', { desc = 'Open find' })
 end
