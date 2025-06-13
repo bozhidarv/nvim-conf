@@ -24,14 +24,16 @@ local PACKAGES= {
   'black',
   'stylua',
   'gofmt',
+  'gofumpt',
   'clang-format',
+  'goimports',
+  'golines',
   -- Lint
   'eslint_d',
   'editorconfig-checker',
   'golangci-lint',
   'pylint',
 }
-
 
 local function install(pack, version)
 	local notifyOpts = { title = "Mason", icon = "", id = "mason.install" }

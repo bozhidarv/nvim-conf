@@ -9,6 +9,7 @@ require('conform').setup {
     python = { 'isort', 'black' },
     javascript = { 'eslint_d', lsp_format = 'fallback', stop_after_first = true },
     typescript = { 'eslint_d', lsp_format = 'fallback', stop_after_first = true },
+    typescriptreact = { 'eslint_d', lsp_format = 'fallback', stop_after_first = true },
     go = { 'gofumpt', 'gofmt', 'goimports', 'golines' },
     sh = { 'shfmt' },
     bash = { 'shfmt' },

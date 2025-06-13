@@ -100,8 +100,13 @@ local servers = {
   },
   jsonls = {},
   zls = {},
+  cssls = {},
+  bashls = {},
+  rust_analyzer = {},
+  dockerls = {},
+  css_variables = {},
+  cssmodules_ls = {},
 }
-
 
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 for k, v in pairs(servers) do
