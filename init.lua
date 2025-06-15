@@ -28,8 +28,6 @@ if vim.g.noplugins ~= true then
     },
   }
 
-  MiniIcons.mock_nvim_web_devicons()
-
   for _, file in ipairs(vim.fn.readdir(vim.fn.stdpath 'config' .. '/lua/plugins', [[v:val =~ '\.lua$']])) do
     require('plugins.' .. file:gsub('%.lua$', ''))
   end
@@ -41,6 +39,13 @@ end
 require 'custom.colors'
 require 'custom.compile'
 require('custom.notes-plugin').setup()
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = {},
+  callback = function()
+    pcall(vim.treesitter.start)
+  end,
+})
 
 vim.opt.statuscolumn = [[%!v:lua.require'custom.statuscol'.statuscolumn()]]
 
