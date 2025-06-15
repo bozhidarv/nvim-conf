@@ -83,24 +83,6 @@ local function syncPackages(ensurePacks)
         install(pack, pinnedVersion ~= '' and pinnedVersion or nil)
       end
     end)
-
-    -- Auto-clean unused packages
-    local installedPackages = masonReg.get_installed_package_names()
-    vim.iter(installedPackages):each(function(packName)
-    	-- Check if installed package is in our ensure list (without version suffix)
-    	local isEnsured = vim.iter(ensurePacks):any(function(ensurePack)
-    		local name = ensurePack:match("([^@]+)")
-    		return name == packName
-    	end)
-
-    	if not isEnsured then
-    		masonReg.get_package(packName):uninstall()
-    		local msg = ("[%s] uninstalled."):format(packName)
-    		vim.defer_fn(function()
-    			vim.notify(msg, nil, { title = "Mason", icon = "󰅗" })
-    		end, 0)
-    	end
-    end)
   end
 
   masonReg.refresh(refreshCallback)
