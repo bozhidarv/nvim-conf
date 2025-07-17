@@ -17,9 +17,13 @@ local PACKAGES = {
   'gopls',
   'zls',
   'clangd',
+  'ltex-ls-plus',
+  'jdtls',
   -- DAP
   'codelldb',
   'delve',
+  'java-debug-adapter',
+  'java-test',
   -- Format
   'black',
   'stylua',

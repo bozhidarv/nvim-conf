@@ -1,6 +1,11 @@
+local add = MiniDeps.add
+
 ---@diagnostic disable: missing-fields
-MiniDeps.add {
+add {
   source = 'neovim/nvim-lspconfig',
+  depends = {
+    'mfussenegger/nvim-jdtls',
+  },
 }
 
 --#region Default LSP Servers
@@ -10,26 +15,6 @@ local servers = {
     cmd = {
       'clangd',
       '--offset-encoding=utf-16',
-    },
-  },
-  jdtls = {
-    settings = {
-      java = {
-        configuration = {
-          runtimes = {
-            {
-              name = 'JavaSE-21',
-              path = '/usr/lib/jvm/java-21-openjdk',
-              default = true,
-            },
-            {
-              name = 'JavaSE=17',
-              path = '/usr/lib/jvm/jdk-17-oracle-x64',
-              default = false,
-            },
-          },
-        },
-      },
     },
   },
   gopls = {
@@ -106,6 +91,7 @@ local servers = {
   dockerls = {},
   css_variables = {},
   cssmodules_ls = {},
+  lemminx = {},
 }
 
 local capabilities = require('blink.cmp').get_lsp_capabilities()

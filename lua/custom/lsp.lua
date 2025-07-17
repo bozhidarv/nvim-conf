@@ -24,6 +24,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { buffer = bufnr, desc = '[R]e[n]ame' })
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = '[C]ode [A]ction' })
 
+    ---@type vim.lsp.Client
     local client = vim.lsp.get_client_by_id(event.data.client_id)
 
     vim.keymap.set('n', 'gd', require('fzf-lua').lsp_definitions, { buffer = bufnr, desc = '[G]oto [D]efinition' })
@@ -54,6 +55,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
       vim.lsp.buf.format()
     end, { desc = 'Format current buffer with LSP' })
+
+    if client.name == 'jdtls' then
+      vim.keymap.set('n', '<leader>tc', function()
+        require('jdtls').test_nearest_method()
+      end, { silent = true, desc = 'Run closest test' })
+      vim.keymap.set('n', '<leader>tf', function()
+        require('jdtls').test_class()
+      end)
+    end
 
     if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
       local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
