@@ -119,10 +119,10 @@ local function escape_wildcards(path)
 end
 
 function M.root_pattern(...)
-  local patterns = vim.iter({...}):flatten(math.huge):totable()
+  local patterns = vim.iter({ ... }):flatten(math.huge):totable()
   return function(startpath)
     startpath = vim.fn.substitute(startpath, 'zipfile://\\(.\\{-}\\)::[^\\\\].*$', '\\1', '')
-    startpath  = vim.fn.substitute(startpath, 'tarfile:\\(.\\{-}\\)::.*$', '\\1', '')
+    startpath = vim.fn.substitute(startpath, 'tarfile:\\(.\\{-}\\)::.*$', '\\1', '')
     for _, pattern in ipairs(patterns) do
       local match = M.search_ancestors(startpath, function(path)
         for _, p in ipairs(vim.fn.glob(table.concat({ escape_wildcards(path), pattern }, '/'), true, true)) do
