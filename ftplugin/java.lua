@@ -8,6 +8,11 @@ local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 local extendedClientCapabilities = require('jdtls').extendedClientCapabilities
 extendedClientCapabilities.onCompletionItemSelectedCommand = 'editor.action.triggerParameterHints'
 
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.bo.softtabstop = 4
+
 local config = {
   -- How to run jdtls. This can be overridden to a full java command-line
   -- if the Python wrapper script doesn't suffice.

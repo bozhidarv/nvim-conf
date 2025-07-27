@@ -180,6 +180,16 @@ local splitStr = function(inputstr)
   return t
 end
 
+dap.configurations.java = {
+  {
+    type = 'java';
+    request = 'attach';
+    name = "Debug (Attach) - Remote";
+    hostName = "127.0.0.1";
+    port = 8000;
+  },
+}
+
 dap.configurations.zig = {
   {
     name = 'Run Program',

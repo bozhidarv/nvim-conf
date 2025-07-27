@@ -37,6 +37,8 @@ local PACKAGES = {
   'editorconfig-checker',
   'golangci-lint',
   'pylint',
+  'checkstyle',
+  'sonarlint-language-server'
 }
 
 ---comment

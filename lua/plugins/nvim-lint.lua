@@ -5,6 +5,24 @@ MiniDeps.add {
 local M = {}
 
 local lint = require 'lint'
+
+local mason_packages = vim.fn.stdpath 'data' .. '/mason/packages'
+local check_style_bin = mason_packages .. '/checkstyle/checkstyle'
+
+require('lint').linters.mjt_checkstyle = {
+  name = 'mjt_checkstyle',
+  cmd = check_style_bin,
+  args = { '-f', 'sarif', '-c', vim.fn.expand '$HOME/mjt_styles.xml' },
+  ignore_exitcode = true,
+  parser = function(output, bufnr, linter_cwd)
+    local diagnostics = require('lint.parser').for_sarif { severity = vim.diagnostic.severity.INFO }(output, bufnr, linter_cwd)
+    for i = 1, #diagnostics, 1 do
+      diagnostics[i].severity = vim.diagnostic.severity.INFO
+    end
+    return diagnostics
+  end,
+}
+
 lint.linters_by_ft = {
   fish = { 'fish' },
   go = { 'golangcilint' },
@@ -13,6 +31,7 @@ lint.linters_by_ft = {
   javascriptreact = { 'eslint_d', 'editorconfig-checker' },
   typescriptreact = { 'eslint_d', 'editorconfig-checker' },
   svelte = { 'eslint_d', 'editorconfig-checker' },
+  java = { 'mjt_checkstyle', 'editorconfig-checker' },
   -- Use the "*" filetype to run linters on all filetypes.
   -- ['*'] = { 'global linter' },
   -- Use the "_" filetype to run linters on filetypes that don't have other linters configured.
@@ -24,6 +43,9 @@ function M.debounce(ms, fn)
   local timer = vim.uv.new_timer()
   return function(...)
     local argv = { ... }
+    if timer == nil then
+      return
+    end
     timer:start(ms, 0, function()
       timer:stop()
       vim.schedule_wrap(fn)(unpack(argv))

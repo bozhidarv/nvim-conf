@@ -137,6 +137,7 @@ require('nvim-treesitter.install').install({
   'gomod',
   'gomod',
   'ecma',
+  'java',
   'jsx',
   'typescript',
   'bash',
