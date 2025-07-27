@@ -26,6 +26,8 @@ end
 
 vim.o.background = 'dark'
 
+-- vim.o.winborder = 'rounded'
+
 -- Set highlight on search
 vim.o.hlsearch = true
 
@@ -46,7 +48,9 @@ end
 
 -- Limit completion window height
 vim.opt.pumheight = 10
-vim.o.completeopt = 'menuone,menu,noinsert,popup,fuzzy'
+vim.opt.omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+vim.o.completeopt = 'menuone,menu,noinsert,popup,fuzzy,preview'
 
 -- Sync clipboard between OS and Neovim.
 --  Remove this option if you want your OS clipboard to remain independent.

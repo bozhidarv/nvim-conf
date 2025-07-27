@@ -95,7 +95,35 @@ local servers = {
 }
 
 local capabilities = require('blink.cmp').get_lsp_capabilities()
+
 for k, v in pairs(servers) do
   v.capabilities = vim.tbl_deep_extend('force', capabilities, v.capabilities or {})
   require('lspconfig')[k].setup(v)
 end
+
+add {
+  source = 'https://gitlab.com/schrieveslaach/sonarlint.nvim',
+}
+
+require('sonarlint').setup {
+  server = {
+    cmd = {
+      'sonarlint-language-server',
+      -- Ensure that sonarlint-language-server uses stdio channel
+      '-stdio',
+      '-analyzers',
+      -- paths to the analyzers you need, using those for python and java in this example
+      vim.fn.expand '$MASON/share/sonarlint-analyzers/sonarpython.jar',
+      vim.fn.expand '$MASON/share/sonarlint-analyzers/sonarcfamily.jar',
+      vim.fn.expand '$MASON/share/sonarlint-analyzers/sonarjava.jar',
+    },
+  },
+  filetypes = {
+    -- Tested and working
+    'cs',
+    'dockerfile',
+    'python',
+    'cpp',
+    'java',
+  },
+}

@@ -24,7 +24,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>cr', vim.lsp.buf.rename, { buffer = bufnr, desc = '[R]e[n]ame' })
     vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { buffer = bufnr, desc = '[C]ode [A]ction' })
 
-    ---@type vim.lsp.Client
+    ---@type vim.lsp.Client|nil
     local client = vim.lsp.get_client_by_id(event.data.client_id)
 
     vim.keymap.set('n', 'gd', require('fzf-lua').lsp_definitions, { buffer = bufnr, desc = '[G]oto [D]efinition' })
@@ -56,7 +56,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       vim.lsp.buf.format()
     end, { desc = 'Format current buffer with LSP' })
 
-    if client.name == 'jdtls' then
+    if client and (client.name == 'jdtls') then
       vim.keymap.set('n', '<leader>tc', function()
         require('jdtls').test_nearest_method()
       end, { silent = true, desc = 'Run closest test' })
@@ -92,6 +92,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
       })
     end
 
+    -- NOTE: How to add custom per lsp kind colors
+    -- if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_completion, event.buf) then
+    --   client.server_capabilities.completionProvider.triggerCharacters = vim.split('qwertyuiopasdfghjklzxcvbnm. ', '')
+    --   vim.lsp.completion.enable(true, client.id, event.buf, { autotrigger = true })
+    --   vim.opt.omnifunc = 'v:lua.require("custom.omnifunc-enhanced").omnifunc'
+    --   vim.keymap.set('i', '<C-Space>', vim.lsp.completion.get, { buffer = bufnr, desc = 'Activate completion' })
+    -- end
+
     -- Prefer LSP folding if client supports it
     if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_foldingRange) then
       local win = vim.api.nvim_get_current_win()
@@ -111,6 +119,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
           vim.lsp.codelens.refresh { bufnr = e.buf }
         end,
       })
+      vim.keymap.set('n', '<leader>cl', vim.lsp.codelens.run, { buffer = bufnr, desc = 'Run current line codelenses' })
       vim.api.nvim_create_autocmd({ 'BufLeave' }, {
         group = vim.api.nvim_create_augroup('clear-codelens', { clear = true }),
         callback = function(e)
