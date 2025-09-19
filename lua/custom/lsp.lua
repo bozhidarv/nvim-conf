@@ -16,6 +16,47 @@ vim.diagnostic.config {
   virtual_text = true,
 }
 
+local function updateJdtConfigs()
+  local jdtls_dap = require 'jdtls.dap'
+  local dap = require 'dap'
+  jdtls_dap.setup_dap_main_class_configs {
+    on_ready = function()
+      ---@param configs dap.Configuration[]
+      jdtls_dap.fetch_main_configs(nil, function(configs)
+        for _, conf in pairs(configs) do
+          ---@type dap.Configuration
+          local new_dap_config = {
+            cwd = conf.cwd,
+            type = 'java',
+            name = conf.name .. ' with custom args',
+            projectName = conf.projectName,
+            mainClass = conf.mainClass,
+            modulePaths = conf.modulePaths,
+            classPaths = conf.classPaths,
+            javaExec = conf.javaExec,
+            request = 'launch',
+            console = 'integratedTerminal',
+            vmArgs = conf.vmArgs,
+            args = function()
+              return vim.fn.input 'Args: '
+            end,
+          }
+
+          local already_added = false
+          for _, dap_conf in pairs(dap.configurations.java) do
+            if dap_conf.name == new_dap_config.name then
+              already_added = true
+            end
+          end
+          if not already_added then
+            table.insert(dap.configurations.java, new_dap_config)
+          end
+        end
+      end)
+    end,
+  }
+end
+
 --#region LspAttach
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
@@ -40,7 +81,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     -- See `:help K` for why this keymap
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr, desc = 'Hover Documentation' })
-    vim.keymap.set('n', '<leader>ck', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'Signature Documentation' })
+    vim.keymap.set('n', '<leader>ck', vim.lsp.buf.hover, { buffer = bufnr, desc = 'Hover Documentation' })
+
+    vim.keymap.set('n', '<leader>ch', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'Signature Documentation' })
+    vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'Signature Documentation' })
 
     -- Lesser used LSP functionality
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc = '[G]oto [D]eclaration' })
@@ -49,7 +93,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', '<leader>cwl', function()
       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
     end, { buffer = bufnr, desc = '[W]orkspace [L]ist Folders' })
-    vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'Signature Documentation' })
 
     -- Create a command `:Format` local to the LSP buffer
     vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
@@ -57,10 +100,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, { desc = 'Format current buffer with LSP' })
 
     if client and (client.name == 'jdtls') then
-      vim.keymap.set('n', '<leader>tc', function()
+      vim.keymap.set('n', '<leader>cu', updateJdtConfigs, { silent = true, buffer = bufnr, desc = 'UpdateJdtDapConfigs' })
+      vim.keymap.set('n', '<leader>tjc', function()
         require('jdtls').test_nearest_method()
       end, { silent = true, desc = 'Run closest test' })
-      vim.keymap.set('n', '<leader>tf', function()
+      vim.keymap.set('n', '<leader>tjf', function()
         require('jdtls').test_class()
       end)
     end
