@@ -39,12 +39,6 @@ require('fzf-lua').setup {
     ['--border'] = 'none',
     ['--highlight-line'] = true, -- fzf >= v0.53
   },
-  grep = {
-    winopts = require('fzf-lua.profiles.ivy').winopts,
-  },
-  grep_curbuf = {
-    winopts = require('fzf-lua.profiles.ivy').winopts,
-  },
   git = {
     status = {
       prompt = 'GitStatus❯ ',
@@ -55,7 +49,7 @@ require('fzf-lua').setup {
       color_icons = true,
       previewer = 'git_diff',
       -- git-delta is automatically detected as pager, uncomment to disable
-      -- preview_pager = false,
+      preview_pager = false,
       actions = {
         -- actions inherit from 'actions.files' and merge
         ['right'] = false,
@@ -64,8 +58,43 @@ require('fzf-lua').setup {
         ['ctrl-x'] = { fn = actions.git_reset, reload = true },
       },
     },
-    blame = {
-      winopts = require('fzf-lua.profiles.ivy').winopts,
+  },
+  winopts = {
+    row = 1,
+    col = 0,
+    width = 1,
+    height = 0.4,
+    title_pos = 'left',
+    border = { '', '─', '', '', '', '', '', '' },
+    preview = {
+      layout = 'horizontal',
+      title_pos = 'right',
+      border = function(_, m)
+        if m.type == 'fzf' then
+          return 'single'
+        else
+          assert(m.type == 'nvim' and m.name == 'prev' and type(m.layout) == 'string')
+          local b = { '┌', '─', '┐', '│', '┘', '─', '└', '│' }
+          if m.layout == 'down' then
+            b[1] = '├' --top right
+            b[3] = '┤' -- top left
+          elseif m.layout == 'up' then
+            b[7] = '├' -- bottom left
+            b[6] = '' -- remove bottom
+            b[5] = '┤' -- bottom right
+          elseif m.layout == 'left' then
+            b[3] = '┬' -- top right
+            b[5] = '┴' -- bottom right
+            b[6] = '' -- remove bottom
+          else -- right
+            b[1] = '┬' -- top left
+            b[7] = '┴' -- bottom left
+            b[6] = '' -- remove bottom
+          end
+
+          return b
+        end
+      end,
     },
   },
 }
