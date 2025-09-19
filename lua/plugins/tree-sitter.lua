@@ -1,6 +1,16 @@
 local add = MiniDeps.add
 
 add {
+  source = 'OXY2DEV/markview.nvim',
+
+  -- For blink.cmp's completion
+  -- source
+  depends = {
+    'saghen/blink.cmp',
+  },
+}
+
+add {
   source = 'nvim-treesitter/nvim-treesitter',
   -- Use 'master' while monitoring updates in 'main'
   checkout = 'main',
@@ -11,6 +21,9 @@ add {
       vim.cmd 'TSUpdate'
     end,
   },
+  depends = {
+    'OXY2DEV/markview.nvim'
+  }
 }
 
 add {
