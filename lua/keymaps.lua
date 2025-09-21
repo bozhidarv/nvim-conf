@@ -4,6 +4,7 @@ vim.keymap.set('n', '<C-h>', '<C-w>h', { silent = true })
 vim.keymap.set('n', '<C-j>', '<C-w>j', { silent = true })
 vim.keymap.set('n', '<C-k>', '<C-w>k', { silent = true })
 vim.keymap.set('n', '<C-l>', '<C-w>l', { silent = true })
+vim.keymap.set('n', '<leader>q', '<C-w>q', { silent = true })
 --#endregion
 
 --#region ui
@@ -43,21 +44,21 @@ vim.keymap.set('n', '<leader>|', ':vsplit<CR>', { desc = 'Verical split' })
 --#endregion
 
 --#region remove unneeded lsp keymaps
-if vim.fn.maparg('grr', 'n') ~= '' then
-  vim.keymap.del('n', 'grr')
-end
-
-if vim.fn.maparg('gra', 'n') ~= '' then
-  vim.keymap.del('n', 'gra')
-end
-
-if vim.fn.maparg('gri', 'n') ~= '' then
-  vim.keymap.del('n', 'gri')
-end
-
-if vim.fn.maparg('grn', 'n') ~= '' then
-  vim.keymap.del('n', 'grn')
-end
+-- if vim.fn.maparg('grr', 'n') ~= '' then
+--   vim.keymap.del('n', 'grr')
+-- end
+--
+-- if vim.fn.maparg('gra', 'n') ~= '' then
+--   vim.keymap.del('n', 'gra')
+-- end
+--
+-- if vim.fn.maparg('gri', 'n') ~= '' then
+--   vim.keymap.del('n', 'gri')
+-- end
+--
+-- if vim.fn.maparg('grn', 'n') ~= '' then
+--   vim.keymap.del('n', 'grn')
+-- end
 --#endregion
 
 --#region Disable help on F1
@@ -65,10 +66,10 @@ vim.keymap.set({ 'i', 'n' }, '<F1>', '<nop>', {})
 --#endregion
 
 --#region tabs
-vim.keymap.set('n', '<leader>Tc', ':tabclose<CR>', { silent = true, desc = 'Close tab' })
-vim.keymap.set('n', '<leader>Tn', ':tabnew<CR>', { silent = true, desc = 'New tab' })
-vim.keymap.set('n', '[T', ':tabprevious<CR>', { silent = true, desc = 'Previous tab' })
-vim.keymap.set('n', ']T', ':tabNext<CR>', { silent = true, desc = 'Next tab' })
+vim.keymap.set('n', '<leader>tc', ':tabclose<CR>', { silent = true, desc = 'Close tab' })
+vim.keymap.set('n', '<leader>tn', ':tabnew<cr>', { silent = true, desc = 'new tab' })
+vim.keymap.set('n', '[t', ':tabprevious<CR>', { silent = true, desc = 'Previous tab' })
+vim.keymap.set('n', ']t', ':tabNext<CR>', { silent = true, desc = 'Next tab' })
 --#endregion
 
 --#region quickfix
@@ -138,6 +139,10 @@ if vim.g.noplugins ~= true then
   vim.keymap.set('n', '<leader>e', '<Cmd>Lf<CR>', { desc = 'Open lf.nvim' })
   --#endregion
 
+  --#region man cWORD
+  vim.keymap.set('n', 'M', [[':Man ' . expand('<cword>') . '<CR>']], { desc = 'Check manpage for current word', silent = true, noremap = true, expr = true })
+  --#endregion
+
   --#region Git
   vim.keymap.set('n', '<leader>gl', '<CMD>LazyGitOpen log<CR>', { desc = 'Git log' })
   vim.keymap.set('n', '<leader>gp', ':Git pull<CR>', { desc = 'Git pull' })
@@ -167,11 +172,11 @@ if vim.g.noplugins ~= true then
   --#region Todo-comments.nvim
   vim.keymap.set('n', '<leader>qt', ':TodoQuickFix<CR>', { desc = 'Open todo comments in qf', silent = true })
 
-  vim.keymap.set('n', ']t', function()
+  vim.keymap.set('n', ']T', function()
     require('todo-comments').jump_next()
   end, { desc = 'Next todo comment' })
 
-  vim.keymap.set('n', '[t', function()
+  vim.keymap.set('n', '[T', function()
     require('todo-comments').jump_prev()
   end, { desc = 'Previous todo comment' })
   --#endregion
