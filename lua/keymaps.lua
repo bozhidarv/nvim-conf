@@ -169,18 +169,6 @@ if vim.g.noplugins ~= true then
   vim.keymap.set('n', '<leader>qw', vim.diagnostic.setqflist, { desc = 'Toggle diagnostics list for workspace' })
   --#endregion
 
-  --#region Todo-comments.nvim
-  vim.keymap.set('n', '<leader>qt', ':TodoQuickFix<CR>', { desc = 'Open todo comments in qf', silent = true })
-
-  vim.keymap.set('n', ']T', function()
-    require('todo-comments').jump_next()
-  end, { desc = 'Next todo comment' })
-
-  vim.keymap.set('n', '[T', function()
-    require('todo-comments').jump_prev()
-  end, { desc = 'Previous todo comment' })
-  --#endregion
-
   --#region Multiplexer Navigation
   vim.keymap.set('n', '<C-j>', ':SmartCursorMoveDown<CR>', { silent = true, desc = 'Navigate down' })
   vim.keymap.set('n', '<C-k>', ':SmartCursorMoveUp<CR>', { silent = true, desc = 'Navigate up' })
