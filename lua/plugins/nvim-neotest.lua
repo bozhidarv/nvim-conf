@@ -16,6 +16,16 @@ add {
 }
 
 add {
+  source = 'rcasia/neotest-java',
+  depends = {
+      "mfussenegger/nvim-jdtls",
+      "mfussenegger/nvim-dap", -- for the debugger
+      "rcarriga/nvim-dap-ui", -- recommended
+      "theHamsta/nvim-dap-virtual-text", -- recommended
+    }
+}
+
+add {
   source = 'rouge8/neotest-rust',
 }
 
@@ -28,11 +38,15 @@ require('neotest').setup {
     require 'neotest-dotnet' {
       dap = { adapter_name = 'coreclr' },
     },
-    require 'neotest-vim-test' { ignore_filetypes = { 'rust', 'cs' } },
+    require 'neotest-vim-test' { ignore_filetypes = { 'rust', 'cs', 'zig' } },
     require 'neotest-zig' {
       dap = {
         adapter = 'codelldb',
       },
+    },
+    require 'neotest-java' {
+      junit_jar = nil,
+      incremental_build = true,
     },
   },
 }

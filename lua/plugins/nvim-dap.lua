@@ -20,12 +20,9 @@ dapui.setup()
 require('nvim-dap-virtual-text').setup {}
 
 --#region Dap icons definition
-vim.fn.sign_define('DapBreakpoint',
-  { text = '󰻃 ', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
-vim.fn.sign_define('DapBreakpointCondition',
-  { text = '󰘥 ', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
-vim.fn.sign_define('DapBreakpointRejected',
-  { text = ' ', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
+vim.fn.sign_define('DapBreakpoint', { text = '󰻃 ', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
+vim.fn.sign_define('DapBreakpointCondition', { text = '󰘥 ', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
+vim.fn.sign_define('DapBreakpointRejected', { text = ' ', texthl = 'DapBreakpoint', linehl = 'DapBreakpoint', numhl = 'DapBreakpoint' })
 vim.fn.sign_define('DapLogPoint', { text = ' ', texthl = 'DapLogPoint', linehl = 'DapLogPoint', numhl = 'DapLogPoint' })
 vim.fn.sign_define('DapStopped', { text = '', texthl = 'DapStopped', linehl = 'DapStopped', numhl = 'DapStopped' })
 --#endregion
@@ -77,7 +74,6 @@ if not is_windows then
       args = { '--port', '${port}' },
 
       -- On windows you may have to uncomment this:
-      detached = false,
     },
   }
 else
@@ -103,7 +99,7 @@ else
       args = { '--port', '${port}' },
 
       -- On windows you may have to uncomment this:
-      -- detached = false,
+      detached = false,
     },
   }
 end
@@ -122,7 +118,7 @@ dap.configurations.cs = {
 }
 dap.configurations.cpp = {
   {
-    name = 'Launch file',
+    name = 'Launch gdb from file',
     type = 'cppdbg',
     request = 'launch',
     program = function()
@@ -130,13 +126,6 @@ dap.configurations.cpp = {
     end,
     cwd = '${workspaceFolder}',
     stopAtEntry = true,
-    setupCommands = {
-      {
-        text = '-enable-pretty-printing',
-        description = 'enable pretty printing',
-        ignoreFailures = false,
-      },
-    },
   },
   {
     name = 'Attach to gdbserver :1234',
@@ -149,13 +138,16 @@ dap.configurations.cpp = {
     program = function()
       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
     end,
-    setupCommands = {
-      {
-        text = '-enable-pretty-printing',
-        description = 'enable pretty printing',
-        ignoreFailures = false,
-      },
-    },
+  },
+  {
+    name = 'Launch LLDB for file',
+    type = 'codelldb',
+    request = 'launch',
+    program = function()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end,
+    cwd = '${workspaceFolder}',
+    stopOnEntry = false,
   },
 }
 dap.configurations.rust = {
@@ -182,13 +174,15 @@ end
 
 dap.configurations.java = {
   {
-    type = 'java';
-    request = 'attach';
-    name = "Debug (Attach) - Remote";
-    hostName = "127.0.0.1";
-    port = 8000;
+    type = 'java',
+    request = 'attach',
+    name = 'Debug (Attach) - Remote',
+    hostName = '127.0.0.1',
+    port = 8000,
   },
 }
+
+-- vim.api.nvim_create_user_command('UpdateJavaDap', , {})
 
 dap.configurations.zig = {
   {

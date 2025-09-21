@@ -6,7 +6,6 @@ require('conform').setup {
   -- Define your formatters
   formatters_by_ft = {
     lua = { 'stylua' },
-    python = { 'isort', 'black' },
     javascript = { 'eslint_d', lsp_format = 'fallback', stop_after_first = true },
     typescript = { 'eslint_d', lsp_format = 'fallback', stop_after_first = true },
     typescriptreact = { 'eslint_d', lsp_format = 'fallback', stop_after_first = true },
