@@ -90,10 +90,24 @@ miniclue.setup {
     -- Enhance this by adding descriptions for <Leader> mapping groups
     miniclue.gen_clues.builtin_completion(),
     miniclue.gen_clues.g(),
-    miniclue.gen_clues.marks(),
+    -- miniclue.gen_clues.marks(),
     miniclue.gen_clues.registers(),
     miniclue.gen_clues.windows(),
     miniclue.gen_clues.z(),
+  },
+  -- Clue window settings
+  window = {
+    -- Floating window config
+    config = {
+      width = vim.api.nvim_win_get_width(0),
+    },
+
+    -- Delay before showing clue window
+    delay = 100,
+
+    -- Keys to scroll inside the clue window
+    scroll_down = '<C-d>',
+    scroll_up = '<C-u>',
   },
 }
 
@@ -153,13 +167,13 @@ require('mini.completion').setup {
 }
 
 local gen_loader = require('mini.snippets').gen_loader
-require('mini.snippets').setup({
+require('mini.snippets').setup {
   snippets = {
     -- Load custom file with global snippets first (adjust for Windows)
-    gen_loader.from_file('~/.config/nvim/snippets/global.json'),
+    gen_loader.from_file '~/.config/nvim/snippets/global.json',
 
     -- Load snippets based on current language by reading files from
     -- "snippets/" subdirectories from 'runtimepath' directories.
     gen_loader.from_lang(),
   },
-})
+}
