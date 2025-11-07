@@ -35,15 +35,6 @@ local custom_arrow = function()
 end
 
 local custom_git = function()
-  -- local first_split = vim.fn.split(vim.api.nvim_eval_statusline('%{FugitiveStatusline()}', {}).str, '[Git(')[1]
-  -- local second_split = vim.fn.split(first_split, ')]')[1]
-  --
-  -- if second_split == 'v:null' then
-  --   return ''
-  -- end
-  -- return ' ' .. second_split
-
-  -- return ' '
   local current_branch = require('custom.branch_name').get_branch_name()
 
   if current_branch == nil then
