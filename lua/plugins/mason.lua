@@ -15,7 +15,7 @@ local PACKAGES = {
   'rust-analyzer',
   'typescript-language-server',
   'gopls',
-  'zls',
+  -- 'zls',
   'clangd',
   'ltex-ls-plus',
   'jdtls',

@@ -26,7 +26,9 @@ local LSP_SERVERS = {
   'lemminx',
   'cmake',
   'ols',
-  'pylsp'
+  'pylsp',
+  'sourcekit',
+  'templ'
 }
 
 add {
