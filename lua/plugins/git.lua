@@ -1,5 +1,26 @@
 MiniDeps.add {
-  source = 'tpope/vim-fugitive',
+  source = 'NeogitOrg/neogit',
+  depends = {
+    'nvim-lua/plenary.nvim', -- required
+    'sindrets/diffview.nvim', -- optional - Diff integration
+
+    'ibhagwan/fzf-lua', -- optional
+  },
+}
+
+require('neogit').setup {}
+require('custom.branch_name').register_autocmd()
+
+MiniDeps.add {
+  source = 'yt20chill/inline_git_blame.nvim',
+}
+
+require('inline_git_blame').setup {
+  -- excluded_filetypes will be extended from default
+  excluded_filetypes = { 'NvimTree', 'neo-tree', 'TelescopePrompt', 'help' },
+  debounce_ms = 150,
+  autocmd = true,
+  you_label = 'You', -- can be any string, or false to disable replacement
 }
 
 require('mini.diff').setup {
@@ -43,11 +64,11 @@ vim.api.nvim_create_user_command('LazyGitOpen', function(args)
       mappings = {
         '<leader>gg',
       },
-      on_exit = function ()
+      on_exit = function()
         git_term = nil
-      end
+      end,
     }
     git_term = lazygit
   end
   git_term:toggle()
-  end, { nargs = 1})
+end, { nargs = 1 })
