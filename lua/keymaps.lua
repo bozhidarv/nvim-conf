@@ -43,24 +43,6 @@ vim.keymap.set('n', '<leader>-', ':split<CR>', { desc = 'Horizontal split' })
 vim.keymap.set('n', '<leader>|', ':vsplit<CR>', { desc = 'Verical split' })
 --#endregion
 
---#region remove unneeded lsp keymaps
--- if vim.fn.maparg('grr', 'n') ~= '' then
---   vim.keymap.del('n', 'grr')
--- end
---
--- if vim.fn.maparg('gra', 'n') ~= '' then
---   vim.keymap.del('n', 'gra')
--- end
---
--- if vim.fn.maparg('gri', 'n') ~= '' then
---   vim.keymap.del('n', 'gri')
--- end
---
--- if vim.fn.maparg('grn', 'n') ~= '' then
---   vim.keymap.del('n', 'grn')
--- end
---#endregion
-
 --#region Disable help on F1
 vim.keymap.set({ 'i', 'n' }, '<F1>', '<nop>', {})
 --#endregion
@@ -144,17 +126,18 @@ if vim.g.noplugins ~= true then
   --#endregion
 
   --#region Git
-  vim.keymap.set('n', '<leader>gl', '<CMD>LazyGitOpen log<CR>', { desc = 'Git log' })
-  vim.keymap.set('n', '<leader>gp', ':Git pull<CR>', { desc = 'Git pull' })
-  vim.keymap.set('n', '<leader>gP', ':Git push<CR>', { desc = 'Git push' })
-  vim.keymap.set('n', '<leader>gb', ':Git blame<CR>', { desc = 'Open git blame' })
+  vim.keymap.set('n', '<leader>gl', '<CMD>Neogit log<CR>', { desc = 'Git log' })
+  vim.keymap.set('n', '<leader>gc', ':Neogit commit<CR>', { desc = 'Git commit' })
+  vim.keymap.set('n', '<leader>gp', ':Neogit pull<CR>', { desc = 'Git pull' })
+  vim.keymap.set('n', '<leader>gP', ':Neogit  push<CR>', { desc = 'Git push' })
+  -- vim.keymap.set('n', '<leader>gb', ':Git blame<CR>', { desc = 'Open git blame' })
   vim.keymap.set('n', '<leader>gh', function()
     require('mini.diff').toggle_overlay(0)
   end, { desc = 'Toggle diff overlay' })
-  vim.keymap.set('n', '<leader>gml', ':diffget //2<CR>', { desc = 'Git merge conflict select left' })
-  vim.keymap.set('n', '<leader>gmr', ':diffget //3<CR>', { desc = 'Git merge conflict select right' })
-  vim.keymap.set('n', '<leader>gg', '<CMD>LazyGitOpen all<CR>', { desc = 'Open lazygit' })
-  vim.keymap.set('n', '<leader>gf', '<CMD>Git<CR>', { desc = 'Open fugitive' })
+  -- vim.keymap.set('n', '<leader>gml', ':diffget //2<CR>', { desc = 'Git merge conflict select left' })
+  -- vim.keymap.set('n', '<leader>gmr', ':diffget //3<CR>', { desc = 'Git merge conflict select right' })
+  -- vim.keymap.set('n', '<leader>gg', '<CMD>LazyGitOpen all<CR>', { desc = 'Open lazygit' })
+  vim.keymap.set('n', '<leader>gf', '<CMD>Neogit kind=split_above<CR>', { desc = 'Open fugitive' })
   --#endregion
 
   --#region diagnostics
