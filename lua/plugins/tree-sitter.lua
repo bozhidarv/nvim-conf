@@ -2,12 +2,6 @@ local add = MiniDeps.add
 
 add {
   source = 'OXY2DEV/markview.nvim',
-
-  -- For blink.cmp's completion
-  -- source
-  depends = {
-    'saghen/blink.cmp',
-  },
 }
 
 add {
