@@ -91,6 +91,11 @@ vim.keymap.set('n', '<F1>', require('custom.notes-plugin').toggle_local_note, { 
 vim.api.nvim_set_keymap('t', '<ESC><ESC>', '<C-\\><C-n>', { noremap = true, desc = 'Enter normal mode' })
 --#endregion
 
+--#region Split diffing
+vim.keymap.set('n', '<leader>Ds', ":windo diffthis<CR>", { noremap = true, desc = 'Diff current split' })
+vim.keymap.set('n', '<leader>Dt', ":windo diffoff<CR>", { noremap = true, desc = 'Stop current diff' })
+--#endregion
+
 if vim.g.noplugins ~= true then
   --#region fzf-lua
   vim.keymap.set('n', '<leader>?', require('fzf-lua').oldfiles, { desc = '[?] Find recently opened files' })
