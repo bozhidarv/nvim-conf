@@ -19,7 +19,7 @@ local LSP_SERVERS = {
   'zls',
   'cssls',
   'bashls',
-  'rust_analyzer',
+  -- 'rust_analyzer',
   'dockerls',
   'css_variables',
   'cssmodules_ls',

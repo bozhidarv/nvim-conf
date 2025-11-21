@@ -12,32 +12,30 @@ add {
     'vim-test/vim-test',
     'nvim-neotest/neotest-vim-test',
     'lawrence-laz/neotest-zig',
+    'mrcjkb/rustaceanvim',
   },
 }
 
 add {
   source = 'rcasia/neotest-java',
   depends = {
-      "mfussenegger/nvim-jdtls",
-      "mfussenegger/nvim-dap", -- for the debugger
-      "rcarriga/nvim-dap-ui", -- recommended
-      "theHamsta/nvim-dap-virtual-text", -- recommended
-    }
-}
-
-add {
-  source = 'rouge8/neotest-rust',
+    'mfussenegger/nvim-jdtls',
+    'mfussenegger/nvim-dap', -- for the debugger
+    'rcarriga/nvim-dap-ui', -- recommended
+    'theHamsta/nvim-dap-virtual-text', -- recommended
+  },
 }
 
 require('neotest').setup {
   adapters = {
-    require 'neotest-rust' {
-      args = { '--no-capture' },
-      dap_adapter = 'codelldb',
-    },
+    -- require 'neotest-rust' {
+    --   args = { '--no-capture' },
+    --   dap_adapter = 'codelldb',
+    -- },
     require 'neotest-dotnet' {
       dap = { adapter_name = 'coreclr' },
     },
+    require 'rustaceanvim.neotest',
     require 'neotest-vim-test' { ignore_filetypes = { 'rust', 'cs', 'zig' } },
     require 'neotest-zig' {
       dap = {

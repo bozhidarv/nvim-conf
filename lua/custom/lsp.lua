@@ -123,6 +123,17 @@ vim.api.nvim_create_autocmd('LspAttach', {
       end)
     end
 
+    if client and (client.name == 'rust-analyzer') then
+      vim.keymap.set(
+        'n',
+        'K', -- Override Neovim's built-in hover keymap with rustaceanvim's hover actions
+        function()
+          vim.cmd.RustLsp { 'hover', 'actions' }
+        end,
+        { silent = true, buffer = bufnr }
+      )
+    end
+
     if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
       local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
